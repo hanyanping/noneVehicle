@@ -246,7 +246,7 @@
               .then(response => {
                 console.log(response.data);
                 if(response.data.result.rescode == 200){
-                 this.$router.push({path:''})
+                 // this.$router.push({path:''})//跳到预约成功页面
                 }
               }, err => {
                 console.log(err);
