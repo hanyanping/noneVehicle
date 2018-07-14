@@ -53,8 +53,7 @@
 </template>
 <script>
   import childComponent from './childComponent'
-  import { DatetimePicker } from 'mint-ui';
-  import { Swipe, SwipeItem } from 'mint-ui';
+  import { DatetimePicker, Swipe, SwipeItem } from 'mint-ui';
   export default{
     data (){
       return{
