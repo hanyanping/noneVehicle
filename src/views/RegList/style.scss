@@ -1,0 +1,17 @@
+.RegList__container {
+  padding: 16px;
+  table {
+    color: #232323;
+    text-align: center;
+    tr td{
+      padding: 5px 0;
+      &:nth-of-type(1) {
+        width: 50px;
+      }
+    }
+    tr th{
+      padding: 5px 0;
+      text-align: center;
+    }
+  }
+}

@@ -7,8 +7,6 @@ import axios from 'axios'
 //引入插件与第三方库
 import 'mint-ui/lib/style.css'
 import MintUI from 'mint-ui'
-import MuseUI from 'muse-ui';
-import 'muse-ui/dist/muse-ui.css';
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 Vue.prototype.ajaxUrl = '/non_vehicle/';

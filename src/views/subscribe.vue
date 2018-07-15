@@ -212,7 +212,7 @@
           var data = {
             parentId: parentId
           }
-            axios.post(this.ajaxUrl+"/vehicle/area" , data)
+            axios.post(this.ajaxUrl+"vehicle/area" , data)
             .then(response => {
               console.log(response.data);
               if(response.data.hasOwnProperty('list')){

@@ -166,7 +166,7 @@
   .selectBox{
      position: relative;
   }
-  
+
   .flexBetween{
     padding: 10px 10px 64px;
     background: #fff;
@@ -242,7 +242,7 @@
         <span class="textDetail">品牌型号:</span>
         <span class="textInput">{{department.brand_model}}</span>
       </div>
-      <div class="inputBox clear selectBox"> 
+      <div class="inputBox clear selectBox">
         <span class="textDetail">车身颜色:</span>
         <span class="textInput">{{department.color}}</span>
       </div>
@@ -255,7 +255,7 @@
         <span class="text">照片信息</span>
       </div>
       <div class="flexBetween">
-        <div class="upload" v-for="(item,index) in imgDataOne">
+        <div class="upload" v-for="(item,index) in imgDataOne" :key="index">
           <div class="cha" v-show="(item.imgUrl)">
             <img :src="item.imgUrl">
           </div>
@@ -311,7 +311,7 @@
         <span class="textDetail">品牌型号:</span>
         <span class="textInput">{{department.brand_model}}</span>
       </div>
-      <div class="inputBox clear selectBox"> 
+      <div class="inputBox clear selectBox">
         <span class="textDetail">车身颜色:</span>
         <span class="textInput">{{department.color}}</span>
       </div>
@@ -324,7 +324,7 @@
         <span class="text">照片信息</span>
       </div>
       <div class="flexBetween">
-        <div class="upload" v-for="(item,index) in imgData">
+        <div class="upload" v-for="(item,index) in imgData" :key="index">
           <div class="cha" v-show="(item.imgUrl)">
             <img :src="item.imgUrl">
           </div>
@@ -333,7 +333,7 @@
           </div>
         </div>
       </div>
-     
+
     </div>
     <div class="textBox" v-if='applyStatus == 3'>
         <span class="line">|</span>

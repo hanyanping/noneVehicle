@@ -79,7 +79,7 @@
 <template>
   <div style="background: #f4f4f4;min-height:100vh;">
     <mt-loadmore  :bottom-method="loadBottom" bottomPullText="上拉加载更多" :auto-fill="false" ref="loadmore" :bottom-all-loaded="allLoaded">
-      <div class="listBox" v-for="item in list">
+      <div class="listBox" v-for="(item, index) in list" :key="index">
           <div class="flexBetween listTop">
             <span>申请时间:{{item.applyTime}}</span>
             <span v-if="item.applyStatus == 0" class="applyStatus origin">待审核</span>
@@ -98,7 +98,7 @@
                 <p>证件号码：<span>{{item.applyNo}}</span></p>
               </div>
             </div>
-            <div class="flexRight"> 
+            <div class="flexRight">
               <span class="goSub" @click.stop='goSubscible(item.applyNo)'>立即预约</span>
               <img class='godetail' src="../assets/images/right.png">
             </div>
@@ -112,7 +112,7 @@
                 <p>证件号码：{{item.applyNo}}</p>
               </div>
             </div>
-            <div class="flexRight"> 
+            <div class="flexRight">
               <span class="goSub" @click.stop='goSubscible(item.applyNo)'>立即预约</span>
               <img class='godetail' src="../assets/images/right.png">
             </div>
@@ -237,7 +237,7 @@
             this.getDataList()
           }else{
             Toast('没有更多数据')
-           
+
           }
           //  this.allLoaded = true;// 若数据已全部获取完毕
           this.$refs.loadmore.onBottomLoaded();

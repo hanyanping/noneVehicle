@@ -5,7 +5,9 @@ import childComponent from '@/components/childComponent'
 import parentTwo from '@/components/parentTwo'
 import childTwo from '@/components/childTwo'
 import personalDeclaration from '@/views/personalDeclaration'
-import guild from '@/views/guild'
+import guild from '@/views/guild'     //  申报
+import declareSuccess from '@/views/declareSuccess'     //  申报成功页面
+import regList from '@/views/RegList'     //  一览表
 import companyDeclar from '@/views/companyDeclar'
 import historyList from '@/views/historyList'
 import listDetail from '@/views/listDetail'
@@ -29,6 +31,16 @@ export default new Router({
       path: '/guild',
       name: 'guild',
       component: guild
+    },
+    {
+      path: '/regList',
+      name: 'regList',
+      component: regList
+    },
+    {
+      path: '/declareSuccess',
+      name: 'declareSuccess',
+      component: declareSuccess,
     },
     {
       path: '/companyDeclar',

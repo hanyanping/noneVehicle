@@ -1,11 +1,14 @@
+/**
+* 申报成功页面
+*/
 <template>
-  <div id="app">
-    <router-view/>
+  <div>
+    提交成功
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+
 }
 </script>
