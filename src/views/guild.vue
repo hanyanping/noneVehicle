@@ -63,31 +63,30 @@
     <div class="banner">
       <img class='guildBanner' src="../assets/images/banner.png">
     </div>
-    <div id="qrcode"></div>
     <div class="jumpBox">
-      <div class="item clear" @click="goPerson">
+      <div class="item clear" >
         <img class="orderIcon" src="../assets/images/geren.png">
         <span>个人申报</span>
-        <div class=" fr" >
+        <div class="fr" @click="goPerson">
           <img class="goOrder" src="../assets/images/jiantou.png">
         </div>
       </div>
-      <div class="item clear" @click="goDanwei">
-        <img class="orderIcon" src="../assets/images/geren.png">
-        <span>单位预录入</span>
-        <div class=" fr" >
-          <img class="goOrder" src="../assets/images/jiantou.png">
+      <div class="item clear" >
+              <img class="orderIcon" src="../assets/images/danwei.png">
+              <span>单位预录入</span>
+          <div class="fr" >
+              <img class="goOrder" @click.stop="goDanwei" src="../assets/images/jiantou.png">
+          </div>
+      </div>
+      <div class="item clear" >
+              <img class="orderIcon" src="../assets/images/jilu.png">
+              <span>历史申请记录</span>
+        <div class=" fr" @click.stop="goHistory">
+          <img class="goOrder"  src="../assets/images/jiantou.png">
         </div>
       </div>
-      <div class="item clear" @click="goHistory">
-        <img class="orderIcon" src="../assets/images/geren.png">
-        <span>历史申请记录</span>
-        <div class=" fr" >
-          <img class="goOrder" src="../assets/images/jiantou.png">
-        </div>
-      </div>
-      <div v-if="userType != 1" class="item clear" @click="goHistory">
-        <img class="orderIcon" src="../assets/images/geren.png">
+      <div v-show="userType == 2" class="item clear">
+        <img class="orderIcon" src="../assets/images/sao.png">
         <span>扫描二维码</span>
         <div class=" fr" >
           <img class="goOrder" src="../assets/images/jiantou.png">
@@ -124,10 +123,12 @@ export default {
     return{
       openSimple: true,
       userType: null,
+        phone: ''
     };
   },
   created() {
     document.getElementsByTagName('title')[0].innerHTML = '过渡期电动自行车';
+    this.phone =  localStorage.getItem('phone');
   },
   mounted() {
     //  获取用户类型
@@ -137,6 +138,7 @@ export default {
     getUserType() {
       axios.post(this.ajaxUrl + 'vehicle/validate', {
         phone: 15901456326
+        //   phone: this.phone
       })
         .then(response => {
           console.log(response);
@@ -156,6 +158,7 @@ export default {
         })
     },
     goPerson() {
+        console.log(3333)
       this.$router.push({'path':'/personalDeclaration'})
     },
     goDanwei() {

@@ -1,14 +1,54 @@
 /**
 * 申报成功页面
 */
+<style rel="stylesheet/scss" lang="scss" scoped>
+    $baseFontSize:75;
+    .declarSuccess{
+        height: 100vh;
+        text-align: center;
+        margin: 15vh auto;
+        img{
+            height:90px;
+            width: 90px;
+        }
+        p{
+            margin: 20px 0;
+            color: #232323;
+            font-size: 16px;
+        }
+        .gobackGuild{
+            width: 140px;
+            height: 40px;
+            color: #fff;
+            background: #096FD4;
+            line-height: 40px;
+            text-align: center;
+            margin: 40px auto;
+            border-radius: 5px;
+        }
+    }
+</style>
 <template>
-  <div>
-    提交成功
+  <div class="declarSuccess">
+    <img src="../../assets/images/submit.png">
+      <p>提交成功</p>
+      <div class="gobackGuild" @click="goGuild">返回首页</div>
   </div>
 </template>
 
 <script>
 export default {
+    data(){
+        return{}
 
+    },
+    created(){
+        document.getElementsByTagName('title')[0].innerHTML = '申请成功';
+    },
+    methods:{
+        goGuild(){
+            this.$router.push({path:'/guild'})
+        }
+    }
 }
 </script>

@@ -11,7 +11,6 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 Vue.prototype.ajaxUrl = '/non_vehicle/';
 Vue.use(MintUI);
-Vue.use(MuseUI);
 /* eslint-disable no-new */
 function setupWebViewJavascriptBridge(callback) {
   if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }

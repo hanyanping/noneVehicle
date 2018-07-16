@@ -125,7 +125,7 @@ $baseFontSize:75;
 }
 
 .inputBox {
-  padding: 15px;
+  padding: 12px;
   background: #fff;
   border-bottom: 1px solid #f4f4f4;
 
@@ -161,8 +161,8 @@ $baseFontSize:75;
     height: 19px;
     width: 19px;
     position: absolute;
-    right: 9px;
-    top: 16px;
+    right: 5px;
+    top: 12px;
   }
 }
 
@@ -256,14 +256,9 @@ $baseFontSize:75;
         <label class="inputText">*</label>
         <span class="textDetail">证件名称</span>
         <img class='selectImg' src="../assets/images/down.png">
-        <select placeholder="请选择证件名称" v-model='cre_name' class="fr selectText">
+        <select placeholder="请选择证件名称"  v-model='cre_name' class="fr selectText selectText1">
           <option value="" style="color: #bbb;">请选择证件名称</option>
-          <option value="居民身份证">居民身份证</option>
-          <option value="军官证">军官证</option>
-          <option value="士兵证">士兵证</option>
-          <option value="军官离退休证">军官离退休证</option>
-          <option value="境外人员身份证">境外人员身份证</option>
-          <option value="外交人员身份证">外交人员身份证</option>
+            <option v-for="item in cred" :value="item.value" >{{item.label}}</option>
         </select>
       </div>
       <div class="inputBox clear">
@@ -275,14 +270,9 @@ $baseFontSize:75;
         <label class="inputText">*</label>
         <span class="textDetail">身份证地址</span>
         <img class='selectImg' src="../assets/images/down.png">
-        <select class="fr selectText" v-model="card_address">
-          <option value="" style="color: #bbb;">请选择身份证地址所在省份</option>
-          <option value="0">北京市</option>
-          <option value="1">河北省</option>
-          <option value="2">士兵证</option>
-          <option value="3">军官离退休证</option>
-          <option value="4">境外人员身份证</option>
-          <option value="5">外交人员身份证</option>
+        <select class="fr selectText2 selectText" v-model="card_address">
+          <option value="">请选择身份证地址所在省份</option>
+          <option v-for="item in province" :value="item.value" >{{item.label}}</option>
         </select>
       </div>
       <div class="inputBox clear">
@@ -294,14 +284,9 @@ $baseFontSize:75;
         <label class="inputText">*</label>
         <span class="textDetail">联系地址所在区</span>
         <img class='selectImg' src="../assets/images/down.png">
-        <select class="fr selectText" v-model="link_area">
+        <select class="fr selectText selectText3" v-model="link_area">
           <option value="" style="color: #bbb;">请选择联系地址行政区</option>
-          <option value="0">北京市</option>
-          <option value="1">河北省</option>
-          <option value="2">士兵证</option>
-          <option value="3">军官离退休证</option>
-          <option value="4">境外人员身份证</option>
-          <option value="5">外交人员身份证</option>
+            <option v-for="item in area" :value="item.value" >{{item.label}}</option>
         </select>
       </div>
       <div class="inputBox clear">
@@ -312,7 +297,7 @@ $baseFontSize:75;
       <div class="inputBox clear">
         <label class="inputText">*</label>
         <span class="textDetail">联系电话</span>
-        <input type="tel" class="textInput fr" v-model="link_phone" placeholder="请输入联系电话">
+        <input type="tel" class="textInput fr" maxlength="11"  v-model="link_phone" placeholder="请输入联系电话">
       </div>
       <div class="inputBox clear">
         <label class="inputText">*</label>
@@ -326,7 +311,7 @@ $baseFontSize:75;
         <img class='tanhaoImg' @click="ShowOne" src="../assets/images/tanhao.png">
       </div>
       <div class="inputBox clear selectBox">
-        <span class="textDetail">电动车整车编码（钢架号）</span>
+        <span class="textDetail">电动车整车编码(钢架号)</span>
         <input type="tel" v-model="pin" class="textInput fr tanInput" placeholder="请输入车架号">
         <img class='tanhaoImg' @click="ShowTwo" src="../assets/images/tanhao.png">
       </div>
@@ -338,9 +323,11 @@ $baseFontSize:75;
         <div class="upload" v-for="(item,index) in imgData" :key="index">
           <!-- 图片上传控件 -->
           <div class="load">
-            <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img">
-            <input type="file" v-if='isAndroid' capture="camera" @change="uploadIMG($event ,index)">
-            <input type="file" v-if='!isAndroid' @change="uploadIMG($event ,index)">
+              <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img">
+              <form enctype="multipart/form-data">
+                <input type="file"  name="image" v-if='isAndroid' capture="camera" @change="uploadIMG($event ,index)">
+                <input type="file"  name="image" v-if='!isAndroid' @change="uploadIMG($event ,index)">
+              </form>
           </div>
           <div class="phoneText">
             <span class="inputText">*</span>
@@ -425,16 +412,38 @@ export default {
       imgUrl: null,
       imgData: [{ 'imgUrl': '', 'img': '../../static/cardImg.png', 'text': '本人持身份证照片' }, { 'imgUrl': '', 'img': '../../static/car.png', 'text': '车辆照片' }, { 'imgUrl': '', 'img': '../../static/carCode.png', 'text': '电动车整车编码（钢架号）照片' }],
       isEnlargeImage: false,
-      isAndroid: true
+      isAndroid: true,
+        cred: '',
+        area:'',
+        province: ''
+
     };
   },
   watch: {
-    'cardCode': function() {
-      console.log(this.cardCode)
-      if ((this.cardCode !== '')) {
-        $(".selectText").css("color", '#232323')
-      }
-    }
+    'link_area': function() {
+        if ((this.link_area !== '')) {
+            $(".selectText3").css("color", '#232323')
+        }else{
+            $(".selectText3").css("color", '#bbb')
+        }
+        $(".selectText3").find("option").css("color","#232323")
+    },
+    'cre_name': function() {
+        if ((this.cre_name !== '')) {
+            $(".selectText1").css("color", '#232323')
+        }else{
+            $(".selectText1").css("color", '#bbb')
+        }
+        $(".selectText1").find("option").css("color","#232323")
+      },
+    'card_address': function() {
+          if ((this.card_address !== '')) {
+              $(".selectText2").css("color", '#232323')
+          }else{
+              $(".selectText2").css("color", '#bbb')
+          }
+        $(".selectText2").find("option").css("color","#232323")
+      },
   },
   created() {
     document.getElementsByTagName('title')[0].innerHTML = '个人申报';
@@ -451,6 +460,10 @@ export default {
   },
   mounted() {
     this.getArea();
+    this.getProvince('province');
+    this.getProvince('area');
+    this.getProvince('cred');
+      $(".selectText").css("color", '#bbb')
   },
   methods: {
     //  获取省会或者区域
@@ -465,6 +478,23 @@ export default {
           console.log(err);
         })
     },
+      getProvince(type) {
+          axios.post(this.ajaxUrl + '/vehicle/dict', {
+              type: type
+          })
+          .then(response => {
+              if(type == 'province'){
+                  this.province = response.data.list;
+              }else if(type == 'area'){
+                  this.area = response.data.list;
+              }else if(type == 'cred'){
+                  this.cred = response.data.list;
+              }
+          })
+          .catch(err => {
+              console.log(err);
+          })
+      },
     sureOne() {
       this.isShowOne = false;
     },
@@ -496,62 +526,29 @@ export default {
       let self = this;
       //判断支不支持FileReader
       if (!file || !window.FileReader) return;
-      if (/^image/.test(file.type)) {
-        //创建一个reader
-        let reader = new FileReader();
-        //将图片转成base64格式
-        reader.readAsDataURL(file);
-        //读取成功后的回调
-        reader.onloadend = function() {
-          let result = this.result;
-          let img = new Image();
-          img.src = result;
-          console.log("********未压缩前的图片大小********");
-          console.log(result.length);
-          img.onload = function() {
-            let data = self.compress(img);
-            self.imgData[num].imgUrl = result;
-            if (num == 0) {
-              self.card_pic = result;
-            } else if (num == 1) {
-              self.car_pic = result;
-            } else if (num == 2) {
-              self.car_pin_pic = result;
-            }
-            console.log(self.imgData)
-            // self.imgUrl = result;
-            let blob = self.dataURItoBlob(data);
-            console.log("*******base64转blob对象******");
-            console.log(blob);
-            var formData = new FormData();
-            formData.append("file", blob);
-            console.log("********将blob对象转成formData对象********");
-            console.log(formData.get("file"));
-            let config = {
-              headers: { "Content-Type": "multipart/form-data" }
-            };
-            return;
-            // 发送请求;
-            axios.post(self.ajaxUrl + "/vehicle/uploadImage", formData, config)
-              .then(response => {
-                console.log(response);
-                self.imgData[num].imgUrl = result.url;
-                if (num == 0) {
-                  self.card_pic = result.url;
-                } else if (num == 1) {
-                  self.car_pic = result.url;
-                } else if (num == 2) {
-                  self.car_pin_pic = result.url;
-                }
-              }, err => {
-                console.log(err);
-              })
-              .catch((error) => {
-                console.log(error)
-              })
-          };
+        var formData = new FormData();
+        formData.append("image", file);
+        let config = {
+            headers: { "Content-Type": "multipart/form-data" }
         };
-      }
+        // 发送请求;
+        axios.post(self.ajaxUrl + "vehicle/uploadImage", formData, config)
+            .then(response => {
+                console.log(response);
+                self.imgData[num].imgUrl = response.data.url;
+                if (num == 0) {
+                    self.card_pic = response.data.url;
+                } else if (num == 1) {
+                    self.car_pic = response.data.url;
+                } else if (num == 2) {
+                    self.car_pin_pic = response.data.url;
+                }
+            }, err => {
+                console.log(err);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     },
     // 压缩图片
     compress(img) {

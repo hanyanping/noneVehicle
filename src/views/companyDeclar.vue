@@ -366,10 +366,6 @@ $baseFontSize:75;
             <span class="inputText">*</span>
             <span class="text">{{item.text}}</span>
           </div>
-          <!-- 图片预览弹框 -->
-          <!--<el-dialog :visible.sync="isEnlargeImage" size="large"  :append-to-body="true" top="8%" width="60%">-->
-          <!--<img @click="isEnlargeImage = false" style="width:100%;" :src="imgUrl">-->
-          <!--</el-dialog>-->
         </div>
       </div>
       <div class="submitBox">
@@ -386,8 +382,8 @@ $baseFontSize:75;
           <img class='selectImg' src="../assets/images/select.png">
           <span>以上内容已看过，同意并提交</span>
         </div>
-        <div class="sureBox">
-          <span class="sure" @click="sure">确认</span>
+        <div class="sureBox" @click.stop="sureBox">
+          <span class="sure" >确认</span>
         </div>
       </div>
     </div>
@@ -397,7 +393,7 @@ $baseFontSize:75;
           如车辆为多种颜色，则填写其中面积最大的三种颜色，顺序为"从前至后"或"从上至"
         </p>
         <div class="sureBox">
-          <span class="sure" @click="sureOne">确认</span>
+          <span class="sure" @click.stop="sureOne">确认</span>
         </div>
       </div>
     </div>
@@ -406,8 +402,8 @@ $baseFontSize:75;
         <p class="chengnuoText">
           如车辆无车架号，车主本人须到我市指定发放点现场查验车辆进行申报
         </p>
-        <div class="sureBox">
-          <span class="sure" @click="sureTwo">确认</span>
+        <div class="sureBox" @click.stop="sureTwo">
+          <span class="sure" >确认</span>
         </div>
       </div>
     </div>
@@ -462,8 +458,7 @@ export default {
     }
   },
   created() {
-    console.log(444)
-    document.getElementsByTagName('title')[0].innerHTML = '个人申报';
+    document.getElementsByTagName('title')[0].innerHTML = '单位申报';
     console.log(this.cardCode)
     var u = navigator.userAgent;
     var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
@@ -488,8 +483,9 @@ export default {
     ShowTwo() {
       this.isShowTwo = true;
     },
-    sure() {
+      sureBox() {
       this.isShow = false;
+      console.log(this.isShow)
     },
     uploadIMG(event, num) {
       console.log(num)
