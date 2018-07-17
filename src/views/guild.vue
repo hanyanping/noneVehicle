@@ -111,12 +111,14 @@
         @click="closeSimpleDialog">确认
       </mu-button>
     </mu-dialog> -->
+    <div id="qrcode">二维码位置</div>
   </div>
 </template>
 
 <script>
 import { Toast } from 'mint-ui';
 import axios from 'axios';
+import QRCode from 'qrcodejs2';
 export default {
   data(){
     return{
@@ -132,6 +134,15 @@ export default {
   mounted() {
     //  获取用户类型
     this.getUserType();
+
+    var qrcode = new QRCode("qrcode", {
+        text: "http://jindo.dev.naver.com/collie",
+        width: 128,
+        height: 128,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
   },
   methods:{
     getUserType() {
