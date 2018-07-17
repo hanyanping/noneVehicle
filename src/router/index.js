@@ -8,6 +8,7 @@ import personalDeclaration from '@/views/personalDeclaration'
 import guild from '@/views/guild'     //  申报
 import declareSuccess from '@/views/declareSuccess'     //  申报成功页面
 import regList from '@/views/RegList'     //  一览表
+import pass from '@/views/pass'     //申请成功
 import companyDeclar from '@/views/companyDeclar'
 import historyList from '@/views/historyList'
 import listDetail from '@/views/listDetail'
@@ -21,12 +22,12 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
-
     {
       path: '/personalDeclaration',
       name: 'personalDeclaration',
       component: personalDeclaration
     },
+
     {
       path: '/guild',
       name: 'guild',
@@ -46,6 +47,11 @@ export default new Router({
       path: '/companyDeclar',
       name: 'companyDeclar',
       component: companyDeclar
+    },
+    {
+      path: '/pass',
+      name: 'pass',
+      component: pass
     },
     {
       path: '/historyList',

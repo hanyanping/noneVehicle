@@ -5,20 +5,7 @@
     font-size: 28rem/$baseFontSize;
   }
 
-  .submitBox{
-    background: #fff;
-    padding: 30px;
-    .submit{
-      height:40px;
-      width: 120px;
-      line-height: 40px;
-      border-radius: 10px;
-      background: #26a2ff;
-      color: #fff;
-      text-align: center;
-      margin: 0px auto;
-    }
-  }
+
 
   .textBox{
     color: #666;
@@ -208,12 +195,25 @@
     input{
       border: 1px solid #f4f4f4;
       padding: 16px;
+      width: 80%;
+      border-radius:6px;
     }
   }
-  #bcid {
-    background:#0F0;
-    height:480px;
-    width:360px;
+  .submitBox{
+    background: #fff;
+    padding: 30px;
+    text-align: center;
+    .submit{
+      display: inline-block;
+      height:40px;
+      width: 120px;
+      line-height: 40px;
+      border-radius: 10px;
+      background: #26a2ff;
+      color: #fff;
+      text-align: center;
+      margin: 0px auto;
+    }
   }
 </style>
 <template>
@@ -387,34 +387,55 @@
         <span class="text">领取人信息</span>
     </div>
     <div>
-         <div class="inputBox flexAround">
-            <div class='selctOwn'>
-                <img  class='yuanImg' @click='select' v-if='isSelect' src='../assets/images/selectyuan.png'>
-                <img class='yuanImg' @click='select' v-if='!isSelect' src='../assets/images/yuan.png'>
-                <span class='yuanText'>本人领取</span></div>
-            <div class='selctOwn'>
-                <img class='yuanImg' @click='selectOne' v-if='isSelectOne' src='../assets/images/selectyuan.png'>
-                <img class='yuanImg' @click='selectOne' v-if='!isSelectOne' src='../assets/images/yuan.png'>
-                <span class='yuanText'>他人领取</span>
-            </div>
+      <div v-if="applyType == 1">
+        <div class="inputBox flexAround" >
+          <div class='selctOwn'>
+            <img  class='yuanImg' @click='select' v-if='isSelect' src='../assets/images/selectyuan.png'>
+            <img class='yuanImg' @click='select' v-if='!isSelect' src='../assets/images/yuan.png'>
+            <span class='yuanText'>本人领取</span></div>
+          <div class='selctOwn'>
+            <img class='yuanImg' @click='selectOne' v-if='isSelectOne' src='../assets/images/selectyuan.png'>
+            <img class='yuanImg' @click='selectOne' v-if='!isSelectOne' src='../assets/images/yuan.png'>
+            <span class='yuanText'>他人领取</span>
+          </div>
         </div>
-        <div style='background: #fff;width:100%;text-align: center;' v-if='isSelectOne'>
-             <div class="upload" style='left:35%;margin-bottom:10px;'>
-                <!-- 图片展示 -->
-                <div class="cha" v-show="imgUrl">
-                    <img :src="imgUrl">
-                </div>
-                <!-- 图片上传控件 -->
-                <div class="load" v-show="imgUrl == ''">
-                    <img class='loadImg' src='../assets/images/takephone.png' style='width:104px;height:104px;'>
-                    <input type="file"  v-if='isAndroid' capture="camera" @change="uploadIMG($event)">
-                    <input type="file"  v-if='!isAndroid'  @change="uploadIMG($event)">
-                </div>
+        <div style='background: #fff;width:100%;text-align: center;padding: 10px;' v-if='isSelectOne'>
+          <div class="upload" style='left:35%;margin-bottom:10px;'>
+            <!-- 图片展示 -->
+            <div class="cha" v-show="imgUrl">
+              <img :src="imgUrl">
             </div>
-            <div class="phoneText" >
-                    <span class="text">代领人个人照片</span>
+            <!-- 图片上传控件 -->
+            <div class="load" v-show="imgUrl == ''">
+              <img class='loadImg' src='../assets/images/takephone.png' style='width:104px;height:104px;'>
+              <input type="file"  v-if='isAndroid' capture="camera" @change="uploadIMG($event)">
+              <input type="file"  v-if='!isAndroid'  @change="uploadIMG($event)">
             </div>
+          </div>
+          <div class="phoneText" >
+            <span class="text">代领人个人照片</span>
+          </div>
         </div>
+      </div>
+      <div v-else>
+        <div style='background: #fff;width:100%;text-align: center;padding: 10px;' v-if='isSelectOne'>
+          <div class="upload" style='left:35%;margin-bottom:10px;'>
+            <!-- 图片展示 -->
+            <div class="cha" v-show="imgUrl">
+              <img :src="imgUrl">
+            </div>
+            <!-- 图片上传控件 -->
+            <div class="load" v-show="imgUrl == ''">
+              <img class='loadImg' src='../assets/images/takephone.png' style='width:104px;height:104px;'>
+              <input type="file"  v-if='isAndroid' capture="camera" @change="uploadIMG($event)">
+              <input type="file"  v-if='!isAndroid'  @change="uploadIMG($event)">
+            </div>
+          </div>
+          <div class="phoneText" >
+            <span class="text">单位及经办人身份证明照片</span>
+          </div>
+        </div>
+      </div>
         <div class="textBox">
           <span class="line">|</span>
           <span class="text">现场审核结果</span>
@@ -434,6 +455,8 @@
         <div class='codeInput'>
           <input type='text' placeholder="请输入临时编号" v-model='code'/>
         </div>
+      <div class="submitBox">
+        <span class="submit" @click="surePass">确定</span></div>
     </div>
 
   </div>
@@ -523,7 +546,7 @@
         this.isAndroid = false;
       }
       this.applyNo = this.$route.query.applyNo;
-      this.applyType = this.$route.query.applyType;
+      this.applyType = '1';
       this.applyStatus = this.$route.query.applyStatus;
       console.log(this.applyStatus)
       this.getData()
@@ -569,7 +592,6 @@
             })
         },
           uploadIMG(event) {
-            console.log(num)
             let files  = event.target.files || event.dataTransfer.files;
             if (!files.length) return;
             this.picavalue = files[0];
@@ -587,55 +609,23 @@
         let self = this;
         //判断支不支持FileReader
         if (!file || !window.FileReader) return;
-        if (/^image/.test(file.type)) {
-          //创建一个reader
-          let reader = new FileReader();
-          //将图片转成base64格式
-          reader.readAsDataURL(file);
-          //读取成功后的回调
-          reader.onloadend = function() {
-            let result = this.result;
-            let img = new Image();
-            img.src = result;
-            console.log("********未压缩前的图片大小********");
-            console.log(result.length);
-            img.onload = function() {
-              let data = self.compress(img);
-              self.imgUrl = result;
-              console.log(self.imgData)
-              // self.imgUrl = result;
-              let blob = self.dataURItoBlob(data);
-              console.log("*******base64转blob对象******");
-              console.log(blob);
-return;
-              var formData = new FormData();
-              formData.append("file", blob);
-              console.log("********将blob对象转成formData对象********");
-              console.log(formData.get("file"));
-              let config = {
-                headers: { "Content-Type": "multipart/form-data" }
-              };
-              // 发送请求;
-              axios.post(that.ajaxUrl+"/vehicle/uploadImage" , formData, config)
-                .then(response => {
-                  console.log(response);
-                  self.imgData[num].imgUrl = result.url;
-                  if(num == 0){
-                    this.card_pic = result.url;
-                  }else if(num == 1){
-                    this.car_pic = result.url;
-                  }else if(num == 2){
-                    this.car_pin_pic = result.url;
-                  }
-                }, err => {
-                  console.log(err);
-                })
-                .catch((error) => {
-                  console.log(error)
-                })
-            };
-          };
-        }
+        var formData = new FormData();
+        formData.append("image", file);
+        let config = {
+          headers: { "Content-Type": "multipart/form-data" }
+        };
+        // 发送请求;
+        axios.post(self.ajaxUrl + "vehicle/uploadImage", formData, config)
+          .then(response => {
+            console.log(response);
+            self.imgUrl = response.data.url;
+            self.approve_url = response.data.url;
+          }, err => {
+            console.log(err);
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       },
       // 压缩图片
       compress(img) {
@@ -674,6 +664,34 @@ return;
         return new Blob([ia], { type: mimeString });
         console.log(444)
       },
+      surePass(){
+        if(this.parantValue == ''){
+          Toast('请选择预约区域')
+        }else if(this.address == ''){
+          Toast('请选择预约机构')
+        }else if(this.pickerValueTwo == ''){
+          Toast('请选择预约时间')
+        }else{
+          var data = {
+            apply_no: this.apply_no,
+            approve_url: this.approve_url,
+            approve_result: this.approve_result,
+            apply_car_no: this.apply_car_no,
+            approve_name: this.user_id
+          }
+          axios.post(this.ajaxUrl+"//vehicle/checkInfo" , data)
+            .then(response => {
+              if(response.data.result.rescode == 200){
+                this.$router.push({path:'/pass'})//跳到申请成功页面
+              }
+            }, err => {
+              console.log(err);
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+        }
+      }
     }
   };
 

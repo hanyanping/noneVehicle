@@ -2,7 +2,6 @@
   $baseFontSize:75;
   .banner {
     width: 100%;
-    height: 443rem/$baseFontSize;
     .guildBanner {
       height: 100%;
       width: 100%;
@@ -64,24 +63,24 @@
       <img class='guildBanner' src="../assets/images/banner.png">
     </div>
     <div class="jumpBox">
-      <div class="item clear" >
+      <div class="item clear" @click="goPerson" >
         <img class="orderIcon" src="../assets/images/geren.png">
         <span>个人申报</span>
-        <div class="fr" @click="goPerson">
+        <div class="fr" >
           <img class="goOrder" src="../assets/images/jiantou.png">
         </div>
       </div>
-      <div class="item clear" >
+      <div class="item clear" @click.stop="goDanwei">
               <img class="orderIcon" src="../assets/images/danwei.png">
               <span>单位预录入</span>
           <div class="fr" >
-              <img class="goOrder" @click.stop="goDanwei" src="../assets/images/jiantou.png">
+              <img class="goOrder"  src="../assets/images/jiantou.png">
           </div>
       </div>
-      <div class="item clear" >
+      <div class="item clear" @click.stop="goHistory">
               <img class="orderIcon" src="../assets/images/jilu.png">
               <span>历史申请记录</span>
-        <div class=" fr" @click.stop="goHistory">
+        <div class=" fr" >
           <img class="goOrder"  src="../assets/images/jiantou.png">
         </div>
       </div>

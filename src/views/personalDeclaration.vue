@@ -297,7 +297,7 @@ $baseFontSize:75;
       <div class="inputBox clear">
         <label class="inputText">*</label>
         <span class="textDetail">联系电话</span>
-        <input type="tel" class="textInput fr" maxlength="11"  v-model="link_phone" placeholder="请输入联系电话">
+        <input type="tel" class="textInput fr" maxlength="11"  readonly="readonly" v-model="link_phone">
       </div>
       <div class="inputBox clear">
         <label class="inputText">*</label>
@@ -333,10 +333,6 @@ $baseFontSize:75;
             <span class="inputText">*</span>
             <span class="text">{{item.text}}</span>
           </div>
-          <!-- 图片预览弹框 -->
-          <!--<el-dialog :visible.sync="isEnlargeImage" size="large"  :append-to-body="true" top="8%" width="60%">-->
-          <!--<img @click="isEnlargeImage = false" style="width:100%;" :src="imgUrl">-->
-          <!--</el-dialog>-->
         </div>
       </div>
       <div class="submitBox">
@@ -415,8 +411,8 @@ export default {
       isAndroid: true,
         cred: '',
         area:'',
-        province: ''
-
+        province: '',
+        user_id: ''
     };
   },
   watch: {
@@ -457,6 +453,10 @@ export default {
     if (isiOS) {
       this.isAndroid = false;
     }
+    this.link_phone = localStorage.getItem('phone');
+    this.user_id = localStorage.setItem('userId')
+    this.link_phone = '13444423233';
+    this.user_id = '12'
   },
   mounted() {
     this.getArea();
@@ -472,7 +472,7 @@ export default {
         parentId: id ? id : ''
       })
         .then(response => {
-          console.log(response);
+          this.area = response.data.list
         })
         .catch(err => {
           console.log(err);
@@ -650,6 +650,7 @@ export default {
         return;
       }
       var data = {
+        "user_id": this.user_id,
         "name": this.name,
         "cre_name": this.cre_name,
         "cre_code": this.cre_code,

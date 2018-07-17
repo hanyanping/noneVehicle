@@ -434,16 +434,6 @@
     },
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '个人申报';
-      console.log(this.cardCode)
-      var u = navigator.userAgent;
-      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-      if(isAndroid){
-        this.isAndroid = true;
-      }
-      if(isiOS){
-        this.isAndroid = false;
-      }
       this.applyNo = this.$route.query.applyNo;
       this.applyType = this.$route.query.applyType;
       this.applyStatus = this.$route.query.applyStatus;
