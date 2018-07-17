@@ -277,47 +277,47 @@
       <div class="inputBox clear">
         <span class="textDetail" v-if='applyStatus != 0'>所有人</span>
         <span class="textDetail" v-else>申领人</span>
-        <span class="textInput">{{department.name}}</span>
+        <span class="textInput">{{person.name}}</span>
       </div>
       <div class="inputBox clear selectBox">
         <span class="textDetail">证件名称:</span>
-        <span class="textInput">{{department.cre_name}}</span>
+        <span class="textInput" v-if='person.cre_name == 1'>身份证</span>
       </div>
       <div class="inputBox clear">
         <span class="textDetail">证件号码:</span>
-        <span class="textInput">{{department.cre_code}}</span>
+        <span class="textInput">{{person.cre_code}}</span>
       </div>
       <div class="inputBox clear selectBox">
         <span class="textDetail">住所地址所在区:</span>
-       <span class="textInput">{{department.live_area}}</span>
+       <span class="textInput">{{person.card_address}}</span>
       </div>
       <div class="inputBox clear">
         <span class="textDetail">住所地址:</span>
-        <span class="textInput">{{department.live_address}}</span>
+        <span class="textInput">{{person.card_detail_address}}</span>
       </div>
       <div class="inputBox clear selectBox">
         <span class="textDetail">联系地址所在区:</span>
-        <span class="textInput">{{department.proxy_area}}</span>
+        <span class="textInput">{{person.link_area}}</span>
       </div>
       <div class="inputBox clear">
         <span class="textDetail">联系地址:</span>
-        <span class="textInput">{{department.proxy_address}}</span>
+        <span class="textInput">{{person.card_detail_address}}</span>
       </div>
       <div class="inputBox clear">
         <span class="textDetail">联系电话:</span>
-        <span class="textInput">{{department.proxy_phone}}</span>
+        <span class="textInput">{{person.link_phone}}</span>
       </div>
       <div class="inputBox clear">
         <span class="textDetail">品牌型号:</span>
-        <span class="textInput">{{department.brand_model}}</span>
+        <span class="textInput">{{person.brand_model}}</span>
       </div>
       <div class="inputBox clear selectBox">
         <span class="textDetail">车身颜色:</span>
-        <span class="textInput">{{department.color}}</span>
+        <span class="textInput">{{person.color}}</span>
       </div>
       <div class="inputBox clear selectBox">
         <span class="textDetail">车辆识别代码：</span>
-        <span class="textInput">{{department.pin}}</span>
+        <span class="textInput">{{person.pin}}</span>
       </div>
       <div class="textBox">
         <span class="line">|</span>
@@ -342,84 +342,40 @@
     <div v-if='applyStatus == 3'>
        <div class="inputBox clear">
         <span class="textDetail">预约办理地点：</span>
-        <span class="textInput">房价过快疯狂靠靠靠考虑考虑考虑</span>
+        <span class="textInput">{{appointment.address}}</span>
       </div>
       <div class="inputBox clear">
         <span class="textDetail">预约办理时间：</span>
-        <span class="textInput">2018-32-4</span>
+        <span class="textInput">{{appointment.time}}</span>
       </div>
     </div>
      <div class="textBox" v-if='applyStatus == 4' style='text-align: center;'>
-        <span class="text">临时编号： kdjkdkdd</span>
+        <span class="text">临时编号： {{approve.applyNo}}</span>
     </div>
      <div class="textBox" v-if='applyStatus == 2'>
         <span class="line">|</span>
         <span class="text">审核结果</span>
     </div>
      <div class="inputBox clear" v-if='applyStatus == 2'>
-        <span class="textInput"  style='color: #232323;'>因身份信息填写有误，审核不通过</span>
+        <span class="textInput"  style='color: #232323;'>{{approve.approveResult}}</span>
       </div>
   </div>
 </template>
 <script>
   import axios from 'axios'
+  import moment from 'moment/moment';
   export default {
     props: ["uploadUrl"],
     data() {
       return {
         apply_no: '',
         imgDataOne:[{'imgUrl':'../../static/car.png','title':'经办人持本人与单位身份证明原件照片'},{'imgUrl':'../../static/car.png','title':'车辆照片'},{'imgUrl':'../../static/car.png','title':'车辆识别代码照片'}],
-        imgData:[{'imgUrl':'../../static/car.png','title':'本人持身份证明照片'},{'imgUrl':'../../static/car.png','title':'车辆照片'},{'imgUrl':'../../static/car.png','title':'车辆识别代码照片'}],
-        person: {
-        "brand_model": "15940123656",
-        "color": "15940123656",
-        "pin": "15940123656",
-        "card_pic": "15940123656",
-        "car_pic": "15940123656",
-        "car_pin_pic": "15940123656"
-        },
-        approve: {
-            "id": 1,
-            "applyNo": "01d19b0bc64b4fef993b0cd2a47b40fa",
-            "approveType": "2",
-            "approveName": "59898987887",
-            "approveResult": "59898987887",
-            "approveTime": 1530773056000
-        },
-        appointment: {
-
-            "apply_no": "01d19b0bc64b4fef993b0cd2a47b40fa",
-            "address": "59898987887",
-            "time": "59898987887"
-        },
-        department: {
-        "name": "15940123656",
-        "cre_name": "15940123656",
-        "cre_code": "15940123656",
-        "live_area": "15940123656",
-        "live_address": "15940123656",
-        "live_phone": "15940123656",
-        "proxy_name": "15940123656",
-        "proxy_cre_name": "15940123656",
-        "proxy_area": "15940123656",
-        "proxy_address": "15940123656",
-        "proxy_phone": "15940123656",
-        "brand_model": "15940123656",
-        "color": "15940123656",
-        "pin": "15940123656",
-        "card_pic": "15940123656",
-        "car_pic": "15940123656",
-        "car_pin_pic": "15940123656"
-         },
-        base: {
-            "applyNo": "01d19b0bc64b4fef993b0cd2a47b40fa",
-            "applyType": "1",
-            "applyTime": 1530684639000,
-            "applyCarNo": "京1234567",
-            "applyStatus": "4",
-            "proxyName": "wwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-            "userId": "10sssssssssssss"
-        },
+        imgData:[{'title':'本人持身份证明照片'},{'title':'车辆照片'},{'title':'车辆识别代码照片'}],
+        person: {},
+        approve: {},
+        appointment: {},
+        department: {},
+        base: {},
        applyType: '',
        applyStatus: ''
       };
@@ -437,8 +393,9 @@
       this.applyNo = this.$route.query.applyNo;
       this.applyType = this.$route.query.applyType;
       this.applyStatus = this.$route.query.applyStatus;
-      console.log(this.applyStatus)
-      this.getData()
+    },
+    mounted() {
+       this.getData();
     },
     methods: {
          getData(){
@@ -448,6 +405,18 @@
              axios.post(this.ajaxUrl+"/vehicle/getUserInfo" , data)
              .then(response => {
                 console.log(response);
+                if(response.data.result.rescode == 200){
+                  this.base = response.data.base;
+                  this.person = response.data.person
+                  this.department = response.data.department;
+                  this.appointment = response.data.appointment;
+                  this.appointment.time = moment(this.appointment.time).format('YYYY-MM-DD')
+                  this.approve = response.data.approve;
+                  this.imgData[0].imgUrl =  response.data.person.card_pic;
+                   this.imgData[1].imgUrl =  response.data.person.car_pic
+                    this.imgData[2].imgUrl =  response.data.person.car_pin_pic;
+                    console.log(this.imgData)
+                }
                 }, err => {
                 console.log(err);
                 })

@@ -104,7 +104,7 @@
       <img class='selectImg' src="../assets/images/down.png">
       <select v-model='address' class="fr selectText1">
         <option value="">请选择预约办理机构</option>
-        <option v-for='item in childlist' :value="item.value">{{item.label}}</option>
+        <option v-for='item in childlist' :value="item.label">{{item.label}}</option>
       </select>
     </div>
     <div class="inputBox clear selectBox" @click="open('datePicker')">

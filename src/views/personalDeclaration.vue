@@ -258,7 +258,7 @@ $baseFontSize:75;
         <img class='selectImg' src="../assets/images/down.png">
         <select placeholder="请选择证件名称"  v-model='cre_name' class="fr selectText selectText1">
           <option value="" style="color: #bbb;">请选择证件名称</option>
-            <option v-for="item in cred" :value="item.value" >{{item.label}}</option>
+            <option v-for="item in cred" :value="item.label" >{{item.label}}</option>
         </select>
       </div>
       <div class="inputBox clear">
@@ -272,7 +272,7 @@ $baseFontSize:75;
         <img class='selectImg' src="../assets/images/down.png">
         <select class="fr selectText2 selectText" v-model="card_address">
           <option value="">请选择身份证地址所在省份</option>
-          <option v-for="item in province" :value="item.value" >{{item.label}}</option>
+          <option v-for="item in province" :value="item.label" >{{item.label}}</option>
         </select>
       </div>
       <div class="inputBox clear">
@@ -286,7 +286,7 @@ $baseFontSize:75;
         <img class='selectImg' src="../assets/images/down.png">
         <select class="fr selectText selectText3" v-model="link_area">
           <option value="" style="color: #bbb;">请选择联系地址行政区</option>
-            <option v-for="item in area" :value="item.value" >{{item.label}}</option>
+            <option v-for="item in area" :value="item.label" >{{item.label}}</option>
         </select>
       </div>
       <div class="inputBox clear">
@@ -454,7 +454,7 @@ export default {
       this.isAndroid = false;
     }
     this.link_phone = localStorage.getItem('phone');
-    this.user_id = localStorage.setItem('userId')
+    this.user_id = localStorage.getItem('userId')
     this.link_phone = '13444423233';
     this.user_id = '12'
   },
