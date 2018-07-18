@@ -7,6 +7,9 @@
         height: 100vh;
         text-align: center;
         margin: 15vh auto;
+        position: fixed;
+        left: 0;
+        right: 0;
         img{
             height:90px;
             width: 90px;

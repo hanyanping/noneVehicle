@@ -56,6 +56,55 @@
       margin: 0 auto;
     }
   }
+  .zhegaiceng {
+    background: rgba(0, 0, 0, 0.6);
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    .zhegaiContent {
+      background: #fff;
+      position: absolute;
+      width: 80%;
+      left: 0;
+      right: 0;
+      top: 2vh;
+      margin: 20vh auto;
+      padding: 20px 20px 5px;
+      border-radius: 10px;
+      .chengnuo {
+        color: #232323;
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+      .chengnuoText{
+        color: rgba(16, 16, 16, 1);
+        font-size: 14px;
+        text-indent: 1em;
+        line-height: 22px;
+      }
+      .popupLink{
+        font-size: 14px;
+        text-indent: 1em;
+        line-height: 22px;
+        color:#096FD4 ;
+        padding: 6px 0
+      }
+    }
+    .sureBox {
+      margin: 30px auto 20px;
+      text-align: center;
+      .sure {
+        background: #096FD4;
+        color: #fff;
+        padding: 12px 40px;
+        font-size: 15px;
+        border-radius: 6px;
+      }
+    }
+  }
 </style>
 <template>
   <div style="min-height: 100vh;background: #f4f4f4;">
@@ -92,39 +141,36 @@
         </div>
       </div>
     </div>
-    <!-- <mu-dialog dialog-class="dialog__warpper" title="提示" width="360" :open.sync="openSimple">
-      <div class="dialog__body">
-        在您办理过渡期电动自行车临时标识申领业务前，
-        请登录北京市工商行政管理局网站：http://www.hd315.gov.cn/,
-        查询您的电动自行车是否已列入《电动自行车生产企业与产品目录,
-        如您的电动自行车品牌型号已在公布的目录范围内，
-        请携带相关手续到全市任意非机动车登记站（详见附件）
-        办理正式登记注册业务；如您的电动自行车品牌型号未列入《电动自行车生产企业与产品目录》，
-        则需按照要求办理过渡期电动自行车临时标识申领业务。
+    <div class="zhegaiceng" v-if="openSimple">
+      <div class="zhegaiContent">
+        <h1 class="chengnuo">本人承诺</h1>
+        <p class="chengnuoText">
+          在您办理过渡期电动自行车临时标识申领业务前，
+          请登录北京市工商行政管理局网站：http://www.hd315.gov.cn/,
+          查询您的电动自行车是否已列入《电动自行车生产企业与产品目录,
+          如您的电动自行车品牌型号已在公布的目录范围内，
+          请携带相关手续到全市任意非机动车登记站（详见附件）
+          办理正式登记注册业务；如您的电动自行车品牌型号未列入《电动自行车生产企业与产品目录》，
+          则需按照要求办理过渡期电动自行车临时标识申领业务。
+        </p>
+        <p class="popupLink" @click="handlegGoRegList"><核发电动自行车牌证非机动车登记站一览表></p>
+        <div class="sureBox">
+          <span class="sure"  @click="closeSimpleDialog">确认</span>
+        </div>
       </div>
-      <p class="popupLink" @click="handlegGoRegList">核发电动自行车牌证非机动车登记站一览表></p>
-      <mu-button
-        slot="actions"
-        flat
-        color="primary"
-        class="dialog__but"
-        @click="closeSimpleDialog">确认
-      </mu-button>
-    </mu-dialog> -->
-    
+    </div>
   </div>
 </template>
 
 <script>
 import { Toast } from 'mint-ui';
 import axios from 'axios';
-
 export default {
   data(){
     return{
       openSimple: true,
       userType: null,
-        phone: ''
+        phone: '',
     };
   },
   created() {
@@ -134,8 +180,6 @@ export default {
   mounted() {
     //  获取用户类型
     this.getUserType();
-
- 
   },
   methods:{
     getUserType() {

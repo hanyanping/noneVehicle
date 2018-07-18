@@ -82,6 +82,7 @@
     text-align: center;
     border-radius: 10px;
   }
+
 </style>
 <template>
   <div style="background: #fff;min-height: 100vh;">
@@ -141,7 +142,7 @@
           card_address: '',
           pickerValue: '',
           pickerValueTwo: '',
-          now: new Date(),
+          now:  new Date(new Date().getTime()+24*60*60*1000),
           parentId: '',
           parentlist: [],
           childlist:[],
@@ -250,6 +251,8 @@
                 console.log(response.data);
                 if(response.data.result.rescode == 200){
                  this.$router.push({path:'/subSucess',query:{apply_no:this.apply_no}})//跳到预约成功页面
+                }else{
+                  Toast(response.data.result.resdes)
                 }
               }, err => {
                 console.log(err);

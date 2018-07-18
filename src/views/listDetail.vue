@@ -130,7 +130,7 @@
       color: #232323;
       font-size: 15px;
       display: inline-block;
-      width: 110px;
+      width: 130px;
     }
     .textInput{
       padding-left: 10px;
@@ -216,15 +216,15 @@
       </div>
        <div class="inputBox clear">
         <span class="textDetail">单位联系电话:</span>
-        <span class="textInput">{{department.live_address}}</span>
+        <span class="textInput">{{department.live_phone}}</span>
       </div>
       <div class="inputBox clear">
         <span class="textDetail">经办人姓名:</span>
-        <span class="textInput">{{department.live_address}}</span>
+        <span class="textInput">{{department.proxy_name}}</span>
       </div>
       <div class="inputBox clear">
         <span class="textDetail">经办人证件名称:</span>
-        <span class="textInput">{{department.live_address}}</span>
+        <span class="textInput">{{department.proxy_cre_name}}</span>
       </div>
       <div class="inputBox clear selectBox">
         <span class="textDetail">经办人联系地址所在区:</span>
@@ -260,7 +260,7 @@
             <img :src="item.imgUrl">
           </div>
           <div class="phoneText">
-            <span class="inputText">*</span><span class="text">{{item.title}}</span>
+            <span class="text">{{item.title}}</span>
           </div>
         </div>
       </div>
@@ -270,18 +270,18 @@
         <span class="line">|</span>
         <span class="text">填写基本信息</span>
       </div>
-       <div class="inputBox clear"  v-if='applyStatus != 0'>
+       <div class="inputBox clear"  v-if='applyStatus != "待审核"'>
         <span class="textDetail">所有权</span>
         <span class="textInput">个人</span>
       </div>
       <div class="inputBox clear">
-        <span class="textDetail" v-if='applyStatus != 0'>所有人</span>
+        <span class="textDetail" v-if='applyStatus != "待审核"'>所有人</span>
         <span class="textDetail" v-else>申领人</span>
         <span class="textInput">{{person.name}}</span>
       </div>
       <div class="inputBox clear selectBox">
         <span class="textDetail">证件名称:</span>
-        <span class="textInput" v-if='person.cre_name == 1'>身份证</span>
+        <span class="textInput">{{person.cre_name}}</span>
       </div>
       <div class="inputBox clear">
         <span class="textDetail">证件号码:</span>
@@ -335,11 +335,11 @@
       </div>
 
     </div>
-    <div class="textBox" v-if='applyStatus == 3'>
+    <div class="textBox" v-if='applyStatus == "预约成功"'>
         <span class="line">|</span>
         <span class="text">预约信息</span>
     </div>
-    <div v-if='applyStatus == 3'>
+    <div v-if='applyStatus == "预约成功"'>
        <div class="inputBox clear">
         <span class="textDetail">预约办理地点：</span>
         <span class="textInput">{{appointment.address}}</span>
@@ -349,14 +349,14 @@
         <span class="textInput">{{appointment.time}}</span>
       </div>
     </div>
-     <div class="textBox" v-if='applyStatus == 4' style='text-align: center;'>
-        <span class="text">临时编号： {{approve.applyNo}}</span>
+     <div class="textBox" v-if='applyStatus == "已签发"' style='text-align: center;'>
+        <span class="text">临时编号： {{base.applyCarNo}}</span>
     </div>
-     <div class="textBox" v-if='applyStatus == 2'>
+     <div class="textBox" v-if='applyStatus == "审核不通过"'>
         <span class="line">|</span>
         <span class="text">审核结果</span>
     </div>
-     <div class="inputBox clear" v-if='applyStatus == 2'>
+     <div class="inputBox clear" v-if='applyStatus == "审核不通过"'>
         <span class="textInput"  style='color: #232323;'>{{approve.approveResult}}</span>
       </div>
   </div>
@@ -369,7 +369,7 @@
     data() {
       return {
         apply_no: '',
-        imgDataOne:[{'imgUrl':'../../static/car.png','title':'经办人持本人与单位身份证明原件照片'},{'imgUrl':'../../static/car.png','title':'车辆照片'},{'imgUrl':'../../static/car.png','title':'车辆识别代码照片'}],
+        imgDataOne:[{'title':'经办人持本人与单位身份证明原件照片'},{'title':'车辆照片'},{'title':'车辆识别代码照片'}],
         imgData:[{'title':'本人持身份证明照片'},{'title':'车辆照片'},{'title':'车辆识别代码照片'}],
         person: {},
         approve: {},
@@ -404,7 +404,6 @@
             }
              axios.post(this.ajaxUrl+"/vehicle/getUserInfo" , data)
              .then(response => {
-                console.log(response);
                 if(response.data.result.rescode == 200){
                   this.base = response.data.base;
                   this.person = response.data.person
@@ -412,10 +411,18 @@
                   this.appointment = response.data.appointment;
                   this.appointment.time = moment(this.appointment.time).format('YYYY-MM-DD')
                   this.approve = response.data.approve;
-                  this.imgData[0].imgUrl =  response.data.person.card_pic;
-                   this.imgData[1].imgUrl =  response.data.person.car_pic
+                  if(this.applyType == 1){
+                    this.imgData[0].imgUrl =  response.data.person.card_pic;
+                    this.imgData[1].imgUrl =  response.data.person.car_pic
                     this.imgData[2].imgUrl =  response.data.person.car_pin_pic;
+                  }else if(this.applyType == 2){
+                    this.imgDataOne[0].imgUrl =  response.data.department.card_pic;
+                    this.imgDataOne[1].imgUrl =  response.data.department.car_pic
+                    this.imgDataOne[2].imgUrl =  response.data.department.car_pin_pic;
+                  }
                     console.log(this.imgData)
+                }else{
+                  Toast(response.data.result.resdes)
                 }
                 }, err => {
                 console.log(err);

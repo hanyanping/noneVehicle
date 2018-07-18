@@ -488,8 +488,7 @@
       if (isiOS) {
         this.isAndroid = false;
       }
-      this.user_id = localStorage.setItem('userId')
-      this.user_id = '12'
+      this.user_id = localStorage.getItem('userId')
     },
     mounted() {
       this.getArea();

@@ -7,9 +7,12 @@
     height: 100vh;
     text-align: center;
     margin: 15vh auto;
+    position: fixed;
+    left: 0;
+    right: 0;
     img{
-      height:90px;
-      width: 90px;
+      height:73px;
+      width: 61px;
     }
     p{
       margin: 20px 0;
@@ -31,7 +34,7 @@
 <template>
   <div class="declarSuccess">
     <img src="../assets/images/passIcon.png">
-    <p>提交成功</p>
+    <p>审核成功</p>
     <div class="gobackGuild" @click="goGuild">返回首页</div>
   </div>
 </template>

@@ -42,6 +42,8 @@ router.beforeEach((to, from, next) => {
           if(response.isLogin == 'true'){
               var userId = response.userid;
               var phone = response.phoneNum;
+              phone = '13444423233';
+              userId = '12';
               localStorage.setItem('userId',userId);
               localStorage.setItem('phone',phone);
           }

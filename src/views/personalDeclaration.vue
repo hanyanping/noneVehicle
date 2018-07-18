@@ -455,8 +455,6 @@ export default {
     }
     this.link_phone = localStorage.getItem('phone');
     this.user_id = localStorage.getItem('userId')
-    this.link_phone = '13444423233';
-    this.user_id = '12'
   },
   mounted() {
     this.getArea();
@@ -538,6 +536,7 @@ export default {
                 self.imgData[num].imgUrl = response.data.url;
                 if (num == 0) {
                     self.card_pic = response.data.url;
+                    console.log(self.card_pic)
                 } else if (num == 1) {
                     self.car_pic = response.data.url;
                 } else if (num == 2) {

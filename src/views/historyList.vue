@@ -76,55 +76,57 @@ $baseFontSize:75;
 </style>
 <template>
   <div style="background: #f4f4f4;min-height:100vh;">
-    <mt-loadmore :bottom-method="loadBottom" bottomPullText="上拉加载更多" :auto-fill="false" ref="loadmore" :bottom-all-loaded="allLoaded">
+    <div class="scroll">
+    <mt-loadmore :bottom-method="loadBottom" bottomPullText="上拉加载更多" :auto-fill="false" ref="loadmore"
+                 :bottom-all-loaded="allLoaded">
       <div class="listBox" v-for="(item, index) in list" :key="index">
         <div class="flexBetween listTop">
-          <span>申请时间:{{item.applyTime}}</span>
-          <span v-if="item.applyStatus == 0" class="applyStatus origin">待审核</span>
-          <span v-if="item.applyStatus == 1" class="applyStatus green">待预约</span>
-          <span v-if="item.applyStatus == 3" class="applyStatus blue">预约成功</span>
-          <span v-if="item.applyStatus == 2" class="applyStatus nopass">未通过</span>
-          <span v-if="item.applyStatus == 5" class="applyStatus nopass">审核失败</span>
-          <span v-if="item.applyStatus == 4" class="already">已签发</span>
+          <span>申请时间 : {{item.applyTime}}</span>
+          <span v-if="item.status == '待审核'" class="applyStatus origin">待审核</span>
+          <span v-if="item.status == '待预约'" class="applyStatus green">待预约</span>
+          <span v-if="item.status == '预约成功'" class="applyStatus blue">预约成功</span>
+          <span v-if="item.status == '审核不通过'" class="applyStatus nopass">审核不通过</span>
+          <span v-if="item.status == '审核失败'" class="applyStatus nopass">审核失败</span>
+          <span v-if="item.status == '已签发'" class="already">已签发</span>
         </div>
-        <div class="listMiddle flexBetween" v-if="item.applyType == 1" @click='goDetail(item.applyNo,item.applyType,item.applyStatus)'>
+        <div class="listMiddle flexBetween" v-if="item.type == 1" @click='goDetail(item.applyNo,item.type,item.status)'>
           <div class="flexLeft">
             <img class='applayIcon godetail' src="../assets/images/geren.png">
             <div class='info'>
-              <p>所有权：
-                个人
+              <p>所有权：个人
               </p>
-              <p>所有人：</p>
+              <p>所有人：{{item.name}}</p>
               <p>证件号码：
                 <span>{{item.applyNo}}</span>
               </p>
             </div>
           </div>
           <div class="flexRight">
-            <span class="goSub" @click.stop='goSubscible(item.applyNo)' v-if="item.applyStatus == 1">立即预约</span>
-            <span class="goSub" @click.stop='goApply(item.applyNo,item.applyType)' v-if="item.applyStatus == 2 || item.applyStatus == 5 ">重新申请</span>
-            <img @click.stop='goSubcode(item.applyNo)' v-if="item.applyStatus ==3" style='height:30px;width:30px;' src='../assets/images/look.png'>
+            <span class="goSub" @click.stop='goSubscible(item.applyNo)' v-if="item.status == '待预约'">立即预约</span>
+            <span class="goSub" @click.stop='goApply(item.applyNo,item.type)' v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
+            <img @click.stop='goSubcode(item.applyNo)' v-if="item.status =='预约成功'" style='height:30px;width:30px;' src='../assets/images/look.png'>
             <img class='godetail' src="../assets/images/right.png">
           </div>
         </div>
-        <div class="listMiddle flexBetween" v-if="item.applyType == 2" @click='goDetail(item.applyNo,item.applyType,item.applyStatus)'>
+        <div class="listMiddle flexBetween" v-if="item.type == 2" @click='goDetail(item.applyNo,item.type,item.status)'>
           <div class="flexLeft">
             <img class='applayIcon' src="../assets/images/danwei.png">
             <div class='info'>
               <p>所有权：单位</p>
-              <p>所有人：</p>
+              <p>所有人：{{item.name}}</p>
               <p>证件号码：{{item.applyNo}}</p>
             </div>
           </div>
           <div class="flexRight">
-             <span class="goSub" @click.stop='goSubscible(item.applyNo)' v-if="item.applyStatus == 1">立即预约</span>
-            <span class="goSub" @click.stop='goApply(item.applyNo,item.applyType)' v-if="item.applyStatus == 2 || item.applyStatus == 5 ">重新申请</span>
-            <img @click.stop='goSubcode(item.applyNo)' v-if="item.applyStatus ==3" style='height:30px;width:30px;' src='../assets/images/look.png'>
+             <span class="goSub" @click.stop='goSubscible(item.applyNo)' v-if="item.status == '待预约'">立即预约</span>
+            <span class="goSub" @click.stop='goApply(item.applyNo,item.applyType)' v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
+            <img @click.stop='goSubcode(item.applyNo)' v-if="item.status =='预约成功'" style='height:30px;width:30px;' src='../assets/images/look.png'>
             <img class='godetail' src="../assets/images/right.png">
           </div>
         </div>
       </div>
     </mt-loadmore>
+    </div>
   </div>
 </template>
 
@@ -140,7 +142,7 @@ export default {
       list: [],
       pageSize: 10,
       pageNum: 1,
-      userId: '556',
+      userId: '',
       loadMore: true
     }
   },
@@ -151,7 +153,7 @@ export default {
   },
   methods: {
     goSubcode(applyNo) {
-      this.$router.push({ path: '/subSucess', query: { apply_no: applyNo } })
+      this.$router.push({ path: '/subSucess', query: { apply_no: applyNo }})
     },
     goApply(applyNo,applyType){
       if(applyType == 1){
@@ -170,7 +172,7 @@ export default {
       var data = {
         pageSize: this.pageSize,
         pageNum: this.pageNum,
-        userId: 12
+        userId: this.userId
       }
       axios.post(this.ajaxUrl + "vehicle/userList", data)
         .then(response => {
@@ -179,11 +181,11 @@ export default {
             if (response.data.list.length != 0) {
               var listdata = response.data.list;
               for (var i = 0; i < listdata.length; i++) {
-                listdata[i].applyTime = moment(listdata[i].applyTime).format('YYYY-MM-DD HH:mm:ss');
+                listdata[i].applyTime = moment(listdata[i].applyTime).format('YYYY年MM月DD日');
                 this.list.push(listdata[i])
               }
             }
-            if (listdata.length == 0 || listdata.length < 1) {
+            if (listdata.length == 0 || listdata.length < this.pageSize) {
               this.loadMore = false;
             }
           }
