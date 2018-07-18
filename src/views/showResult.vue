@@ -478,7 +478,7 @@
     props: ["uploadUrl"],
     data() {
       return {
-        img: '../../static/takephone.png',
+        img: '../../vehicle/static/takephone.png',
         ispass: true,
         ispassone: false,
         imgUrl: '',
@@ -486,7 +486,7 @@
         isSelect: true,
         isSelectOne: false,
         apply_no: '',
-        imgDataOne:[{'imgUrl':'../../static/car.png','title':'经办人持本人与单位身份证明原件照片'},{'imgUrl':'../../static/car.png','title':'车辆照片'},{'imgUrl':'../../static/car.png','title':'车辆识别代码照片'}],
+        imgDataOne:[{'imgUrl':'../../vehicle/static/car.png','title':'经办人持本人与单位身份证明原件照片'},{'imgUrl':'../../vehicle/static/car.png','title':'车辆照片'},{'imgUrl':'../../vehicle/static/car.png','title':'车辆识别代码照片'}],
         imgData:[{'title':'本人持身份证明照片'},{'title':'车辆照片'},{'title':'车辆识别代码照片'}],
         person: {},
         approve: {},
