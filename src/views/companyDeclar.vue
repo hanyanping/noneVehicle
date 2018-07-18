@@ -432,11 +432,11 @@
         provinceCode: '',
         picavalue: "",
         imgUrl: null,
-        imgData: [{'imgUrl': '', 'img': '../../vehicle/static/danwei.png', 'text': '经办人持本人与单位身份证明原件照片'}, {
+        imgData: [{'imgUrl': '', 'img': '../../static/danwei.png', 'text': '经办人持本人与单位身份证明原件照片'}, {
           'imgUrl': '',
-          'img': '../../vehicle/static/car.png',
+          'img': '../../static/car.png',
           'text': '车辆照片'
-        }, {'imgUrl': '', 'img': '../../vehicle/static/carCode.png', 'text': ' 电动车整车编码(钢架号)照片'}],
+        }, {'imgUrl': '', 'img': '../../static/carCode.png', 'text': ' 电动车整车编码(钢架号)照片'}],
         isEnlargeImage: false,
         isAndroid: true,
         user_id: ''

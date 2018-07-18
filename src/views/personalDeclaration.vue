@@ -406,7 +406,7 @@ export default {
       provinceCode: '',
       picavalue: "",
       imgUrl: null,
-      imgData: [{ 'imgUrl': '', 'img': '../../static/cardImg.png', 'text': '本人持身份证照片' }, { 'imgUrl': '', 'img': '../../static/car.png', 'text': '车辆照片' }, { 'imgUrl': '', 'img': '../../carCode.png', 'text': '电动车整车编码（钢架号）照片' }],
+      imgData: [{ 'imgUrl': '', 'img': '../../static/cardImg.png', 'text': '本人持身份证照片' }, { 'imgUrl': '', 'img': '../../static/car.png', 'text': '车辆照片' }, { 'imgUrl': '', 'img': '../../static/carCode.png', 'text': '电动车整车编码（钢架号）照片' }],
       isEnlargeImage: false,
       isAndroid: true,
         cred: '',
