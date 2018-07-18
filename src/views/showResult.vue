@@ -498,7 +498,7 @@
         approve_result: '',
         result: [],
         apply_car_no:'',
-        user_id: '12'
+        user_id: ''
 
       };
     },

@@ -28,6 +28,10 @@ function setupWebViewJavascriptBridge(callback) {
   setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
 };
 router.beforeEach((to, from, next) => {
+    // var phone = '13444423233';
+    // var userId = '12';
+    // localStorage.setItem('userId',userId);
+    // localStorage.setItem('phone',phone);
     setupWebViewJavascriptBridge(function(bridge) {
       if(isAndroid){
           bridge.init(function(message, responseCallback) {
@@ -42,8 +46,6 @@ router.beforeEach((to, from, next) => {
           if(response.isLogin == 'true'){
               var userId = response.userid;
               var phone = response.phoneNum;
-              phone = '13444423233';
-              userId = '12';
               localStorage.setItem('userId',userId);
               localStorage.setItem('phone',phone);
           }

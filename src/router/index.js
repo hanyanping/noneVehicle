@@ -29,7 +29,7 @@ export default new Router({
     },
 
     {
-      path: '/guild',
+      path: '/',
       name: 'guild',
       component: guild
     },
