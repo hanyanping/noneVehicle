@@ -97,7 +97,7 @@ $baseFontSize:75;
               </p>
               <p>所有人：{{item.name}}</p>
               <p>证件号码：
-                <span>{{item.applyNo}}</span>
+                <span>{{item.code}}</span>
               </p>
             </div>
           </div>

@@ -10,6 +10,7 @@ import MintUI from 'mint-ui'
 import '../static/reset.css'
 import '../static/flexible.debug.js'
 import '../static/flexible_css.debug.js'
+import 'viewerjs/dist/viewer.css'
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 Vue.prototype.ajaxUrl = '/non_vehicle/';

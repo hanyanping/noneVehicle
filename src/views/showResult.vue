@@ -310,7 +310,7 @@
         <span class="line">|</span>
         <span class="text">照片信息</span>
       </div>
-      <div class="flexBetween">
+      <div class="flexBetween" id="scaleImg1">
         <div class="upload" v-for="(item,index) in imgDataOne">
           <div class="cha" v-show="(item.imgUrl)">
             <img :src="item.imgUrl">
@@ -378,7 +378,7 @@
         <span class="line">|</span>
         <span class="text">照片信息</span>
       </div>
-      <div class="flexBetween">
+      <div class="flexBetween" id="scaleImg">
         <div class="upload" v-for="(item,index) in imgData">
           <div class="cha" v-show="(item.imgUrl)">
             <img :src="item.imgUrl">
@@ -488,6 +488,7 @@
   </div>
 </template>
 <script>
+    import Viewer from 'viewerjs';
   import axios from 'axios'
   import { Toast } from 'mint-ui';
   import moment from 'moment/moment';
@@ -604,10 +605,27 @@
                 this.imgData[0].imgUrl =  response.data.person.card_pic;
                 this.imgData[1].imgUrl =  response.data.person.car_pic
                 this.imgData[2].imgUrl =  response.data.person.car_pin_pic;
+                  this.$nextTick(() => {
+                      new Viewer(document.getElementById('scaleImg'), {
+                          url: 'src',
+                          navbar:false,
+                          toolbar:true,
+                          loop: true
+                      })
+                  })
+
               }else if(this.applyType == 2){
                 this.imgDataOne[0].imgUrl =  response.data.department.card_pic;
                 this.imgDataOne[1].imgUrl =  response.data.department.car_pic
                 this.imgDataOne[2].imgUrl =  response.data.department.car_pin_pic;
+                  this.$nextTick(() => {
+                      new Viewer(document.getElementById('scaleImg1'), {
+                          url: 'src',
+                          navbar:false,
+                          toolbar:true,
+                          loop: true
+                      })
+                  })
               }
             }
           }, err => {
