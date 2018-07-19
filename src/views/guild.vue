@@ -114,14 +114,14 @@
     <div class="jumpBox">
       <div class="item clear" @click="goPerson" >
         <img class="orderIcon" src="../assets/images/geren.png">
-        <span>个人申报</span>
+        <span>个人申报界面</span>
         <div class="fr" >
           <img class="goOrder" src="../assets/images/jiantou.png">
         </div>
       </div>
       <div class="item clear" @click.stop="goDanwei">
               <img class="orderIcon" src="../assets/images/danwei.png">
-              <span>单位预录入</span>
+              <span>单位申请预录入界面</span>
           <div class="fr" >
               <img class="goOrder"  src="../assets/images/jiantou.png">
           </div>
@@ -133,7 +133,7 @@
           <img class="goOrder"  src="../assets/images/jiantou.png">
         </div>
       </div>
-      <div v-show="userType == 2" class="item clear">
+      <div v-show="userType == 1" class="item clear">
         <img class="orderIcon" src="../assets/images/sao.png">
         <span>扫描二维码</span>
         <div class=" fr" >
@@ -174,7 +174,6 @@ export default {
     };
   },
   created() {
-    document.getElementsByTagName('title')[0].innerHTML = '过渡期电动自行车';
     this.phone =  localStorage.getItem('phone');
   },
   mounted() {
@@ -184,7 +183,7 @@ export default {
   methods:{
     getUserType() {
       axios.post(this.ajaxUrl + 'vehicle/validate', {
-        phone: 15901456326
+        phone: '18510822236'
         //   phone: this.phone
       })
         .then(response => {

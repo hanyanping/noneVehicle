@@ -46,11 +46,10 @@ export default {
 
     },
     created(){
-        document.getElementsByTagName('title')[0].innerHTML = '申请成功';
     },
     methods:{
         goGuild(){
-            this.$router.push({path:'/guild'})
+            this.$router.push({path:'/'})
         }
     }
 }

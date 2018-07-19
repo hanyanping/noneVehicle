@@ -114,12 +114,12 @@ $baseFontSize:75;
             <div class='info'>
               <p>所有权：单位</p>
               <p>所有人：{{item.name}}</p>
-              <p>证件号码：{{item.applyNo}}</p>
+              <p>证件号码：{{item.code}}</p>
             </div>
           </div>
           <div class="flexRight">
              <span class="goSub" @click.stop='goSubscible(item.applyNo)' v-if="item.status == '待预约'">立即预约</span>
-            <span class="goSub" @click.stop='goApply(item.applyNo,item.applyType)' v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
+            <span class="goSub" @click.stop='goApply(item.applyNo,item.type)' v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
             <img @click.stop='goSubcode(item.applyNo)' v-if="item.status =='预约成功'" style='height:30px;width:30px;' src='../assets/images/look.png'>
             <img class='godetail' src="../assets/images/right.png">
           </div>
@@ -147,15 +147,18 @@ export default {
     }
   },
   created() {
-    document.getElementsByTagName('title')[0].innerHTML = '非机动车申请记录';
-    this.userId = localStorage.getItem('userId');
-    this.getDataList()
+
   },
-  methods: {
-    goSubcode(applyNo) {
-      this.$router.push({ path: '/subSucess', query: { apply_no: applyNo }})
+    mounted(){
+        this.userId = localStorage.getItem('userId');
+        this.getDataList()
+    },
+    methods: {
+        goSubcode(applyNo) {
+          this.$router.push({ path: '/subSucess', query: { apply_no: applyNo }})
     },
     goApply(applyNo,applyType){
+            console.log(applyType)
       if(applyType == 1){
           this.$router.push({path:'/personalDeclaration'})
       }else if(applyType == 2){

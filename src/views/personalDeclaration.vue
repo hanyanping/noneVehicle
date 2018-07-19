@@ -176,6 +176,14 @@ $baseFontSize:75;
   width: 100%;
   position: fixed;
   top: 0;
+    .lodingimg{
+        position: absolute;
+       height: 60px;
+        width: 60px;
+        left: 0;
+        right: 0;
+        margin: 30vh auto;
+    }
   .zhegaiContent {
     background: #fff;
     position: absolute;
@@ -223,7 +231,9 @@ $baseFontSize:75;
     }
   }
 }
-
+.zhegaicengone{
+    background: rgba(0, 0, 0, 0.4);
+}
 .flexBetween {
   padding: 10px 10px 30px;
   background: #fff;
@@ -346,8 +356,9 @@ $baseFontSize:75;
           该车系本人合法所得，如不属实，愿承担一切法律责任。
         </p>
         <div class="selectBox">
-          <img class='selectImg' src="../assets/images/select.png">
-          <span>以上内容已看过，同意并提交</span>
+          <img class='selectImg' @click='selected' v-if="isSure" src="../assets/images/select.png">
+            <img class='selectImg' @click='selected' v-if="!isSure" src="../assets/images/yuan.png">
+          <span style="display: inline-block;vertical-align: middle;">以上内容已看过，同意并提交</span>
         </div>
         <div class="sureBox">
           <span class="sure" @click="sure">确认</span>
@@ -374,6 +385,9 @@ $baseFontSize:75;
         </div>
       </div>
     </div>
+      <div class="zhegaicengone zhegaiceng" v-if="isShowthree">
+             <img class='lodingimg' src="../assets/images/loadingpop.gif">
+      </div>
   </div>
 </template>
 <script>
@@ -385,6 +399,8 @@ export default {
   props: ["uploadUrl"],
   data() {
     return {
+        isShowthree: false,
+        isSure: false,
       isShow: true,
       isShowOne: false,
       isShowTwo: false,
@@ -406,7 +422,7 @@ export default {
       provinceCode: '',
       picavalue: "",
       imgUrl: null,
-      imgData: [{ 'imgUrl': '', 'img': '../../static/cardImg.png', 'text': '本人持身份证照片' }, { 'imgUrl': '', 'img': '../../static/car.png', 'text': '车辆照片' }, { 'imgUrl': '', 'img': '../../static/carCode.png', 'text': '电动车整车编码（钢架号）照片' }],
+      imgData: [{ 'imgUrl': '', 'img': require('../../static/cardImg.png'), 'text': '本人持身份证照片' }, { 'imgUrl': '', 'img':require( '../../static/car.png'), 'text': '车辆照片' }, { 'imgUrl': '', 'img': require('../../static/carCode.png'), 'text': '电动车整车编码（钢架号）照片' }],
       isEnlargeImage: false,
       isAndroid: true,
         cred: '',
@@ -442,7 +458,7 @@ export default {
       },
   },
   created() {
-    document.getElementsByTagName('title')[0].innerHTML = '个人申报';
+    // document.getElementsByTagName('title')[0].innerHTML = '个人申报';
     console.log(this.cardCode)
     var u = navigator.userAgent;
     var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
@@ -453,10 +469,11 @@ export default {
     if (isiOS) {
       this.isAndroid = false;
     }
-    this.link_phone = localStorage.getItem('phone');
-    this.user_id = localStorage.getItem('userId')
+
   },
   mounted() {
+      this.link_phone = localStorage.getItem('phone');
+      this.user_id = localStorage.getItem('userId')
     this.getArea();
     this.getProvince('province');
     this.getProvince('area');
@@ -505,19 +522,26 @@ export default {
     ShowTwo() {
       this.isShowTwo = true;
     },
+      selected(){
+          this.isSure = !this.isSure;
+      },
     sure() {
-      this.isShow = false;
+        if(!this.isSure){
+            Toast("请勾选");
+        }else{
+            this.isShow = false;
+        }
     },
     uploadIMG(event, num) {
       console.log(num)
       let files = event.target.files || event.dataTransfer.files;
       if (!files.length) return;
       this.picavalue = files[0];
-      if (this.picavalue.size / 1024 > 5000) {
-        Toast("图片过大不支持上传");
-      } else {
+      // if (this.picavalue.size / 1024 > 5000) {
+      //   Toast("图片过大不支持上传");
+      // } else {
         this.imgPreview(this.picavalue, '', num);
-      }
+      // }
     },
     //获取图片
     imgPreview(file, callback, num) {
@@ -530,8 +554,10 @@ export default {
             headers: { "Content-Type": "multipart/form-data" }
         };
         // 发送请求;
+        this.isShowthree = true;
         axios.post(self.ajaxUrl + "vehicle/uploadImage", formData, config)
             .then(response => {
+                this.isShowthree = false;
                 console.log(response);
                 self.imgData[num].imgUrl = response.data.url;
                 if (num == 0) {
@@ -544,9 +570,11 @@ export default {
                 }
             }, err => {
                 console.log(err);
+                // this.isShowthree = false;
             })
             .catch((error) => {
                 console.log(error)
+                // this.isShowthree = false;
             })
     },
     // 压缩图片

@@ -223,6 +223,21 @@
       margin: 0px auto;
     }
   }
+  .zhegaicengone{
+      background: rgba(0, 0, 0, 0.4);
+      height: 100vh;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      .lodingimg{
+          position: absolute;
+          height: 60px;
+          width: 60px;
+          left: 0;
+          right: 0;
+          margin: 30vh auto;
+      }
+  }
 </style>
 <template>
   <div style="background: #f4f4f4;min-height: 100vh;">
@@ -409,7 +424,7 @@
         <div style='background: #fff;width:100%;text-align: center;padding: 10px;' v-if='isSelectOne'>
           <div class="upload" style='left:35%;margin-bottom:10px;'>
             <!-- 图片上传控件 -->
-            <div class="load" v-show="imgUrl == ''">
+            <div class="load">
               <img class="loadImg" :src="imgUrl ? imgUrl : img" style='width:104px;height:104px;'>
               <input type="file"  v-if='isAndroid' capture="camera" @change="uploadIMG($event)">
               <input type="file"  v-if='!isAndroid'  @change="uploadIMG($event)">
@@ -467,7 +482,9 @@
       <div class="submitBox">
         <span class="submit" @click="surePass">确定</span></div>
     </div>
-
+      <div class="zhegaicengone zhegaiceng" v-if="isShowthree">
+          <img class='lodingimg' src="../assets/images/loadingpop.gif">
+      </div>
   </div>
 </template>
 <script>
@@ -478,6 +495,7 @@
     props: ["uploadUrl"],
     data() {
       return {
+          isShowthree: false,
         img: '../../static/takephone.png',
         ispass: true,
         ispassone: false,
@@ -486,7 +504,7 @@
         isSelect: true,
         isSelectOne: false,
         apply_no: '',
-        imgDataOne:[{'imgUrl':'../../static/car.png','title':'经办人持本人与单位身份证明原件照片'},{'imgUrl':'../../static/car.png','title':'车辆照片'},{'imgUrl':'../../vehicle/static/car.png','title':'车辆识别代码照片'}],
+        imgDataOne:[{'imgUrl':require('../../static/car.png'),'title':'经办人持本人与单位身份证明原件照片'},{'imgUrl':require('../../static/car.png'),'title':'车辆照片'},{'imgUrl':require('../../static/car.png'),'title':'车辆识别代码照片'}],
         imgData:[{'title':'本人持身份证明照片'},{'title':'车辆照片'},{'title':'车辆识别代码照片'}],
         person: {},
         approve: {},
@@ -513,7 +531,7 @@
       },
     },
     created() {
-      document.getElementsByTagName('title')[0].innerHTML = '个人申报';
+      document.getElementsByTagName('title')[0].innerHTML = '扫码结果展示';
       var u = navigator.userAgent;
       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -603,16 +621,18 @@
         let files  = event.target.files || event.dataTransfer.files;
         if (!files.length) return;
         this.picavalue = files[0];
-        if (this.picavalue.size / 1024 > 5000) {
-        this.$message({
-            message: "图片过大不支持上传",
-            type: "warning"
-        });
-        } else {
-        this.imgPreview(this.picavalue,'');
-        }
+        // if (this.picavalue.size / 1024 > 5000) {
+        // this.$message({
+        //     message: "图片过大不支持上传",
+        //     type: "warning"
+        // });
+        // } else {
+            this.imgPreview(this.picavalue,'');
+        // }
     },
-         //获取图片
+
+      //
+      //    //获取图片
       imgPreview(file, callback) {
         let self = this;
         //判断支不支持FileReader
@@ -623,11 +643,12 @@
           headers: { "Content-Type": "multipart/form-data" }
         };
         // 发送请求;
+          this.isShowthree = true;
         axios.post(self.ajaxUrl + "vehicle/uploadImage", formData, config)
           .then(response => {
-            console.log(response);
-            self.imgUrl = response.data.url;
-            self.approve_url = response.data.url;
+              self.imgUrl = response.data.url;
+              self.approve_url = response.data.url;
+              this.isShowthree = false;
           }, err => {
             console.log(err);
           })

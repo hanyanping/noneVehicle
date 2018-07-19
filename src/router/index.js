@@ -17,96 +17,142 @@ import erweima from '@/views/erweima'
 import subSucess from '@/views/subSucess'
 import showResult from '@/views/showResult'
 import regular from '@/components/regular'
+
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  routes: [
-    {
-      path: '/personalDeclaration',
-      name: 'personalDeclaration',
-      component: personalDeclaration
-    },
-
-    {
-      path: '/',
-      name: 'guild',
-      component: guild
-    },
-    {
-      path: '/regList',
-      name: 'regList',
-      component: regList
-    },
-    {
-      path: '/declareSuccess',
-      name: 'declareSuccess',
-      component: declareSuccess,
-    },
-    {
-      path: '/companyDeclar',
-      name: 'companyDeclar',
-      component: companyDeclar
-    },
-    {
-      path: '/pass',
-      name: 'pass',
-      component: pass
-    },
-    {
-      path: '/historyList',
-      name: 'historyList',
-      component: historyList
-    },
-    {
-      path: '/listDetail',
-      name: 'listDetail',
-      component: listDetail
-    },
-    {
-      path: '/showResult',
-      name: 'showResult',
-      component: showResult
-    },
-    {
-      path: '/parentComponent',
-      name: 'parentComponent',
-      component: parentComponent
-    },
-    {
-      path: '/subscribe',
-      name: 'subscribe',
-      component: subscribe
-    },
-    {
-      path: '/erweima',
-      name: 'erweima',
-      component: erweima
-    },
-    {
-      path: '/subSucess',
-      name: 'subSucess',
-      component: subSucess
-    },
-    {
-      path: '/childComponent',
-      name: 'childComponent',
-      component: childComponent
-    },
-    {
-      path: '/parentTwo',
-      name: 'parentTwo',
-      component: parentTwo
-    },
-    {
-      path: '/childTwo',
-      name: 'childTwo',
-      component: childTwo
-    },
-    {
-      path: '/regular',
-      name: 'regular',
-      component: regular
-    }
-  ]
+    base: '/vehicle/',
+    mode: 'history',
+    routes: [
+        {
+            path: '/personalDeclaration',
+            name: 'personalDeclaration',
+            component: personalDeclaration,
+            meta: {
+                title: '个人申报'
+            }
+        },
+        {
+            path: '/',
+            name: 'guild',
+            component: guild,
+            meta: {
+                title: '过渡期电动自行车'
+            }
+        },
+        {
+            path: '/regList',
+            name: 'regList',
+            component: regList,
+            meta: {
+                title: '个人申报'
+            }
+        },
+        {
+            path: '/declareSuccess',
+            name: 'declareSuccess',
+            component: declareSuccess,
+            meta: {
+                title: '申请成功'
+            }
+        },
+        {
+            path: '/companyDeclar',
+            name: 'companyDeclar',
+            component: companyDeclar,
+            meta: {
+                title: '单位预录入'
+            }
+        },
+        {
+            path: '/pass',
+            name: 'pass',
+            component: pass,
+            meta: {
+                title: '审核成功'
+            }
+        },
+        {
+            path: '/historyList',
+            name: 'historyList',
+            component: historyList,
+            meta: {
+                title: '非机动车申请记录'
+            }
+        },
+        {
+            path: '/listDetail',
+            name: 'listDetail',
+            component: listDetail,
+            meta: {
+                title: '信息详情'
+            }
+        },
+        {
+            path: '/showResult',
+            name: 'showResult',
+            component: showResult,
+            meta: {
+                title: '扫码结果展示'
+            }
+        },
+        {
+            path: '/parentComponent',
+            name: 'parentComponent',
+            component: parentComponent,
+            meta: {
+                title: '个人申报'
+            }
+        },
+        {
+            path: '/subscribe',
+            name: 'subscribe',
+            component: subscribe,
+            meta: {
+                title: '预约办理'
+            }
+        },
+        {
+            path: '/erweima',
+            name: 'erweima',
+            component: erweima,
+            meta: {
+                title: '非机动车信息二维码'
+            }
+        },
+        {
+            path: '/subSucess',
+            name: 'subSucess',
+            component: subSucess,
+            meta: {
+                title: '预约成功'
+            }
+        },
+        {
+            path: '/childComponent',
+            name: 'childComponent',
+            component: childComponent,
+            meta: {
+                title: '个人申报'
+            }
+        },
+        {
+            path: '/parentTwo',
+            name: 'parentTwo',
+            component: parentTwo,
+            meta: {
+                title: '个人申报'
+            }
+        },
+        {
+            path: '/childTwo',
+            name: 'childTwo',
+            component: childTwo
+        },
+        {
+            path: '/regular',
+            name: 'regular',
+            component: regular
+        }
+    ]
 })

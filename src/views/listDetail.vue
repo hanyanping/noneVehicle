@@ -389,7 +389,6 @@
       }
     },
     created() {
-      document.getElementsByTagName('title')[0].innerHTML = '个人申报';
       this.applyNo = this.$route.query.applyNo;
       this.applyType = this.$route.query.applyType;
       this.applyStatus = this.$route.query.applyStatus;
