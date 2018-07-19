@@ -50,7 +50,7 @@
     },
     methods:{
       goGuild(){
-        this.$router.push({path:'/guild'})
+        this.$router.push({path:'/'})
       }
     }
   }
