@@ -367,21 +367,22 @@
                 <div class="submit" @click="submit">提交信息</div>
             </div>
         </div>
-        <!--<div class="zhegaiceng" v-if="isShow">-->
-            <!--<div class="zhegaiContent">-->
-                <!--<h1 class="chengnuo">本单位承诺</h1>-->
-                <!--<p class="chengnuoText">-->
-                    <!--该车系本单位合法所得，如不属实，愿承担一切法律责任。-->
-                <!--</p>-->
-                <!--<div class="selectBox">-->
-                    <!--<img class='selectImg' src="../assets/images/select.png">-->
-                    <!--<span>以上内容已看过，同意并提交</span>-->
-                <!--</div>-->
-                <!--<div class="sureBox" @click.stop="sureBox">-->
-                    <!--<span class="sure">确认</span>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
+        <div class="zhegaiceng" v-if="isShow">
+            <div class="zhegaiContent">
+                <h1 class="chengnuo">本单位承诺</h1>
+                <p class="chengnuoText">
+                    该车系本单位合法所得，如不属实，愿承担一切法律责任。
+                </p>
+                <div class="selectBox">
+                  <img class='selectImg' @click='selected' v-if="isSure" src="../assets/images/select.png">
+                  <img class='selectImg' @click='selected' v-if="!isSure" src="../assets/images/yuan.png">
+                    <span>以上内容已看过，同意并提交</span>
+                </div>
+                <div class="sureBox" @click.stop="sureBox">
+                    <span class="sure">确认</span>
+                </div>
+            </div>
+        </div>
         <div class="zhegaiceng" v-if="isShowOne">
             <div class="zhegaiContent">
                 <p class="chengnuoText">
@@ -416,12 +417,13 @@
         props: ["uploadUrl"],
         data() {
             return {
+              isSure: false,
                 isShowthree: false,
                 cred: '',
                 credperson: '',
                 area: '',
                 province: '',
-                isShow: false,
+                isShow: true,
                 isShowOne: false,
                 isShowTwo: false,
                 name: '',
@@ -525,6 +527,9 @@
                         console.log(err);
                     })
             },
+          selected(){
+            this.isSure = !this.isSure;
+          },
             getProvince(type) {
                 axios.post(this.ajaxUrl + '/vehicle/dict', {
                     type: type
@@ -558,7 +563,11 @@
                 this.isShowTwo = true;
             },
             sureBox() {
+              if(!this.isSure){
+                Toast("请勾选");
+              }else{
                 this.isShow = false;
+              }
             },
             uploadIMG(event, num) {
                 let files = event.target.files || event.dataTransfer.files;

@@ -169,7 +169,7 @@ export default {
   data(){
     return{
       openSimple: true,
-      userType: null,
+      userType: '',
         phone: '',
     };
   },
@@ -183,19 +183,19 @@ export default {
   methods:{
     getUserType() {
       axios.post(this.ajaxUrl + 'vehicle/validate', {
-        phone: '18510822236'
-        //   phone: this.phone
+//        phone: '18510822236'
+           phone: this.phone
       })
         .then(response => {
           console.log(response);
           const { data } = response;
           const { result } = data;
-          const { rescode, resdes, type } = result;
+          const { rescode, resdes } = result;
           if (rescode != 200) {
             //  失败
             Toast(resdes);
           } else {
-            this.userType = type;
+            this.userType = response.data.type;
           }
         })
         .catch(err => {

@@ -559,6 +559,7 @@ export default {
             .then(response => {
                 this.isShowthree = false;
                 console.log(response);
+                alert( response.data.url)
                 self.imgData[num].imgUrl = response.data.url;
                 if (num == 0) {
                     self.card_pic = response.data.url;

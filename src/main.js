@@ -31,10 +31,22 @@ function setupWebViewJavascriptBridge(callback) {
   document.documentElement.appendChild(WVJBIframe);
   setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
 };
-router.beforeEach((to, from, next) => {
-    if (to.meta.title) {
-        document.title = to.meta.title
+function setTitle(title){
+  document.title = title || document.title;
+  var ua = navigator.userAgent.toLowerCase();
+  if(ua.match(/MicroMessenger/i)=="micromessenger" && !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/i)){
+    var ifr = document.createElement('iframe')
+    ifr.src = "/favicon.ico";
+    ifr.onload = function() {
+      setTimeout(function(){
+        ifr.remove();
+      }, 0)
     }
+    document.body.appendChild(ifr);
+  }
+}
+router.beforeEach((to, from, next) => {
+  setTitle(to.meta.title)
     // var phone = '13444423233';
     // var userId = '12';
     // localStorage.setItem('userId',userId);
