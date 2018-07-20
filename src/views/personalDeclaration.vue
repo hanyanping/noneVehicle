@@ -132,38 +132,38 @@
 
         .textDetail {
             color: #232323;
-            font-size: 15px;
+            font-size: 14px;
         }
         .textInput {
             text-align: right;
-            font-size: 15px;
+            font-size: 14px;
             color: #232323;
             font-family: Microsoft Yahei;
             text-align: right;
         }
         .selectText {
-            font-size: 15px;
+            font-size: 14px;
             color: #bbb;
             padding-right: 16px;
             font-family: Microsoft Yahei;
             text-align: right;
         }
         .tanInput {
-            padding-right: 16px;
+            padding-right: 25px;
         }
         .selectImg {
             height: 8px;
             width: 12px;
             position: absolute;
             right: 12px;
-            top: 22px;
+            top: 18px;
         }
         .tanhaoImg {
             height: 19px;
             width: 19px;
             position: absolute;
             right: 5px;
-            top: 12px;
+            top: 10px;
         }
     }
 
@@ -325,7 +325,7 @@
             </div>
             <div class="inputBox clear selectBox">
                 <span class="textDetail">电动车整车编码(钢架号)</span>
-                <input type="tel" v-model="pin" class="textInput fr tanInput" placeholder="请输入车架号">
+                <input type="tel" style='width: 40%;' v-model="pin" class="textInput fr tanInput" placeholder="请输入车架号">
                 <img class='tanhaoImg' @click="ShowTwo" src="../assets/images/tanhao.png">
             </div>
             <div class="textBox">
@@ -466,7 +466,6 @@
         },
         created() {
             // document.getElementsByTagName('title')[0].innerHTML = '个人申报';
-            console.log(this.cardCode)
             var u = navigator.userAgent;
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -480,38 +479,38 @@
         },
         mounted() {
             this.link_phone = localStorage.getItem('phone');
+            alert(this.link_phone)
             this.user_id = localStorage.getItem('userId')
             this.getArea();
             this.getProvince('province');
             this.getProvince('area');
             this.getProvince('cred');
             $(".selectText").css("color", '#bbb');
-            alert('person'+this.bridge)
             var self = this;
             self.bridge.registerHandler('webviewGetImage', function (data, responseCallback) {//注册客户端主动触发js端
-                alert(data.image)
-                self.imgData[data.position].imgUrl = data.image;
-                if (data.position) {
-                    self.card_pic = data.image;
-                    console.log(self.card_pic)
-                } else if (data.position) {
-                    self.car_pic = data.image;
-                } else if (data.position) {
-                    self.car_pin_pic = data.image;
-                }
-                axios.post(this.ajaxUrl + '/vehicle/uploadBaseImage', {
-                    image: data.image ? data.image : ''
+              self.isShowthree = true;
+              axios.post(self.ajaxUrl + '/vehicle/uploadBaseImage', {
+                    image: data.image ? 'data:image/jpeg;base64,'+ data.image : ''
                 })
                     .then(response => {
-                        console.log(response)
+                      self.isShowthree = false;
+                      if (response.data.result.rescode == 200) {
+                        self.imgData[data.position].imgUrl = response.data.url;
+                        if (data.position == 0) {
+                          self.card_pic = response.data.url;
+                          console.log(self.card_pic)
+                        } else if (data.position == 1) {
+                          self.car_pic = response.data.url;
+                        } else if (data.position == 2) {
+                          self.car_pin_pic = response.data.url;
+                        }
+                      }
                         // this.area = response.data.list
                     })
                     .catch(err => {
                         console.log(err);
+                      self.isShowthree = false;
                     })
-                // var imgalt = $('div[class=img_f][data=' + data.position + ']').find('img');
-                // imgalt.attr('src', 'data:image/jpeg;base64,' + data.image);
-                // $('div[class=img_f][data=' + data.position + ']').find('input').val(data.image)
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
             })

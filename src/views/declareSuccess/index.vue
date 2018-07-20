@@ -49,6 +49,7 @@ export default {
     },
     methods:{
         goGuild(){
+          alert(44)
             this.$router.push({path:'/'})
         }
     }

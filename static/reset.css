@@ -176,3 +176,6 @@ select {
 .mu-dialog-body {
     padding: 16px;
 }
+.viewer-rotate-left,.viewer-rotate-right,.viewer-one-to-one,.viewer-zoom-out,.viewer-zoom-in,.viewer-flip-vertical,.viewer-flip-horizontal,.viewer-reset{
+  display:none;
+}

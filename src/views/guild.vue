@@ -65,11 +65,11 @@
     .zhegaiContent {
       background: #fff;
       position: absolute;
-      width: 80%;
+      width: 82%;
       left: 0;
       right: 0;
       top: 2vh;
-      margin: 20vh auto;
+      margin: 12vh auto;
       padding: 20px 20px 5px;
       border-radius: 10px;
       .chengnuo {
@@ -174,17 +174,15 @@ export default {
     };
   },
   created() {
-      // localStorage.setItem('phone','18510822236')
-    this.phone =  localStorage.getItem('phone');
   },
   mounted() {
+    this.phone =  '17600220760';
     //  获取用户类型
     this.getUserType();
   },
   methods:{
     getUserType() {
       axios.post(this.ajaxUrl + 'vehicle/validate', {
-//        phone: '18510822236'
            phone: this.phone
       })
         .then(response => {
@@ -205,7 +203,6 @@ export default {
         })
     },
     goPerson() {
-        console.log(3333)
       this.$router.push({'path':'/personalDeclaration'})
     },
     goDanwei() {

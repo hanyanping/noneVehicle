@@ -41,18 +41,18 @@
     }
     .textDetail{
       color: #232323;
-      font-size: 15px;
+      font-size: 14px;
       display: inline-block;
       width: 110px;
     }
     .textInput{
       padding-left: 10px;
-      font-size: 15px;
+      font-size: 14px;
       color: #232323;
       font-family: Microsoft Yahei;
     }
     .selectText{
-      font-size: 15px;
+      font-size: 14px;
       color: #bbb;
       padding-right: 16px;
       font-family: Microsoft Yahei;
@@ -66,7 +66,7 @@
       width: 12px;
       position: absolute;
       right: 12px;
-      top: 22px;
+      top: 18px;
     }
     .tanhaoImg{
       height: 19px;
@@ -313,7 +313,7 @@
       <div class="flexBetween" id="scaleImg1">
         <div class="upload" v-for="(item,index) in imgDataOne">
           <div class="cha" v-show="(item.imgUrl)">
-            <img :src="item.imgUrl">
+            <img :src="item.imgUrl" :data-src="item.bigUrl">
           </div>
           <div class="phoneText">
            <span class="text">{{item.title}}</span>
@@ -381,7 +381,7 @@
       <div class="flexBetween" id="scaleImg">
         <div class="upload" v-for="(item,index) in imgData">
           <div class="cha" v-show="(item.imgUrl)">
-            <img :src="item.imgUrl">
+            <img :src="item.imgUrl" :data-src="item.bigUrl">
           </div>
           <div class="phoneText">
            <span class="text">{{item.title}}</span>
@@ -425,9 +425,9 @@
           <div class="upload" style='left:35%;margin-bottom:10px;'>
             <!-- 图片上传控件 -->
             <div class="load">
-              <img class="loadImg" :src="imgUrl ? imgUrl : img" style='width:104px;height:104px;'>
-              <input type="file"  v-if='isAndroid' capture="camera" @change="uploadIMG($event)">
-              <input type="file"  v-if='!isAndroid'  @change="uploadIMG($event)">
+              <img class="loadImg" :src="imgUrl ? imgUrl : img" style='width:104px;height:104px;' @click="getPhone()">
+              <!--<input type="file"  v-if='isAndroid' capture="camera" @change="uploadIMG($event)">-->
+              <!--<input type="file"  v-if='!isAndroid'  @change="uploadIMG($event)">-->
             </div>
           </div>
           <div class="phoneText" >
@@ -444,9 +444,9 @@
             <!--</div>-->
             <!-- 图片上传控件 -->
             <div class="load" >
-              <img class="loadImg" :src="imgUrl ? imgUrl : img" style='width:104px;height:104px;'>
-              <input type="file"  v-if='isAndroid' capture="camera" @change="uploadIMG($event)">
-              <input type="file"  v-if='!isAndroid'  @change="uploadIMG($event)">
+              <img class="loadImg" :src="imgUrl ? imgUrl : img" style='width:104px;height:104px;' @click="getPhone()">
+              <!--<input type="file"  v-if='isAndroid' capture="camera" @change="uploadIMG($event)">-->
+              <!--<input type="file"  v-if='!isAndroid'  @change="uploadIMG($event)">-->
             </div>
           </div>
           <div class="phoneText" >
@@ -505,7 +505,7 @@
         isSelect: true,
         isSelectOne: false,
         apply_no: '',
-        imgDataOne:[{'imgUrl':require('../../static/car.png'),'title':'经办人持本人与单位身份证明原件照片'},{'imgUrl':require('../../static/car.png'),'title':'车辆照片'},{'imgUrl':require('../../static/car.png'),'title':'车辆识别代码照片'}],
+        imgDataOne:[{'title':'经办人持本人与单位身份证明原件照片'},{'title':'车辆照片'},{'title':'车辆识别代码照片'}],
         imgData:[{'title':'本人持身份证明照片'},{'title':'车辆照片'},{'title':'车辆识别代码照片'}],
         person: {},
         approve: {},
@@ -548,7 +548,29 @@
     mounted() {
       this.getData();
       this.getApproveresult('approve_result');
-      $(".selectText").css("color", '#bbb')
+      $(".selectText").css("color", '#bbb');
+      var self = this;
+      self.bridge.registerHandler('webviewGetImage', function (data, responseCallback) {//注册客户端主动触发js端
+        self.isShowthree = true;
+        axios.post(self.ajaxUrl + '/vehicle/uploadBaseImage', {
+          image: data.image ? 'data:image/jpeg;base64,'+ data.image : ''
+        })
+          .then(response => {
+            self.isShowthree = false;
+            if (response.data.result.rescode == 200) {
+              self.imgUrl = response.data.url;
+              self.approve_url = response.data.url;
+              self.card_pic = response.data.url;
+            }
+            // this.area = response.data.list
+          })
+          .catch(err => {
+            console.log(err);
+            self.isShowthree = false;
+          })
+        var responseData = {'rescode': '200'}
+        responseCallback(responseData)
+      })
     },
     methods: {
       getApproveresult(type) {
@@ -602,12 +624,15 @@
               this.appointment.time = moment(this.appointment.time).format('YYYY-MM-DD')
               this.approve = response.data.approve;
               if(this.applyType == 1){
-                this.imgData[0].imgUrl =  response.data.person.card_pic;
-                this.imgData[1].imgUrl =  response.data.person.car_pic
-                this.imgData[2].imgUrl =  response.data.person.car_pin_pic;
+                this.imgData[0].imgUrl =  response.data.person.card_pic_min;
+                this.imgData[1].imgUrl =  response.data.person.car_pic_min;
+                this.imgData[2].imgUrl =  response.data.person.car_pin_pic_min;
+                this.imgData[0].bigUrl =  response.data.person.card_pic;
+                this.imgData[1].bigUrl =  response.data.person.car_pic
+                this.imgData[2].bigUrl =  response.data.person.car_pin_pic;
                   this.$nextTick(() => {
                       new Viewer(document.getElementById('scaleImg'), {
-                          url: 'src',
+                          url: 'data-src',
                           navbar:false,
                           toolbar:true,
                           loop: true
@@ -615,12 +640,15 @@
                   })
 
               }else if(this.applyType == 2){
-                this.imgDataOne[0].imgUrl =  response.data.department.card_pic;
-                this.imgDataOne[1].imgUrl =  response.data.department.car_pic
-                this.imgDataOne[2].imgUrl =  response.data.department.car_pin_pic;
+                this.imgDataOne[0].imgUrl =  response.data.department.card_pic_min;
+                this.imgDataOne[1].imgUrl =  response.data.department.car_pic_min;
+                this.imgDataOne[2].imgUrl =  response.data.department.car_pin_pic_min;
+                this.imgDataOne[0].bigUrl =  response.data.department.card_pic;
+                this.imgDataOne[1].bigUrl =  response.data.department.car_pic
+                this.imgDataOne[2].bigUrl =  response.data.department.car_pin_pic;
                   this.$nextTick(() => {
                       new Viewer(document.getElementById('scaleImg1'), {
-                          url: 'src',
+                          url: 'data-src',
                           navbar:false,
                           toolbar:true,
                           loop: true
@@ -634,6 +662,14 @@
           .catch((error) => {
             console.log(error)
           })
+      },
+      getPhone() {
+        // event.preventDefault();//取消原来的方法
+        var position= '';
+        console.log(position)
+        this.bridge.callHandler('openCamera', {'position': position}, function (response) {
+          console.log('js调用客户端方法回调传参' + response);
+        });
       },
       uploadIMG(event) {
         let files  = event.target.files || event.dataTransfer.files;

@@ -1,12 +1,13 @@
 <style rel="stylesheet/scss" lang="scss" scoped>
-  $baseFontSize:75;
-  .text{
+  $baseFontSize: 75;
+  .text {
     font-size: 28rem/$baseFontSize;
   }
+
   .upload {
     position: relative;
     width: 30%;
-    height:100px;
+    height: 100px;
     // 图片展示
     .cha {
       position: absolute;
@@ -46,7 +47,7 @@
         width: 100%;
         height: 100%;
         border: none;
-        object-fit:cover;
+        object-fit: cover;
       }
     }
     //鼠标放上时显示删除和放大
@@ -60,10 +61,10 @@
       left: 0;
       width: 100%;
       height: 100px;
-      .loadImg{
+      .loadImg {
         height: 100%;
         width: 100%;
-        object-fit:cover;
+        object-fit: cover;
       }
       input {
         position: absolute;
@@ -93,11 +94,12 @@
       height: 1px;
     }
   }
-  .submitBox{
+
+  .submitBox {
     background: #fff;
     padding: 30px;
-    .submit{
-      height:40px;
+    .submit {
+      height: 40px;
       width: 120px;
       line-height: 40px;
       border-radius: 10px;
@@ -108,54 +110,56 @@
     }
   }
 
-  .textBox{
+  .textBox {
     color: #666;
     padding: 15px;
     height: 20px;
     line-height: 20px;
-    .text{
+    .text {
       padding-left: 6px;
       font-size: 16px;
     }
   }
-  .inputText{
+
+  .inputText {
     color: #f00;
     vertical-align: middle;
   }
-  .inputBox{
+
+  .inputBox {
     padding: 15px;
     background: #fff;
     border-bottom: 1px solid #f4f4f4;
-    .textDetail{
+    .textDetail {
       color: #232323;
-      font-size: 15px;
+      font-size: 14px;
       display: inline-block;
       width: 130px;
     }
-    .textInput{
+    .textInput {
       padding-left: 10px;
-      font-size: 15px;
+      font-size: 14px;
       color: #232323;
       font-family: Microsoft Yahei;
     }
-    .selectText{
-      font-size: 15px;
+    .selectText {
+      font-size: 14px;
       color: #bbb;
       padding-right: 16px;
       font-family: Microsoft Yahei;
       text-align: right;
     }
-    .tanInput{
+    .tanInput {
       padding-right: 16px;
     }
-    .selectImg{
+    .selectImg {
       height: 8px;
       width: 12px;
       position: absolute;
       right: 12px;
       top: 22px;
     }
-    .tanhaoImg{
+    .tanhaoImg {
       height: 19px;
       width: 19px;
       position: absolute;
@@ -163,20 +167,21 @@
       top: 16px;
     }
   }
-  .selectBox{
-     position: relative;
+
+  .selectBox {
+    position: relative;
   }
 
-  .flexBetween{
+  .flexBetween {
     padding: 10px 10px 64px;
     background: #fff;
-    .phoneText{
+    .phoneText {
       position: absolute;
       top: 105px;
       padding-bottom: 6px;
       width: 100%;
       text-align: center;
-      .text{
+      .text {
         font-size: 14px;
         color: #232323;
       }
@@ -190,7 +195,7 @@
         <span class="line">|</span>
         <span class="text">填写基本信息</span>
       </div>
-       <div class="inputBox clear">
+      <div class="inputBox clear">
         <span class="textDetail">所有权</span>
         <span class="textInput">单位</span>
       </div>
@@ -208,13 +213,13 @@
       </div>
       <div class="inputBox clear selectBox">
         <span class="textDetail">单位地址所在省:</span>
-       <span class="textInput">{{department.live_area}}</span>
+        <span class="textInput">{{department.live_area}}</span>
       </div>
       <div class="inputBox clear">
         <span class="textDetail">单位地址:</span>
         <span class="textInput">{{department.live_address}}</span>
       </div>
-       <div class="inputBox clear">
+      <div class="inputBox clear">
         <span class="textDetail">单位联系电话:</span>
         <span class="textInput">{{department.live_phone}}</span>
       </div>
@@ -257,7 +262,7 @@
       <div class="flexBetween" id="scaleImg1">
         <div class="upload" v-for="(item,index) in imgDataOne" :key="index">
           <div class="cha" v-show="(item.imgUrl)">
-            <img :src="item.imgUrl">
+            <img :src="item.imgUrl" :data-src="item.bigUrl">
           </div>
           <div class="phoneText">
             <span class="text">{{item.title}}</span>
@@ -270,7 +275,7 @@
         <span class="line">|</span>
         <span class="text">填写基本信息</span>
       </div>
-       <div class="inputBox clear"  v-if='applyStatus != "待审核"'>
+      <div class="inputBox clear" v-if='applyStatus != "待审核"'>
         <span class="textDetail">所有权</span>
         <span class="textInput">个人</span>
       </div>
@@ -289,7 +294,7 @@
       </div>
       <div class="inputBox clear selectBox">
         <span class="textDetail">住所地址所在区:</span>
-       <span class="textInput">{{person.card_address}}</span>
+        <span class="textInput">{{person.card_address}}</span>
       </div>
       <div class="inputBox clear">
         <span class="textDetail">住所地址:</span>
@@ -326,7 +331,7 @@
       <div class="flexBetween" id="scaleImg">
         <div class="upload" v-for="(item,index) in imgData" :key="index">
           <div class="cha" v-show="(item.imgUrl)">
-            <img :src="item.imgUrl">
+            <img :src="item.imgUrl" :data-src="item.bigUrl">
           </div>
           <div class="phoneText">
             <span class="inputText">*</span><span class="text">{{item.title}}</span>
@@ -336,11 +341,11 @@
 
     </div>
     <div class="textBox" v-if='applyStatus == "预约成功"'>
-        <span class="line">|</span>
-        <span class="text">预约信息</span>
+      <span class="line">|</span>
+      <span class="text">预约信息</span>
     </div>
     <div v-if='applyStatus == "预约成功"'>
-       <div class="inputBox clear">
+      <div class="inputBox clear">
         <span class="textDetail">预约办理地点：</span>
         <span class="textInput">{{appointment.address}}</span>
       </div>
@@ -349,43 +354,44 @@
         <span class="textInput">{{appointment.time}}</span>
       </div>
     </div>
-     <div class="textBox" v-if='applyStatus == "已签发"' style='text-align: center;'>
-        <span class="text">临时编号： {{base.applyCarNo}}</span>
+    <div class="textBox" v-if='applyStatus == "已签发"' style='text-align: center;'>
+      <span class="text">临时编号： {{base.applyCarNo}}</span>
     </div>
-     <div class="textBox" v-if='applyStatus == "审核不通过"'>
-        <span class="line">|</span>
-        <span class="text">审核结果</span>
+    <div class="textBox" v-if='applyStatus == "审核不通过"'>
+      <span class="line">|</span>
+      <span class="text">审核结果</span>
     </div>
-     <div class="inputBox clear" v-if='applyStatus == "审核不通过"'>
-        <span class="textInput"  style='color: #232323;'>{{approve.approveResult}}</span>
-      </div>
+    <div class="inputBox clear" v-if='applyStatus == "审核不通过"'>
+      <span class="textInput" style='color: #232323;'>{{approve.approveResult}}</span>
+    </div>
   </div>
 </template>
 <script>
-    import Viewer from 'viewerjs';
+  import Viewer from 'viewerjs';
   import axios from 'axios'
   import moment from 'moment/moment';
+
   export default {
     props: ["uploadUrl"],
     data() {
       return {
         apply_no: '',
-        imgDataOne:[{'title':'经办人持本人与单位身份证明原件照片'},{'title':'车辆照片'},{'title':'车辆识别代码照片'}],
-        imgData:[{'title':'本人持身份证明照片'},{'title':'车辆照片'},{'title':'车辆识别代码照片'}],
+        imgDataOne: [{'title': '经办人持本人与单位身份证明原件照片'}, {'title': '车辆照片'}, {'title': '车辆识别代码照片'}],
+        imgData: [{'title': '本人持身份证明照片'}, {'title': '车辆照片'}, {'title': '车辆识别代码照片'}],
         person: {},
         approve: {},
         appointment: {},
         department: {},
         base: {},
-       applyType: '',
-       applyStatus: ''
+        applyType: '',
+        applyStatus: ''
       };
     },
     watch: {
-      'cardCode': function() {
+      'cardCode': function () {
         console.log(this.cardCode)
-        if((this.cardCode !== '')){
-          $(".selectText").css("color",'#232323')
+        if ((this.cardCode !== '')) {
+          $(".selectText").css("color", '#232323')
         }
       }
     },
@@ -395,58 +401,64 @@
       this.applyStatus = this.$route.query.applyStatus;
     },
     mounted() {
-       this.getData();
+      this.getData();
     },
     methods: {
-         getData(){
-            var data= {
-                apply_no: this.applyNo
-            }
-             axios.post(this.ajaxUrl+"/vehicle/getUserInfo" , data)
-             .then(response => {
-                if(response.data.result.rescode == 200){
-                  this.base = response.data.base;
-                  this.person = response.data.person
-                  this.department = response.data.department;
-                  this.appointment = response.data.appointment;
-                  this.appointment.time = moment(this.appointment.time).format('YYYY-MM-DD')
-                  this.approve = response.data.approve;
-                  if(this.applyType == 1){
-                    this.imgData[0].imgUrl =  response.data.person.card_pic;
-                    this.imgData[1].imgUrl =  response.data.person.car_pic
-                    this.imgData[2].imgUrl =  response.data.person.car_pin_pic;
-                      this.$nextTick(() => {
-                          new Viewer(document.getElementById('scaleImg'), {
-                              url: 'src',
-                              navbar:false,
-                              toolbar:true,
-                              loop: true
-                          })
-                      })
-                  }else if(this.applyType == 2){
-                    this.imgDataOne[0].imgUrl =  response.data.department.card_pic;
-                    this.imgDataOne[1].imgUrl =  response.data.department.car_pic
-                    this.imgDataOne[2].imgUrl =  response.data.department.car_pin_pic;
-                      this.$nextTick(() => {
-                          new Viewer(document.getElementById('scaleImg1'), {
-                              url: 'src',
-                              navbar:false,
-                              toolbar:true,
-                              loop: true
-                          })
-                      })
-                  }
-                    console.log(this.imgData)
-                }else{
-                  Toast(response.data.result.resdes)
-                }
-                }, err => {
-                console.log(err);
+      getData() {
+        var data = {
+          apply_no: this.applyNo
+        }
+        axios.post(this.ajaxUrl + "/vehicle/getUserInfo", data)
+          .then(response => {
+            if (response.data.result.rescode == 200) {
+              this.base = response.data.base;
+              this.person = response.data.person
+              this.department = response.data.department;
+              this.appointment = response.data.appointment;
+              this.appointment.time = moment(this.appointment.time).format('YYYY-MM-DD')
+              this.approve = response.data.approve;
+              if (this.applyType == 1) {
+                this.imgData[0].imgUrl = response.data.person.card_pic_min;
+                this.imgData[1].imgUrl = response.data.person.car_pic_min;
+                this.imgData[2].imgUrl = response.data.person.car_pin_pic_min;
+                this.imgData[0].bigUrl = response.data.person.card_pic;
+                this.imgData[1].bigUrl = response.data.person.car_pic
+                this.imgData[2].bigUrl = response.data.person.car_pin_pic;
+                this.$nextTick(() => {
+                  new Viewer(document.getElementById('scaleImg'), {
+                    url: 'data-src',
+                    navbar: false,
+                    toolbar: true,
+                    loop: true
+                  })
                 })
-                .catch((error) => {
-                    console.log(error)
-            })
-        },
+              } else if (this.applyType == 2) {
+                this.imgDataOne[0].imgUrl = response.data.department.card_pic_min;
+                this.imgDataOne[1].imgUrl = response.data.department.car_pic_min;
+                this.imgDataOne[2].imgUrl = response.data.department.car_pin_pic_min;
+                this.imgDataOne[0].bigUrl = response.data.department.card_pic;
+                this.imgDataOne[1].bigUrl = response.data.department.car_pic
+                this.imgDataOne[2].bigUrl = response.data.department.car_pin_pic;
+                this.$nextTick(() => {
+                  new Viewer(document.getElementById('scaleImg1'), {
+                    url: 'data-src',
+                    navbar: false,
+                    toolbar: true,
+                    loop: true
+                  })
+                })
+              }
+              console.log(this.imgData)
+            } else {
+              Toast(response.data.result.resdes)
+            }
+          }, err => {
+            console.log(err);
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
     }
   };
 

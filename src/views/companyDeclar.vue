@@ -132,17 +132,17 @@
 
         .textDetail {
             color: #232323;
-            font-size: 15px;
+            font-size: 14px;
         }
         .textInput {
             text-align: right;
-            font-size: 15px;
+            font-size: 14px;
             color: #232323;
             font-family: Microsoft Yahei;
             text-align: right;
         }
         .selectText {
-            font-size: 15px;
+            font-size: 14px;
             color: #bbb;
             padding-right: 16px;
             font-family: Microsoft Yahei;
@@ -156,7 +156,7 @@
             width: 12px;
             position: absolute;
             right: 12px;
-            top: 22px;
+            top: 18px;
         }
         .tanhaoImg {
             height: 19px;
@@ -342,7 +342,7 @@
             </div>
             <div class="inputBox clear selectBox">
                 <span class="textDetail">电动车整车编码(钢架号)</span>
-                <input type="tel" v-model="pin" class="textInput fr tanInput" placeholder="请输入车架号">
+                <input type="tel" v-model="pin" style='width: 40%;' class="textInput fr tanInput" placeholder="请输入车架号">
                 <img class='tanhaoImg' @click="ShowTwo" src="../assets/images/tanhao.png">
             </div>
             <div class="textBox">
@@ -353,9 +353,9 @@
                 <div class="upload" v-for="(item,index) in imgData" :key="index">
                     <!-- 图片上传控件 -->
                     <div class="load">
-                        <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img">
-                        <input type="file" v-if='isAndroid' capture="camera" @change="uploadIMG($event ,index)">
-                        <input type="file" v-if='!isAndroid' @change="uploadIMG($event ,index)">
+                        <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img" @click="getPhone(index,$event)">
+                        <!--<input type="file" v-if='isAndroid' capture="camera" @change="uploadIMG($event ,index)">-->
+                        <!--<input type="file" v-if='!isAndroid' @change="uploadIMG($event ,index)">-->
                     </div>
                     <div class="phoneText">
                         <span class="inputText">*</span>
@@ -512,7 +512,34 @@
             this.getProvince('area');
             this.getProvince('depart_cred');
             this.getProvince('cred');
-            $(".selectText").css("color", '#bbb')
+            $(".selectText").css("color", '#bbb');
+          var self = this;
+          self.bridge.registerHandler('webviewGetImage', function (data, responseCallback) {//注册客户端主动触发js端
+            self.isShowthree = true;
+            axios.post(self.ajaxUrl + '/vehicle/uploadBaseImage', {
+              image: data.image ? 'data:image/jpeg;base64,'+ data.image : ''
+            })
+              .then(response => {
+                self.isShowthree = false;
+                if (response.data.result.rescode == 200) {
+                  self.imgData[data.position].imgUrl = response.data.url;
+                  if (data.position == 0) {
+                    self.card_pic = response.data.url;
+                  } else if (data.position == 1) {
+                    self.car_pic = response.data.url;
+                  } else if (data.position == 2) {
+                    self.car_pin_pic = response.data.url;
+                  }
+                }
+                // this.area = response.data.list
+              })
+              .catch(err => {
+                console.log(err);
+                self.isShowthree = false;
+              })
+            var responseData = {'rescode': '200'}
+            responseCallback(responseData)
+          })
         },
         methods: {
             //  获取省会或者区域
@@ -569,6 +596,14 @@
                 this.isShow = false;
               }
             },
+          getPhone(index,event) {
+            // event.preventDefault();//取消原来的方法
+            var position= index;
+            console.log(position)
+            this.bridge.callHandler('openCamera', {'position': position}, function (response) {
+              console.log('js调用客户端方法回调传参' + response);
+            });
+          },
             uploadIMG(event, num) {
                 let files = event.target.files || event.dataTransfer.files;
                 if (!files.length) return;
