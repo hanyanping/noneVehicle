@@ -174,6 +174,7 @@ export default {
     };
   },
   created() {
+      // localStorage.setItem('phone','18510822236')
     this.phone =  localStorage.getItem('phone');
   },
   mounted() {

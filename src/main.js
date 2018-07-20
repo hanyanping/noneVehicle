@@ -14,6 +14,7 @@ import 'viewerjs/dist/viewer.css'
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 Vue.prototype.ajaxUrl = '/non_vehicle/';
+
 Vue.use(MintUI);
 /* eslint-disable no-new */
 function setupWebViewJavascriptBridge(callback) {
@@ -46,31 +47,29 @@ function setTitle(title){
   }
 }
 router.beforeEach((to, from, next) => {
-  setTitle(to.meta.title)
-    // var phone = '13444423233';
-    // var userId = '12';
-    // localStorage.setItem('userId',userId);
-    // localStorage.setItem('phone',phone);
-    // setupWebViewJavascriptBridge(function(bridge) {
-    //   if(isAndroid){
-    //       bridge.init(function(message, responseCallback) {
-    //         //log('JS got a message', message)
-    //           var data = { 'Javascript Responds':'Wee!' }
-    //         //log('JS responding with', data)
-    //           responseCallback(data)
-    //       })
-    //   };
-    //     /*保险到期提示 */
-    //   bridge.callHandler('isLogin', '',function(response){
-    //       if(response.isLogin == 'true'){
-    //           var userId = response.userid;
-    //           var phone = response.phoneNum;
-    //           localStorage.setItem('userId',userId);
-    //           localStorage.setItem('phone',phone);
-    //       }
-    //   });
-    // });
-		next()
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android??
+    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios??
+    setTitle(to.meta.title)
+    setupWebViewJavascriptBridge(function(bridge) {//调用原生方法
+      if(isAndroid){
+          bridge.init(function(message, responseCallback) {
+            //log('JS got a message', message)
+              var data = { 'Javascript Responds':'Wee!' }
+            //log('JS responding with', data)
+              responseCallback(data)
+          })
+      };
+      bridge.callHandler('isLogin', '',function(response){
+          if(response.isLogin == 'true'){
+
+          }
+      });
+        Vue.prototype.bridge = bridge;
+        alert('bridge'+bridge)
+    });
+    setTimeout(next(),13)
+
 })
 new Vue({
   el: '#app',

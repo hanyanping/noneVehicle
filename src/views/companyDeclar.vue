@@ -608,9 +608,11 @@
                         }
                     }, err => {
                         console.log(err);
+                        this.isShowthree = false;
                     })
                     .catch((error) => {
                         console.log(error)
+                        this.isShowthree = false;
                     })
             },
             // 压缩图片
