@@ -499,6 +499,16 @@
                 } else if (data.position) {
                     self.car_pin_pic = data.image;
                 }
+                axios.post(this.ajaxUrl + '/vehicle/uploadBaseImage', {
+                    image: data.image ? data.image : ''
+                })
+                    .then(response => {
+                        console.log(response)
+                        // this.area = response.data.list
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
                 // var imgalt = $('div[class=img_f][data=' + data.position + ']').find('img');
                 // imgalt.attr('src', 'data:image/jpeg;base64,' + data.image);
                 // $('div[class=img_f][data=' + data.position + ']').find('input').val(data.image)
