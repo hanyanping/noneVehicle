@@ -83,7 +83,6 @@ router.beforeEach((to, from, next) => {
             localStorage.setItem('userId', userId);
             localStorage.setItem('phone', phone)
             Vue.prototype.bridge = bridge;
-            alert(userId)
             setTimeout(next(), 13)
           }
         });

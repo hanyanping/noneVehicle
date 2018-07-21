@@ -479,7 +479,6 @@
         },
         mounted() {
             this.link_phone = localStorage.getItem('phone');
-            alert(this.link_phone)
             this.user_id = localStorage.getItem('userId')
             this.getArea();
             this.getProvince('province');
@@ -576,8 +575,6 @@
                 });
             },
             uploadIMG(event, num) {
-                console.log(num)
-                alert(4444)
                 let files = event.target.files || event.dataTransfer.files;
                 if (!files.length) {
                     this.isShowthree = false;
@@ -594,7 +591,6 @@
             imgPreview(file, callback, num) {
                 let self = this;
                 //判断支不支持FileReader
-                alert(file)
                 if (!file || !window.FileReader) return;
                 var formData = new FormData();
                 formData.append("image", file);
@@ -608,7 +604,6 @@
                     .then(response => {
                         this.isShowthree = false;
                         console.log(response);
-                        alert(response.data.url)
                         self.imgData[num].imgUrl = response.data.url;
                         if (num == 0) {
                             self.card_pic = response.data.url;

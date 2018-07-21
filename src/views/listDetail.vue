@@ -357,11 +357,11 @@
     <div class="textBox" v-if='applyStatus == "已签发"' style='text-align: center;'>
       <span class="text">临时编号： {{base.applyCarNo}}</span>
     </div>
-    <div class="textBox" v-if='applyStatus == "审核不通过"'>
+    <div class="textBox" v-if='applyStatus == "审核不通过" || applyStatus == "审核失败"'>
       <span class="line">|</span>
       <span class="text">审核结果</span>
     </div>
-    <div class="inputBox clear" v-if='applyStatus == "审核不通过"'>
+    <div class="inputBox clear" v-if='applyStatus == "审核不通过" || applyStatus == "审核失败"'>
       <span class="textInput" style='color: #232323;'>{{approve.approveResult}}</span>
     </div>
   </div>
