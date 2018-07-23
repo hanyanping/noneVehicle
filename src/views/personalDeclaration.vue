@@ -488,6 +488,9 @@
             var self = this;
             self.bridge.registerHandler('webviewGetImage', function (data, responseCallback) {//注册客户端主动触发js端
               self.isShowthree = true;
+                if (data.position == 2) {
+                    self.car_pin_pic = 'data:image/jpeg;base64,'+ data.image;
+                }
               axios.post(self.ajaxUrl + '/vehicle/uploadBaseImage', {
                     image: data.image ? 'data:image/jpeg;base64,'+ data.image : ''
                 })
@@ -500,9 +503,10 @@
                           console.log(self.card_pic)
                         } else if (data.position == 1) {
                           self.car_pic = response.data.url;
-                        } else if (data.position == 2) {
-                          self.car_pin_pic = response.data.url;
                         }
+                        // else if (data.position == 2) {
+                        //   self.car_pin_pic = response.data.url;
+                        // }
                       }
                         // this.area = response.data.list
                     })
