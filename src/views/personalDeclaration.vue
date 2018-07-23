@@ -336,7 +336,8 @@
                 <div class="upload" v-for="(item,index) in imgData" :key="index">
                     <!-- 图片上传控件 -->
                     <div class="load">
-                        <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img" @click="getPhone(index,$event)">
+                        <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img"
+                             @click="getPhone(index,$event)">
                         <!--<form enctype="multipart/form-data">-->
                         <!--<input type="file"  name="image" v-if='isAndroid' capture="camera" @change="uploadIMG($event ,index)">-->
                         <!--<input type="file"  name="image" v-if='!isAndroid' @change="uploadIMG($event ,index)">-->
@@ -348,6 +349,9 @@
                     </div>
                 </div>
             </div>
+            <!--<div id="bigImg">-->
+                <!--<img style='height:100px;width: 100px;' :data-src="phone" :src="phone" >-->
+            <!--</div>-->
             <div class="submitBox">
                 <div class="submit" @click="submit">提交信息</div>
             </div>
@@ -397,11 +401,12 @@
     import {Toast} from 'mint-ui';
     import axios from 'axios';
     import * as regAction from '@/utils/reg';
-
+    import Viewer from 'viewerjs';
     export default {
         props: ["uploadUrl"],
         data() {
             return {
+                phone: '',
                 isShowthree: false,
                 isSure: false,
                 isShow: true,
@@ -487,32 +492,27 @@
             $(".selectText").css("color", '#bbb');
             var self = this;
             self.bridge.registerHandler('webviewGetImage', function (data, responseCallback) {//注册客户端主动触发js端
-              self.isShowthree = true;
-                if (data.position == 2) {
-                    self.car_pin_pic = 'data:image/jpeg;base64,'+ data.image;
-                }
-              axios.post(self.ajaxUrl + '/vehicle/uploadBaseImage', {
-                    image: data.image ? 'data:image/jpeg;base64,'+ data.image : ''
+                self.isShowthree = true;
+                axios.post(self.ajaxUrl + '/vehicle/uploadBaseImage', {
+                    image: data.image ? 'data:image/jpeg;base64,' + data.image : ''
                 })
                     .then(response => {
-                      self.isShowthree = false;
-                      if (response.data.result.rescode == 200) {
-                        self.imgData[data.position].imgUrl = response.data.url;
-                        if (data.position == 0) {
-                          self.card_pic = response.data.url;
-                          console.log(self.card_pic)
-                        } else if (data.position == 1) {
-                          self.car_pic = response.data.url;
+                        self.isShowthree = false;
+                        if (response.data.result.rescode == 200) {
+                            self.imgData[data.position].imgUrl = response.data.url;
+                            if (data.position == 0) {
+                                self.card_pic = response.data.url;
+                                console.log(self.card_pic)
+                            } else if (data.position == 1) {
+                                self.car_pic = response.data.url;
+                            } else if (data.position == 2) {
+                                self.car_pin_pic = response.data.url;
+                            }
                         }
-                        // else if (data.position == 2) {
-                        //   self.car_pin_pic = response.data.url;
-                        // }
-                      }
-                        // this.area = response.data.list
                     })
                     .catch(err => {
                         console.log(err);
-                      self.isShowthree = false;
+                        self.isShowthree = false;
                     })
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
@@ -570,9 +570,9 @@
                     this.isShow = false;
                 }
             },
-            getPhone(index,event) {
+            getPhone(index, event) {
                 // event.preventDefault();//取消原来的方法
-                var position= index;
+                var position = index;
                 console.log(position)
                 this.bridge.callHandler('openCamera', {'position': position}, function (response) {
                     console.log('js调用客户端方法回调传参' + response);
