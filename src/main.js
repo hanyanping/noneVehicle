@@ -86,11 +86,8 @@ router.beforeEach((to, from, next) => {
             setTimeout(next(), 13)
           }
         });
-
       });
-
     }
-
   } else {
     next()
   }

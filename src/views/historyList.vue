@@ -151,7 +151,7 @@ export default {
   },
     mounted(){
         this.userId = localStorage.getItem('userId');
-        this.userId = '8C4C15479B0343ECBBA90540E059156D'
+        // this.userId = '8C4C15479B0343ECBBA90540E059156D'
         this.getDataList()
     },
     methods: {

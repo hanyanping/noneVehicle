@@ -183,12 +183,11 @@
         },
         mounted() {
             this.phone = localStorage.getItem('phone');
-            alert(this.phone)
             //  获取用户类型
             this.getUserType();
             var self = this;
             self.bridge.registerHandler('getQRCodeScanResult', function (data, responseCallback) {//注册客户端主动触发js端
-                alert(data.qrcodeScanResult)
+                window.location.href= data.qrcodeScanResult;
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
             })

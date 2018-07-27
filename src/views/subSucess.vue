@@ -69,8 +69,8 @@ export default {
   methods: {
     getCode() {
       var qrcode = new QRCode("qrcode", {
-       // text: "https://mock.zhongchebaolian.com/vehicle/showResult?apply_no="+this.apply_no+"&user_id="+this.user_id,
-        text: "http://10.2.8.59:8081/vehicle/showResult?apply_no="+this.apply_no+"&user_id="+this.user_id,
+       text: "https://mock.zhongchebaolian.com/vehicle/showResult?apply_no="+this.apply_no+"&user_id="+this.user_id,
+       //  text: "http://10.2.8.59:8081/vehicle/showResult?apply_no="+this.apply_no+"&user_id="+this.user_id,
         width: 180,
         height: 180,
         colorDark: "#000000",
