@@ -271,7 +271,7 @@
                 <img class='selectImg' src="../assets/images/down.png">
                 <select placeholder="请选择证件名称" v-model='cre_name' class="fr selectText selectText1">
                     <option value="" style="color: #bbb;">请选择证件名称</option>
-                    <option v-for="item in cred" :value="item.label">{{item.label}}</option>
+                    <option v-for="item in cred" :value="item.label" :key='item'>{{item.label}}</option>
                 </select>
             </div>
             <div class="inputBox clear">
@@ -285,7 +285,7 @@
                 <img class='selectImg' src="../assets/images/down.png">
                 <select class="fr selectText2 selectText" v-model="card_address">
                     <option value="">请选择身份证地址所在省份</option>
-                    <option v-for="item in province" :value="item.label">{{item.label}}</option>
+                    <option v-for="item in province" :value="item.label" :key='item'>{{item.label}}</option>
                 </select>
             </div>
             <div class="inputBox clear">
@@ -299,7 +299,7 @@
                 <img class='selectImg' src="../assets/images/down.png">
                 <select class="fr selectText selectText3" v-model="link_area">
                     <option value="" style="color: #bbb;">请选择联系地址行政区</option>
-                    <option v-for="item in area" :value="item.label">{{item.label}}</option>
+                    <option v-for="item in area" :value="item.label" :key='item'>{{item.label}}</option>
                 </select>
             </div>
             <div class="inputBox clear">

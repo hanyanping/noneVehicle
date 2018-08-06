@@ -311,7 +311,7 @@
         <span class="text">照片信息</span>
       </div>
       <div class="flexBetween" id="scaleImg1">
-        <div class="upload" v-for="(item,index) in imgDataOne">
+        <div class="upload" v-for="(item,index) in imgDataOne" :key='(item,index)'>
           <div class="cha" v-show="(item.imgUrl)">
             <img :src="item.imgUrl" :data-src="item.bigUrl">
           </div>
@@ -379,7 +379,7 @@
         <span class="text">照片信息</span>
       </div>
       <div class="flexBetween" id="scaleImg">
-        <div class="upload" v-for="(item,index) in imgData">
+        <div class="upload" v-for="(item,index) in imgData" :key='(item,index)'>
           <div class="cha" v-show="(item.imgUrl)">
             <img :src="item.imgUrl" :data-src="item.bigUrl">
           </div>
@@ -476,7 +476,7 @@
       <div class='codeInput'>
         <select   v-if='ispassone' v-model='approve_result' class="fr selectText selectText1">
           <option value="" style="color: #bbb;">请选择不通过理由</option>
-          <option v-for="item in result" :value="item.label" >{{item.label}}</option>
+          <option v-for="item in result" :value="item.label" :key='(item)'>{{item.label}}</option>
         </select>
       </div>
       <div class="submitBox">

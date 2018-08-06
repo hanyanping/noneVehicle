@@ -17,7 +17,9 @@ import erweima from '@/views/erweima'
 import subSucess from '@/views/subSucess'
 import showResult from '@/views/showResult'
 import regular from '@/components/regular'
-
+import onlinesublist from '@/views/onlinesublist'
+import searchcar from '@/views/searchcar'
+import onlinechoose from '@/views/onlinechoose'
 Vue.use(Router)
 
 export default new Router({
@@ -41,6 +43,14 @@ export default new Router({
             }
         },
         {
+            path: '/onlinechoose',
+            name: 'onlinechoose',
+            component: onlinechoose,
+            meta: {
+                title: '过渡期电动自行车'
+            }
+        },
+        {
             path: '/regList',
             name: 'regList',
             component: regList,
@@ -56,12 +66,29 @@ export default new Router({
                 title: '申请成功'
             }
         },
+
+        {
+            path: '/searchcar',
+            name: 'searchcar',
+            component: searchcar,
+            meta: {
+                title: '过渡期电动自行车'
+            }
+        },
         {
             path: '/companyDeclar',
             name: 'companyDeclar',
             component: companyDeclar,
             meta: {
                 title: '单位预录入'
+            }
+        },
+        {
+            path: '/onlinesublist',
+            name: 'onlinesublist',
+            component: onlinesublist,
+            meta: {
+                title: '非机动车申请记录'
             }
         },
         {

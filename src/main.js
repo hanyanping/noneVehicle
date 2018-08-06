@@ -61,7 +61,7 @@ router.beforeEach((to, from, next) => {
   var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android??
   var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios??
   setTitle(to.meta.title)
-  // next()
+  next()//开发
   if (to.name == 'guild') {
     if (Vue.prototype.bridge) {
       next()
@@ -74,8 +74,7 @@ router.beforeEach((to, from, next) => {
             //log('JS responding with', data)
             responseCallback(data)
           })
-        }
-        ;
+        };
         bridge.callHandler('isLogin', '', function (response) {
           if (response.isLogin == 'true') {
             var userId = response.userid;
