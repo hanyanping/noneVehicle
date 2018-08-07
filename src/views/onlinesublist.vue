@@ -161,6 +161,9 @@ export default {
       this.$router.push({ path: '/subscribe', query: { applyNo: applyNo } })
     },
     goDetail(applyNo, applyType, applyStatus) {
+      applyNo = 'a9884595870c4f74bca1fe07dbc1ad75'
+      applyType = '1'
+      applyStatus = '预约成功'
       this.$router.push({ path: '/listDetail', query: { applyNo: applyNo, applyType: applyType, applyStatus: applyStatus } })
     },
     getDataList() {

@@ -188,7 +188,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      openSimple: true,
+      openSimple: false,
       userType: "",
       phone: ""
     };
