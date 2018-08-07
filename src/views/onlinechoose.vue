@@ -60,7 +60,9 @@ import Viewer from 'viewerjs';
         }
         
       },
-      gosubscrible(){},
+      gosubscrible(){
+          this.$router.push({path:'/personsubscribe'})
+      },
       getApproveresult(type) {
         axios.post(this.ajaxUrl + '/vehicle/dict', {
           type: type

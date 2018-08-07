@@ -156,7 +156,7 @@ export default {
     },
     methods: {
         goSubcode(applyNo) {
-          this.$router.push({ path: '/subSucess', query: { apply_no: applyNo }})
+         this.$router.push({ path: '/subscribecode', query: { apply_no: applyNo,code:0 }})
     },
     goApply(applyNo,applyType){
             console.log(applyType)

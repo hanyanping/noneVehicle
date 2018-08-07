@@ -20,6 +20,9 @@ import regular from '@/components/regular'
 import onlinesublist from '@/views/onlinesublist'
 import searchcar from '@/views/searchcar'
 import onlinechoose from '@/views/onlinechoose'
+import personsubscribe from '@/views/personsubscribe'
+import subscribecode from '@/views/subscribecode'
+import onlineverify from '@/views/onlineverify'
 Vue.use(Router)
 
 export default new Router({
@@ -47,7 +50,31 @@ export default new Router({
             name: 'onlinechoose',
             component: onlinechoose,
             meta: {
+                title: '扫描结果显示'
+            }
+        },
+        {
+            path: '/onlineverify',
+            name: 'onlineverify',
+            component: onlineverify,
+            meta: {
                 title: '过渡期电动自行车'
+            }
+        },
+        {
+            path: '/personsubscribe',
+            name: 'personsubscribe',
+            component: personsubscribe,
+            meta: {
+                title: '个人申报（预约）'
+            }
+        },
+        {
+            path: '/subscribecode',
+            name: 'subscribecode',
+            component: subscribecode,
+            meta: {
+                title: '预约成功'
             }
         },
         {

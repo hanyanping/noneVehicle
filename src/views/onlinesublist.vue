@@ -147,7 +147,7 @@ export default {
     },
     methods: {
         goSubcode(applyNo) {
-          this.$router.push({ path: '/subSucess', query: { apply_no: applyNo }})
+          this.$router.push({ path: '/subscribecode', query: { apply_no: applyNo,code:1 }})
     },
     goApply(applyNo,applyType){
             console.log(applyType)
@@ -164,7 +164,7 @@ export default {
       this.$router.push({ path: '/listDetail', query: { applyNo: applyNo, applyType: applyType, applyStatus: applyStatus } })
     },
     getDataList() {
-         this.list = [{applyTime: '2018-08-24',name: '张三',code: '344455555555',type:1},{applyTime: '2018-09-04',name: '李四',code: '6644775555555',type:1},{applyTime: '2018-08-12',name: '花朵的',code: '611775555555',type:2}]
+         this.list = [{applyTime: '2018-08-24',name: '张三',code: '344455555555',type:1,'applyNo':'344fffrr'},{applyTime: '2018-09-04',name: '李四',code: '6644775555555',type:1},{applyTime: '2018-08-12',name: '花朵的',code: '611775555555',type:2}]
       var data = {
         pageSize: this.pageSize,
         pageNum: this.pageNum,

@@ -228,7 +228,7 @@ export default {
             Toast(resdes);
           } else {
             this.userType = response.data.type;
-            alert(this.userType);
+          
           }
         })
         .catch(err => {
@@ -238,7 +238,6 @@ export default {
     },
     saoCode() {
       this.bridge.callHandler("invokeQRCodeScan", "", function(response) {
-        alert(response);
         console.log("js调用客户端方法回调传参" + response);
       });
     },
