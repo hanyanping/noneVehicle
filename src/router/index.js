@@ -74,7 +74,7 @@ export default new Router({
             name: 'subscribecode',
             component: subscribecode,
             meta: {
-                title: '预约成功'
+                title: '预约二维码'
             }
         },
         {

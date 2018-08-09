@@ -96,7 +96,7 @@
 
     .submitBox {
         background: #fff;
-        padding: 30px;
+        padding: 40px;
         .submit {
             height: 40px;
             width: 120px;
@@ -285,11 +285,11 @@
             <div>
             <div class="inputBox clear">
                 <span class="textDetail">预约办理地点：</span>
-                <span class="textInput">北京市朝阳区</span>
+                <span class="textInput">{{appointment.address}}</span>
             </div>
             <div class="inputBox clear">
                 <span class="textDetail">预约办理时间：</span>
-                <span class="textInput">2018-08-25</span>
+                <span class="textInput">{{appointment.time}}</span>
             </div>
             </div>
             <div class="textBox">
@@ -342,7 +342,7 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">联系电话</span>
-                <input type="tel" class="textInput fr" maxlength="11" placeholder="请输入联系电话" v-model="link_phone">
+                <input type="tel" class="textInput fr"  readonly v-model="link_phone">
             </div>
             <div class="inputBox clear">
                 <label class="inputText">*</label>
@@ -424,6 +424,8 @@
         props: ["uploadUrl"],
         data() {
             return {
+                appointment: {},
+                person: {},
                 apply_car_no: '',
                 phone: '',
                 isShowthree: false,
@@ -432,8 +434,8 @@
                 isShowOne: false,
                 isShowTwo: false,
                 name: '',
-                cre_name: '身份证',
-                cre_code: '423343234556542',
+                cre_name: '',
+                cre_code: '',
                 card_address: '',
                 card_detail_address: '',
                 link_area: '',
@@ -471,14 +473,6 @@
                 }
                 $(".selectText3").find("option").css("color", "#232323")
             },
-            'cre_name': function () {
-                if ((this.cre_name !== '')) {
-                    $(".selectText1").css("color", '#232323')
-                } else {
-                    $(".selectText1").css("color", '#bbb')
-                }
-                $(".selectText1").find("option").css("color", "#232323")
-            },
             'card_address': function () {
                 if ((this.card_address !== '')) {
                     $(".selectText2").css("color", '#232323')
@@ -499,11 +493,12 @@
             if (isiOS) {
                 this.isAndroid = false;
             }
-
+            this.apply_no = this.$route.query.apply_no;
+            this.user_id = this.$route.query.user_id;
+            this.link_phone = this.$route.query.phone;
         },
         mounted() {
-            // this.link_phone = localStorage.getItem('phone');
-            this.user_id = localStorage.getItem('userId')
+             this.getData();
             this.getArea();
             this.getProvince('province');
             this.getProvince('area');
@@ -538,6 +533,63 @@
             })
         },
         methods: {
+            getData(){
+        var data= {
+          apply_no: this.apply_no
+        }
+        axios.post(this.ajaxUrl+"/vehicle/getUserInfo" , data)
+          .then(response => {
+            console.log(response);
+            if(response.data.result.rescode == 200){
+              this.base = response.data.base;
+              this.applyType = this.base.applyType;
+              this.person = response.data.person;
+              this.cre_name = this.person.cre_name;
+              this.cre_code = this.person.cre_code;
+              this.department = response.data.department;
+              this.appointment = response.data.appointment;
+              this.appointment.time = moment(this.appointment.time).format('YYYY-MM-DD')
+              this.approve = response.data.approve;
+              if(this.applyType == 1){
+                this.imgData[0].imgUrl =  response.data.person.card_pic_min;
+                this.imgData[1].imgUrl =  response.data.person.car_pic_min;
+                this.imgData[2].imgUrl =  response.data.person.car_pin_pic_min;
+                this.imgData[0].bigUrl =  response.data.person.card_pic;
+                this.imgData[1].bigUrl =  response.data.person.car_pic
+                this.imgData[2].bigUrl =  response.data.person.car_pin_pic;
+                  this.$nextTick(() => {
+                      new Viewer(document.getElementById('scaleImg'), {
+                          url: 'data-src',
+                          navbar:false,
+                          toolbar:true,
+                          loop: true
+                      })
+                  })
+
+              }else if(this.applyType == 2){
+                this.imgDataOne[0].imgUrl =  response.data.department.card_pic_min;
+                this.imgDataOne[1].imgUrl =  response.data.department.car_pic_min;
+                this.imgDataOne[2].imgUrl =  response.data.department.car_pin_pic_min;
+                this.imgDataOne[0].bigUrl =  response.data.department.card_pic;
+                this.imgDataOne[1].bigUrl =  response.data.department.car_pic
+                this.imgDataOne[2].bigUrl =  response.data.department.car_pin_pic;
+                  this.$nextTick(() => {
+                      new Viewer(document.getElementById('scaleImg1'), {
+                          url: 'data-src',
+                          navbar:false,
+                          toolbar:true,
+                          loop: true
+                      })
+                  })
+              }
+            }
+          }, err => {
+            console.log(err);
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
             //  获取省会或者区域
             getArea(id) {
                 axios.post(this.ajaxUrl + 'vehicle/area', {
@@ -744,6 +796,10 @@
                     Toast('请上传车架号照片')
                     return;
                 }
+                if(this.apply_car_no == ''){
+                    Toast('请输入临时编号')
+                    return;
+                }
                 var data = {
                     "user_id": this.user_id,
                     "name": this.name,
@@ -757,9 +813,11 @@
                     "brand_model": this.brand_model,
                     "color": this.color,
                     "pin": this.pin,
-                    "card_pic": this.card_pic,
+                    "card_pic": 'this.card_pic',
                     "car_pic": this.car_pic,
-                    "car_pin_pic": this.car_pin_pic
+                    "car_pin_pic": this.car_pin_pic,
+                    'apply_no': this. apply_no,
+                    'apply_car_no': this.apply_car_no
                 }
                 console.log(JSON.stringify(data));
                 // 发送请求;
@@ -773,7 +831,7 @@
                             Toast(resdes);
                         } else {
                             //  成功跳转到申报成功页面
-                            this.$router.push('/declareSuccess');
+                            this.$router.push('/pass');
                         }
                     }, err => {
                         console.log(err);

@@ -245,8 +245,8 @@ export default {
       this.$router.push({ path: "/searchcar",query:{source:0} });
     },
     goDanwei() {
-      this.$router.push({path:'/companyDeclar'})
-      // this.$router.push({ path: "/searchcar",query:{source:1} });
+      // this.$router.push({path:'/companyDeclar'})
+      this.$router.push({ path: "/searchcar",query:{source:1} });
     },
     goHistory() {
       this.$router.push({ path: "/historyList" });

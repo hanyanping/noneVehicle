@@ -82,22 +82,29 @@ $baseFontSize:75;
       <div class="listBox" v-for="(item, index) in list" :key="index">
         <div class="flexBetween listTop">
           <span>申请时间 : {{item.applyTime}}</span>
-          <span  class="applyStatus blue">预约成功</span>
+          <span v-if="item.status == '待审核'" class="applyStatus origin">待审核</span>
+          <span v-if="item.status == '待预约'" class="applyStatus green">待预约</span>
+          <span v-if="item.status == '预约成功'" class="applyStatus blue">预约成功</span>
+          <span v-if="item.status == '审核不通过'" class="applyStatus nopass">审核不通过</span>
+          <span v-if="item.status == '审核失败'" class="applyStatus nopass">审核失败</span>
+          <span v-if="item.status == '已签发'" class="already">已签发</span>
         </div>
         <div class="listMiddle flexBetween" v-if="item.type == 1" @click='goDetail(item.applyNo,item.type,item.status)'>
           <div class="flexLeft">
             <img class='applayIcon godetail' src="../assets/images/geren.png">
             <div class='info'>
-              <p>所有权：个人
+              <p>申请类型：个人
               </p>
-              <p>所有人：{{item.name}}</p>
+              <p>证件名称：{{item.creName}}</p>
               <p>证件号码：
                 <span>{{item.code}}</span>
               </p>
             </div>
           </div>
           <div class="flexRight">
-            <img @click.stop='goSubcode(item.applyNo)'  style='height:30px;width:30px;' src='../assets/images/look.png'>
+            <span class="goSub" @click.stop='goSubscible(item.applyNo)' v-if="item.status == '待预约'">立即预约</span>
+            <span class="goSub" @click.stop='goApply(item.applyNo,item.type)' v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
+            <img @click.stop='goSubcode(item.appointmentTime,item.applyNo)' v-if="item.status =='预约成功'" style='height:30px;width:30px;' src='../assets/images/look.png'>
             <img class='godetail' src="../assets/images/right.png">
           </div>
         </div>
@@ -111,7 +118,9 @@ $baseFontSize:75;
             </div>
           </div>
           <div class="flexRight">
-            <img @click.stop='goSubcode(item.applyNo)' style='height:30px;width:30px;' src='../assets/images/look.png'>
+             <span class="goSub" @click.stop='goSubscible(item.applyNo)' v-if="item.status == '待预约'">立即预约</span>
+            <span class="goSub" @click.stop='goApply(item.applyNo,item.type)' v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
+            <img @click.stop='goSubcode(item.appointmentTime,item.applyNo)' v-if="item.status =='预约成功'" style='height:30px;width:30px;' src='../assets/images/look.png'>
             <img class='godetail' src="../assets/images/right.png">
           </div>
         </div>
@@ -146,11 +155,12 @@ export default {
         this.getDataList()
     },
     methods: {
-        goSubcode(applyNo) {
+        goSubcode(appointmentTime,applyNo) {
+          localStorage.setItem('appointmentTime',appointmentTime);
+          
           this.$router.push({ path: '/subscribecode', query: { apply_no: applyNo,code:1 }})
     },
     goApply(applyNo,applyType){
-            console.log(applyType)
       if(applyType == 1){
           this.$router.push({path:'/personalDeclaration'})
       }else if(applyType == 2){
@@ -161,17 +171,14 @@ export default {
       this.$router.push({ path: '/subscribe', query: { applyNo: applyNo } })
     },
     goDetail(applyNo, applyType, applyStatus) {
-      applyNo = 'a9884595870c4f74bca1fe07dbc1ad75'
-      applyType = '1'
-      applyStatus = '预约成功'
       this.$router.push({ path: '/listDetail', query: { applyNo: applyNo, applyType: applyType, applyStatus: applyStatus } })
     },
     getDataList() {
-         this.list = [{applyTime: '2018-08-24',name: '张三',code: '344455555555',type:1,'applyNo':'344fffrr'},{applyTime: '2018-09-04',name: '李四',code: '6644775555555',type:1},{applyTime: '2018-08-12',name: '花朵的',code: '611775555555',type:2}]
       var data = {
         pageSize: this.pageSize,
         pageNum: this.pageNum,
-        userId: this.userId
+        userId: this.userId,
+        type: 2
       }
       axios.post(this.ajaxUrl + "vehicle/userList", data)
         .then(response => {

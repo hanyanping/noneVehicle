@@ -104,7 +104,7 @@ $baseFontSize:75;
           <div class="flexRight">
             <span class="goSub" @click.stop='goSubscible(item.applyNo)' v-if="item.status == '待预约'">立即预约</span>
             <span class="goSub" @click.stop='goApply(item.applyNo,item.type)' v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
-            <img @click.stop='goSubcode(item.applyNo)' v-if="item.status =='预约成功'" style='height:30px;width:30px;' src='../assets/images/look.png'>
+            <img @click.stop='goSubcode(item.appointmentTime,item.applyNo)' v-if="item.status =='预约成功'" style='height:30px;width:30px;' src='../assets/images/look.png'>
             <img class='godetail' src="../assets/images/right.png">
           </div>
         </div>
@@ -120,7 +120,7 @@ $baseFontSize:75;
           <div class="flexRight">
              <span class="goSub" @click.stop='goSubscible(item.applyNo)' v-if="item.status == '待预约'">立即预约</span>
             <span class="goSub" @click.stop='goApply(item.applyNo,item.type)' v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
-            <img @click.stop='goSubcode(item.applyNo)' v-if="item.status =='预约成功'" style='height:30px;width:30px;' src='../assets/images/look.png'>
+            <img @click.stop='goSubcode(item.appointmentTime,item.applyNo)' v-if="item.status =='预约成功'" style='height:30px;width:30px;' src='../assets/images/look.png'>
             <img class='godetail' src="../assets/images/right.png">
           </div>
         </div>
@@ -155,7 +155,8 @@ export default {
         this.getDataList()
     },
     methods: {
-        goSubcode(applyNo) {
+        goSubcode(appointmentTime,applyNo) {
+           localStorage.setItem('appointmentTime',appointmentTime);
          this.$router.push({ path: '/subscribecode', query: { apply_no: applyNo,code:0 }})
     },
     goApply(applyNo,applyType){
@@ -176,7 +177,8 @@ export default {
       var data = {
         pageSize: this.pageSize,
         pageNum: this.pageNum,
-        userId: this.userId
+        userId: this.userId,
+        type: 1
       }
       axios.post(this.ajaxUrl + "vehicle/userList", data)
         .then(response => {

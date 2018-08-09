@@ -496,7 +496,7 @@
     props: ["uploadUrl"],
     data() {
       return {
-          isShowthree: false,
+        isShowthree: false,
         img: '../../static/takephone.png',
         ispass: true,
         ispassone: false,

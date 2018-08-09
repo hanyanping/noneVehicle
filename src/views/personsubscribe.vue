@@ -174,6 +174,7 @@ export default {
     this.getArea(this.parentId);
     this.apply_no = this.$route.query.applyNo;
      this.getProvince('cred');
+      this.user_id = localStorage.getItem('userId');
   },
   mounted() {
     if (!this.parantValue) {
@@ -306,14 +307,13 @@ export default {
       } else if (this.pickerValueTwo == "") {
         Toast("请选择预约时间");
       } else {
-        this.$router.push({
-                  path: "/subSucess",
-                  query: { apply_no: this.apply_no }
-                }); //跳到预约成功页面
         var data = {
           apply_no: this.apply_no,
           address: this.address,
-          time: this.pickerValueTwo
+          time: this.pickerValueTwo,
+           user_id:this.user_id,
+           cre_name: this.cre_name,
+           cre_code: this.cre_code
         };
         axios.post(this.ajaxUrl + "/vehicle/appointment", data)
           .then(

@@ -46,7 +46,6 @@
 
     },
     created(){
-      document.getElementsByTagName('title')[0].innerHTML = '申请成功';
     },
     methods:{
       goGuild(){

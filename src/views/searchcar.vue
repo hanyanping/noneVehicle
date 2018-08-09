@@ -95,7 +95,7 @@
                 </tr>
                  <tr v-for="(item,index) in tableList" :key='(item,index)'>
                     <td>{{index+1}}</td>
-                     <td>{{item.code}}</td>
+                     <td>{{item.label}}</td>
                 </tr>
             </table>
         </div>
@@ -143,15 +143,24 @@ import Viewer from 'viewerjs';
         },
         search(){
             if(this.inputtext){
-                this.showResult = true;
-                this.noresult = false;
-                this.tableList = [{code:'京123456'},{code:'冀345667'},{code:'京12356'},{code:'京66666'}];
-                if(this.tableList.length == 0){
-                    this.showResult = false;
-                     this.noresult = true;
-                }
+                   axios.post(this.ajaxUrl + '/vehicle/dict', {
+                        type: 'bikeType',
+                        match: this.inputtext
+                     })
+                    .then(response => {
+                         this.tableList = response.data.list;
+                        if(this.tableList.length == 0 ){
+                            this.showResult = false;
+                            this.noresult = true;
+                        }else{
+                            this.showResult = true;
+                            this.noresult = false;
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
             }else{
-               
                Toast('请输入搜索内容') 
             }
         },

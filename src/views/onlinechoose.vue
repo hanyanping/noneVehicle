@@ -22,7 +22,7 @@
             <img @click='goapplay' class='onlineimg' src='../assets/images/gonglue.png'>
             <p >线上申请</p>
          </div>
-         <div class='onlinetext'>
+         <div class='onlinetext' v-if='source == 0'>
             <img @click='gosubscrible' class='onlineimg' src='../assets/images/guanli.png'>
             <p>线上预约</p>
          </div>
@@ -38,14 +38,14 @@ import Viewer from 'viewerjs';
     props: ["uploadUrl"],
     data() {
       return {
-        
+        source: ''
       };
     },
     watch: {
   
     },
     created() {
-        
+        this.source =  this.$route.query.source;
     },
     mounted() {
   
