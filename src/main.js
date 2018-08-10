@@ -62,7 +62,7 @@ router.beforeEach((to, from, next) => {
   var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios??
   setTitle(to.meta.title)
   // localStorage.setItem('phone', '17600220760')
-  // next()//开发
+  next()//开发
   if (to.name == 'guild') {
     if (Vue.prototype.bridge) {
       next()

@@ -289,8 +289,8 @@
                 </select>
             </div>
             <div class="inputBox clear">
-                <label class="inputText">*</label>
-                <span class="textDetail">证件详细地址</span>
+                <!-- <label class="inputText">*</label> -->
+                <!-- <span class="textDetail">证件详细地址</span> -->
                 <input v-model="card_detail_address" type="text" class="textInput fr" placeholder="请输入证件详细地址">
             </div>
             <div class="inputBox clear selectBox">
@@ -303,8 +303,8 @@
                 </select>
             </div>
             <div class="inputBox clear">
-                <label class="inputText">*</label>
-                <span class="textDetail">联系地址</span>
+                <!-- <label class="inputText">*</label> -->
+                <!-- <span class="textDetail">联系地址</span> -->
                 <input type="text" class="textInput fr" v-model="link_address" placeholder="请输入联系地址">
             </div>
             <div class="inputBox clear">

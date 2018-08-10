@@ -204,7 +204,20 @@ export default {
       responseCallback
     ) {
       //注册客户端主动触发js端
-      window.location.href = data.qrcodeScanResult;
+       var apply_noindex = data.qrcodeScanResult.indexOf('apply_no')+9;
+        var user_idindex = data.qrcodeScanResult.indexOf('user_id')-1;
+        console.log(apply_no,user_id,phone)
+        if(data.qrcodeScanResult.indexOf('onlineverify')>0){//线上申请
+          var phoneindex = data.qrcodeScanResult.indexOf('phone')-1;
+            var apply_no = data.qrcodeScanResult.substring(apply_noindex,user_idindex);
+            var user_id = data.qrcodeScanResult.substring(user_idindex+9,phoneindex);
+            var phone = data.qrcodeScanResult.substring(phoneindex+7);
+            self.$router.push({path:'/onlineverify',query:{apply_no:apply_no,user_id:user_id,phone:phone}})
+        }else if(data.qrcodeScanResult.indexOf('showResult')>0){
+            var apply_no = data.qrcodeScanResult.substring(apply_noindex,user_idindex);
+            var user_id = data.qrcodeScanResult.substring(user_idindex+9);
+            self.$router.push({path:'/showResult',query:{apply_no:apply_no,user_id:user_id}})
+        }
       var responseData = { rescode: "200" };
       responseCallback(responseData);
     });

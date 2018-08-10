@@ -253,25 +253,41 @@
         }
     }
      .codeInput{
-         padding-top: 30px;
-    background: #fff;
-    width: 100%;
-    height: 40px;
-    padding-left: 16px;
-    font-size: 15px;
-    input{
-      border: 1px solid #f4f4f4;
-      padding: 16px;
-      width: 80%;
-      border-radius:6px;
-    }
-    .selectText {
-      float: left;
-      font-size: 15px;
-      padding: 16px;
-      color: #bbb;
-      font-family: Microsoft Yahei;
-      /*text-align: right;*/
+         padding-top: 35px;
+        background: #fff;
+        width: 100%;
+        height: 40px;
+        padding-left: 16px;
+        font-size: 15px;
+        input{
+        border: 1px solid #f4f4f4;
+        padding: 12px 16px;
+        width: 60%;
+        border-radius:6px;
+        }
+       .textDetail{
+           display: inline-block;
+        //    width: 100%;
+        margin-bottom: 10px;
+       }
+        .selectText {
+        font-size: 15px;
+        padding: 16px;
+        color: #bbb;
+        font-family: Microsoft Yahei;
+        /*text-align: right;*/
+        }
+    .codespan{
+        background:#0CEFAF;
+        color: #232323;
+        font-size: 14px;
+        display: inline-block;
+        height: 30px;
+        width: 30px;
+        text-align: center;
+        line-height: 30px;
+        margin-right: 5px;
+        margin-top: 5px;
     }
   }
 </style>
@@ -384,7 +400,9 @@
             <div class='codeInput' >
                   <label class="inputText">*</label>
                 <span class="textDetail">临时编号</span>
-                <input type='text' placeholder="请输入临时编号" v-model='apply_car_no'/>
+                <div>
+                <span class='codespan'>京</span><span class='codespan'>临</span><input type='text' placeholder="请输入临时编号" v-model='apply_car_no'/>
+                </div>
             </div>
             <div class="submitBox">
                 <div class="submit" @click="submit">提交信息</div>
@@ -817,7 +835,7 @@
                     "car_pic": this.car_pic,
                     "car_pin_pic": this.car_pin_pic,
                     'apply_no': this. apply_no,
-                    'apply_car_no': this.apply_car_no
+                    'apply_car_no': '京临'+this.apply_car_no
                 }
                 console.log(JSON.stringify(data));
                 // 发送请求;

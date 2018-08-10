@@ -52,10 +52,10 @@
               }
           }
           .surebox{
-              font-size: 15px;
+              font-size: 14px;
               width: 100%;
-              height: 60px;
-              line-height: 60px;
+              height: 45px;
+              line-height: 45px;
               color: #fff;
               text-align: center;
               border-radius: 6px;
@@ -85,7 +85,8 @@
     </div>
     <div class='searchresult' v-if='showResult'>
         <p class='resultinfo'>
-            查询到以下品牌型号已在《电动自行车产品目录》里，请确认是否有您的车辆：
+            查询到以下品牌型号已在《电动自行车产品目录》里，请确认是否有您的车辆,
+            若有请您至现场办理正式登记手续（办理地点：<span style='color: #1872db;' @click='goadress'>核发电动自行车牌证非机动车登记站一览表</span>)
         </p>
         <div class='tablebox'>
             <table>
@@ -135,6 +136,9 @@ import Viewer from 'viewerjs';
   
     },
     methods: {
+        goadress(){
+            this.$router.push("/RegList");
+        },
         gochooseonline(){
             this.$router.push({path:'/onlinechoose',query:{source:this.$route.query.source}})
         },

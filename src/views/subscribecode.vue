@@ -133,9 +133,9 @@ export default {
     getCode(code) {
       var linkurl = ''
       if(code == 0){
-        linkurl = "https://mock.zhongchebaolian.com/vehicle/showResult?apply_no="+this.apply_no+"&user_id="+this.user_id//审核页面
+        linkurl = "/showResult?apply_no="+this.apply_no+"&user_id="+this.user_id//审核页面
       }else if(code == 1){
-        linkurl = "https://mock.zhongchebaolian.com/vehicle/onlineverify?apply_no="+this.apply_no+"&user_id="+this.user_id+'&phone='+this.phone//审核页面
+        linkurl = "/onlineverify?apply_no="+this.apply_no+"&user_id="+this.user_id+'&phone='+this.phone//审核页面
       }
       var qrcode = new QRCode("qrcode", {
        text: linkurl,

@@ -195,7 +195,7 @@
     input{
       border: 1px solid #f4f4f4;
       padding: 16px;
-      width: 80%;
+      width: 60%;
       border-radius:6px;
     }
     .selectText {
@@ -205,6 +205,18 @@
       color: #bbb;
       font-family: Microsoft Yahei;
       /*text-align: right;*/
+    }
+     .codespan{
+        background:#0CEFAF;
+        color: #232323;
+        font-size: 14px;
+        display: inline-block;
+        height: 30px;
+        width: 30px;
+        text-align: center;
+        line-height: 30px;
+        margin-right: 5px;
+        margin-top: 5px;
     }
   }
   .submitBox{
@@ -471,7 +483,7 @@
             </div>
         </div>
         <div class='codeInput' v-if='ispass'>
-          <input type='text' placeholder="请输入临时编号" v-model='apply_car_no'/>
+          <span class='codespan'>京</span><span class='codespan'>临</span><input type='text' placeholder="请输入临时编号" v-model='apply_car_no'/>
         </div>
       <div class='codeInput'>
         <select   v-if='ispassone' v-model='approve_result' class="fr selectText selectText1">
@@ -497,7 +509,7 @@
     data() {
       return {
         isShowthree: false,
-        img: '../../static/takephone.png',
+        img: require('../../static/takephone.png'),
         ispass: true,
         ispassone: false,
         imgUrl: '',
@@ -806,6 +818,9 @@
         }
       },
       submitSure(){
+        if(this.apply_car_no != ''){
+          this.apply_car_no = '京临'+this.apply_car_no;
+        }
         var data = {
           apply_no: this.apply_no,
           approve_url: this.imgUrl,

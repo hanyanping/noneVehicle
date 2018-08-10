@@ -89,7 +89,7 @@ $baseFontSize:75;
           <span v-if="item.status == '审核失败'" class="applyStatus nopass">审核失败</span>
           <span v-if="item.status == '已签发'" class="already">已签发</span>
         </div>
-        <div class="listMiddle flexBetween" v-if="item.type == 1" @click='goDetail(item.applyNo,item.type,item.status)'>
+        <div class="listMiddle flexBetween" v-if="item.type == 1">
           <div class="flexLeft">
             <img class='applayIcon godetail' src="../assets/images/geren.png">
             <div class='info'>
@@ -108,7 +108,7 @@ $baseFontSize:75;
             <img class='godetail' src="../assets/images/right.png">
           </div>
         </div>
-        <div class="listMiddle flexBetween" v-if="item.type == 2" @click='goDetail(item.applyNo,item.type,item.status)'>
+        <div class="listMiddle flexBetween" v-if="item.type == 2" >
           <div class="flexLeft">
             <img class='applayIcon' src="../assets/images/danwei.png">
             <div class='info'>
