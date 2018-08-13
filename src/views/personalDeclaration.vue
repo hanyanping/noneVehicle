@@ -280,33 +280,36 @@
                 <input type="text" v-model="cre_code" class="textInput fr" placeholder="请输入证件号码">
             </div>
             <div class="inputBox clear selectBox">
-                <label class="inputText">*</label>
+                <!-- <label class="inputText">*</label>
                 <span class="textDetail">身份证地址</span>
-                <img class='selectImg' src="../assets/images/down.png">
-                <select class="fr selectText2 selectText" v-model="card_address">
+                <img class='selectImg' src="../assets/images/down.png"> -->
+                <label class="inputText fl">*</label>
+                <select style='margin-left: 5px;' class="fl selectText2 selectText" v-model="card_address">
                     <option value="">请选择身份证地址所在省份</option>
                     <option v-for="item in province" :value="item.label" :key='item'>{{item.label}}</option>
                 </select>
-            </div>
-            <div class="inputBox clear">
-                <!-- <label class="inputText">*</label> -->
-                <!-- <span class="textDetail">证件详细地址</span> -->
                 <input v-model="card_detail_address" type="text" class="textInput fr" placeholder="请输入证件详细地址">
             </div>
+            <!-- <div class="inputBox clear">
+                <label class="inputText">*</label> 
+                <span class="textDetail">证件详细地址</span> 
+                <input v-model="card_detail_address" type="text" class="textInput fr" placeholder="请输入证件详细地址">
+            </div> -->
             <div class="inputBox clear selectBox">
-                <label class="inputText">*</label>
-                <span class="textDetail">联系地址所在区</span>
-                <img class='selectImg' src="../assets/images/down.png">
-                <select class="fr selectText selectText3" v-model="link_area">
+                <label class="inputText fl">*</label>
+                <!-- <span class="textDetail">联系地址所在区</span> -->
+                <!-- <img class='selectImg' src="../assets/images/down.png"> -->
+                <select style='margin-left: 5px;' class="fl selectText selectText3" v-model="link_area">
                     <option value="" style="color: #bbb;">请选择联系地址行政区</option>
                     <option v-for="item in area" :value="item.label" :key='item'>{{item.label}}</option>
                 </select>
-            </div>
-            <div class="inputBox clear">
-                <!-- <label class="inputText">*</label> -->
-                <!-- <span class="textDetail">联系地址</span> -->
                 <input type="text" class="textInput fr" v-model="link_address" placeholder="请输入联系地址">
+
             </div>
+            <!-- <div class="inputBox clear">
+                <label class="inputText">*</label>
+                <span class="textDetail">联系地址</span>
+            </div> -->
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">联系电话</span>

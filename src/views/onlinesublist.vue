@@ -89,7 +89,7 @@ $baseFontSize:75;
           <span v-if="item.status == '审核失败'" class="applyStatus nopass">审核失败</span>
           <span v-if="item.status == '已签发'" class="already">已签发</span>
         </div>
-        <div class="listMiddle flexBetween" v-if="item.type == 1">
+        <div class="listMiddle flexBetween" v-if="item.type == 1" @click='goDetail(item.applyNo, item.type, item.status)'>
           <div class="flexLeft">
             <img class='applayIcon godetail' src="../assets/images/geren.png">
             <div class='info'>
@@ -171,7 +171,7 @@ export default {
       this.$router.push({ path: '/subscribe', query: { applyNo: applyNo } })
     },
     goDetail(applyNo, applyType, applyStatus) {
-      this.$router.push({ path: '/listDetail', query: { applyNo: applyNo, applyType: applyType, applyStatus: applyStatus } })
+      this.$router.push({ path: '/onlinelistDetail', query: { applyNo: applyNo, applyType: applyType, applyStatus: applyStatus } })
     },
     getDataList() {
       var data = {

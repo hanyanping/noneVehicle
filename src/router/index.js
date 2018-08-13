@@ -23,6 +23,7 @@ import onlinechoose from '@/views/onlinechoose'
 import personsubscribe from '@/views/personsubscribe'
 import subscribecode from '@/views/subscribecode'
 import onlineverify from '@/views/onlineverify'
+import onlinelistDetail from '@/views/onlinelistDetail'
 Vue.use(Router)
 
 export default new Router({
@@ -35,6 +36,14 @@ export default new Router({
             component: personalDeclaration,
             meta: {
                 title: '个人申报'
+            }
+        },
+        {
+            path: '/onlinelistDetail',
+            name: 'onlinelistDetail',
+            component: onlinelistDetail,
+            meta: {
+                title: '信息详情'
             }
         },
         {

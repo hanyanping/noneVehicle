@@ -284,61 +284,10 @@
         <span class="textDetail" v-else>申领人</span>
         <span class="textInput">{{person.name}}</span>
       </div>
-      <div class="inputBox clear selectBox">
-        <span class="textDetail">证件名称:</span>
-        <span class="textInput">{{person.cre_name}}</span>
-      </div>
       <div class="inputBox clear">
         <span class="textDetail">证件号码:</span>
         <span class="textInput">{{person.cre_code}}</span>
       </div>
-      <div class="inputBox clear selectBox">
-        <span class="textDetail">住所地址所在区:</span>
-        <span class="textInput">{{person.card_address}}</span>
-      </div>
-      <div class="inputBox clear">
-        <span class="textDetail">住所地址:</span>
-        <span class="textInput">{{person.card_detail_address}}</span>
-      </div>
-      <div class="inputBox clear selectBox">
-        <span class="textDetail">联系地址所在区:</span>
-        <span class="textInput">{{person.link_area}}</span>
-      </div>
-      <div class="inputBox clear">
-        <span class="textDetail">联系地址:</span>
-        <span class="textInput">{{person.card_detail_address}}</span>
-      </div>
-      <div class="inputBox clear">
-        <span class="textDetail">联系电话:</span>
-        <span class="textInput">{{person.link_phone}}</span>
-      </div>
-      <div class="inputBox clear">
-        <span class="textDetail">品牌型号:</span>
-        <span class="textInput">{{person.brand_model}}</span>
-      </div>
-      <div class="inputBox clear selectBox">
-        <span class="textDetail">车身颜色:</span>
-        <span class="textInput">{{person.color}}</span>
-      </div>
-      <div class="inputBox clear selectBox">
-        <span class="textDetail">车辆识别代码：</span>
-        <span class="textInput">{{person.pin}}</span>
-      </div>
-      <div class="textBox">
-        <span class="line">|</span>
-        <span class="text">照片信息</span>
-      </div>
-      <div class="flexBetween" id="scaleImg">
-        <div class="upload" v-for="(item,index) in imgData" :key="index">
-          <div class="cha" v-show="(item.imgUrl)">
-            <img :src="item.imgUrl" :data-src="item.bigUrl">
-          </div>
-          <div class="phoneText">
-            <span class="inputText">*</span><span class="text">{{item.title}}</span>
-          </div>
-        </div>
-      </div>
-
     </div>
     <div class="textBox" v-if='applyStatus == "预约成功"'>
       <span class="line">|</span>
@@ -353,16 +302,6 @@
         <span class="textDetail">预约办理时间：</span>
         <span class="textInput">{{appointment.time}}</span>
       </div>
-    </div>
-    <div class="textBox" v-if='applyStatus == "已签发"' style='text-align: center;'>
-      <span class="text">临时编号： {{base.applyCarNo}}</span>
-    </div>
-    <div class="textBox" v-if='applyStatus == "审核不通过" || applyStatus == "审核失败"'>
-      <span class="line">|</span>
-      <span class="text">审核结果</span>
-    </div>
-    <div class="inputBox clear" v-if='applyStatus == "审核不通过" || applyStatus == "审核失败"'>
-      <span class="textInput" style='color: #232323;'>{{approve.approveResult}}</span>
     </div>
   </div>
 </template>
