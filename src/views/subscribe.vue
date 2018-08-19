@@ -199,7 +199,8 @@
         },
         group(areaId){
           var data = {
-            areaId: areaId
+            areaId: areaId,
+            type: 1
           }
           axios.post(this.ajaxUrl+"/vehicle/group" , data)
             .then(response => {
@@ -218,7 +219,8 @@
         },
         getArea(parentId){
           var data = {
-            parentId: parentId
+            parentId: parentId,
+              type: 1
           }
             axios.post(this.ajaxUrl+"vehicle/area" , data)
             .then(response => {
@@ -265,5 +267,3 @@
       }
     }
 </script>
-
-

@@ -156,7 +156,7 @@
             width: 12px;
             position: absolute;
             right: 12px;
-            top: 18px;
+            top: 20px;
         }
         .tanhaoImg {
             height: 19px;
@@ -278,20 +278,19 @@
                 <input type="text" v-model="cre_code" class="textInput fr" placeholder="请输入证件号码">
             </div>
             <div class="inputBox clear selectBox">
-                <label class="inputText fl">*</label>
-                <!-- <span class="textDetail">单位地址所在省</span>
-                <img class='selectImg' src="../assets/images/down.png"> -->
-                <select style='margin-left: 5px;' class="fl selectText selectText2" v-model="live_area">
+                <label class="inputText">*</label>
+                <span class="textDetail">单位地址所在省</span>
+                <img class='selectImg' src="../assets/images/down.png">
+                <select style='margin-left: 5px;' class="fr selectText selectText2" v-model="live_area">
                     <option value="" style="color: #bbb;">请选择单位地址所在省</option>
                     <option v-for="item in province" :value="item.label">{{item.label}}</option>
                 </select>
+            </div>
+           <div class="inputBox clear">
+                  <!--<label class="inputText">*</label>
+                <span class="textDetail">单位地址</span> -->
                 <input v-model="live_address" type="text" class="textInput fr" placeholder="请输入联系地址">
             </div>
-            <!-- <div class="inputBox clear">
-                <label class="inputText">*</label>
-                <span class="textDetail">单位地址</span>
-                <input v-model="live_address" type="text" class="textInput fr" placeholder="请输入联系地址">
-            </div> -->
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">单位联系电话</span>
@@ -312,20 +311,19 @@
                 </select>
             </div>
             <div class="inputBox clear selectBox">
-                <label class="inputText fl">*</label>
-                <!-- <span class="textDetail">经办人联系地址所在区</span>
-                <img class='selectImg' src="../assets/images/down.png"> -->
-                <select class="fl selectText selectText4" style="margin-left: 5px;" v-model="proxy_area">
+                <label class="inputText">*</label>
+               <span class="textDetail">经办人联系地址所在区</span>
+                <img class='selectImg' src="../assets/images/down.png">
+                <select class="fr selectText selectText4" style="margin-left: 5px;" v-model="proxy_area">
                     <option value="" >请选择行政区</option>
                     <option v-for="item in area" :value="item.label">{{item.label}}</option>
                 </select>
+            </div>
+           <div class="inputBox clear">
+              <!--<label class="inputText">*</label>
+                <span class="textDetail">经办人联系地址</span>-->
                 <input type="text" class="textInput fr" v-model="proxy_address" placeholder="请输入经办人联系地址">
             </div>
-            <!-- <div class="inputBox clear">
-                <label class="inputText">*</label>
-                <span class="textDetail">经办人联系地址</span>
-                <input type="text" class="textInput fr" v-model="proxy_address" placeholder="请输入经办人联系地址">
-            </div> -->
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">经办人联系电话</span>
@@ -533,7 +531,6 @@
                     self.car_pin_pic = response.data.url;
                   }
                 }
-                // this.area = response.data.list
               })
               .catch(err => {
                 console.log(err);
@@ -808,5 +805,3 @@
     };
 
 </script>
-
-

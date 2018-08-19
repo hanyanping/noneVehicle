@@ -57,7 +57,7 @@ $baseFontSize:75;
           <div id="qrcode"></div>
         </div>
         <p class="showText showText1">预约成功</p>
-        <p class="showText">需车主本人或代理人携带车主及代理人身份证明原件，按照预约时间到预约发放点出示二维码信息现场领取标识，未按照预约时间领取标识的，需重新进行预约</p>
+        <p class="showText">需车主本人或代理人携带车主及代理人身份证明原件，按照预约时间({{appointment.time}})到预约发放点({{appointment.address}})出示二维码信息现场领取标识，未按照预约时间领取标识的，需重新进行预约</p>
       </div>
     </div>
      <div style="padding: 40px 20px;" v-else>
@@ -73,6 +73,7 @@ $baseFontSize:75;
 </template>
 
 <script>
+import axios from "axios";
 import QRCode from 'qrcodejs2';
 import moment from 'moment/moment';
 export default {
@@ -82,7 +83,8 @@ export default {
       apply_no: '',
       isOverdue: true,
       phone: '',
-      user_id: ''
+      user_id: '',
+      appointment:''
     }
   },
   created() {
@@ -90,29 +92,8 @@ export default {
     this.apply_no = this.$route.query.apply_no;
     this.user_id = localStorage.getItem('userId');
     this.phone = localStorage.getItem('phone');
-    var time = localStorage.getItem('appointmentTime');
-    time = time.replace(/年|月/g, '-').replace(/日/g, '');
-    time  = parseInt(Number(new Date(time)));
-    console.log(time)
-    var subyear = this.gettime(time,'year');
-    var submonth = this.gettime(time,'month');
-    var subday = this.gettime(time,'day')
-    var newDay = new Date();
-    newDay = Number(newDay);
-    var year = this.gettime(newDay,'year');
-    var month = this.gettime(newDay,'month');
-    var day = this.gettime(newDay,'day');
-    console.log(subyear,submonth,subday,year,month,day)
-   var substing = parseInt(Number(new Date(subyear+'-'+submonth+'-'+subday)));
-   
-   var currentstring = parseInt(Number(new Date(year+'-'+month+'-'+day)));
-   if(currentstring>substing){
-     this.isOverdue = false;
-   }else{
-     this.isOverdue = true;
-   }
-
-  },  
+    this.getData();
+  },
   mounted() {
     var code = this.$route.query.code;
     if(this.isOverdue){
@@ -120,6 +101,50 @@ export default {
     }
   },
   methods: {
+    resetTime(time){
+        time  = parseInt(Number(new Date(time)));
+        console.log(time)
+        var subyear = this.gettime(time,'year');
+        var submonth = this.gettime(time,'month');
+        var subday = this.gettime(time,'day')
+        var newDay = new Date();
+        newDay = Number(newDay);
+        var year = this.gettime(newDay,'year');
+        var month = this.gettime(newDay,'month');
+        var day = this.gettime(newDay,'day');
+        console.log(subyear,submonth,subday,year,month,day)
+       var substing = parseInt(Number(new Date(subyear+'-'+submonth+'-'+subday)));
+       var currentstring = parseInt(Number(new Date(year+'-'+month+'-'+day)));
+       if(currentstring>substing){
+         this.isOverdue = false;
+       }else{
+         this.isOverdue = true;
+       }
+    },
+    getData() {
+      var data = {
+        apply_no: this.apply_no
+      }
+      axios.post(this.ajaxUrl + "/vehicle/getUserInfo", data)
+        .then(response => {
+          if (response.data.result.rescode == 200) {
+            this.base = response.data.base;
+            this.person = response.data.person
+            this.department = response.data.department;
+            this.appointment = response.data.appointment;
+            var time = this.appointment.time;
+            console.log(time)
+            this.resetTime(time)
+          } else {
+            Toast(response.data.result.resdes)
+          }
+        }, err => {
+          console.log(err);
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
     gettime(time,type){
       time = new Date(time)
       if(type == 'year'){
@@ -157,5 +182,3 @@ export default {
   }
 }
 </script>
-
-

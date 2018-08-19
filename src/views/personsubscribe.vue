@@ -227,7 +227,7 @@ export default {
     }
   },
   methods: {
-    getProvince(type) {  
+    getProvince(type) {
         axios.post(this.ajaxUrl + '/vehicle/dict', {
             type: type
         })
@@ -253,7 +253,8 @@ export default {
     },
     group(areaId) {
       var data = {
-        areaId: areaId
+        areaId: areaId,
+        type: 2
       };
       axios
         .post(this.ajaxUrl + "/vehicle/group", data)
@@ -276,7 +277,8 @@ export default {
     },
     getArea(parentId) {
       var data = {
-        parentId: parentId
+        parentId: parentId,
+        type: 2
       };
       axios
         .post(this.ajaxUrl + "vehicle/area", data)
@@ -340,5 +342,3 @@ export default {
   }
 };
 </script>
-
-
