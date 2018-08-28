@@ -405,6 +405,7 @@
                     <span class='codespan'>京</span><span class='codespan'>临</span><input type='text'
                                                                                          placeholder="请输入临时编号"
                                                                                          v-model='apply_car_no'/>
+                    <img v-if="isAndroid" class='inputImg' @click="LicensePlateOC" src="../assets/images/listicon.png">
                 </div>
             </div>
             <div class="submitBox">
@@ -553,8 +554,18 @@
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
             })
+            self.bridge.registerHandler('callBackJSLicensePlateOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
+                self.apply_car_no = data.licensePlateResult.words_result[1].words;
+                var responseData = {'rescode': '200'}
+                responseCallback(responseData)
+            })
         },
         methods: {
+            LicensePlateOC() {//车牌识别OC
+                this.bridge.callHandler('invokeLicensePlateOCR', function (response) {
+                    console.log('js调用客户端方法回调传参' + response);
+                });
+            },
             getData() {
                 var data = {
                     apply_no: this.apply_no

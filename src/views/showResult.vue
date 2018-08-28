@@ -602,7 +602,7 @@
                 responseCallback(responseData)
             })
             self.bridge.registerHandler('callBackJSLicensePlateOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
-                self.apply_car_no = data.licensePlateResult;
+                self.apply_car_no = data.licensePlateResult.words_result[1].words;
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
             })

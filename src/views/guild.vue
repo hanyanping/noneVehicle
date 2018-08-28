@@ -194,6 +194,8 @@
             };
         },
         created() {
+            var str = {direcrr:'3','words_result':[{'words':'dffff'},{'words':'23334444'}]}
+            console.log(str.words_result[1].words)
         },
         mounted() {
             this.phone = localStorage.getItem("phone");
