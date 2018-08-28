@@ -224,9 +224,10 @@
             }
         }
     }
-    .zhegaicengone{
+
+    .zhegaicengone {
         background: rgba(0, 0, 0, 0.4);
-        .lodingimg{
+        .lodingimg {
             position: absolute;
             height: 60px;
             width: 60px;
@@ -235,6 +236,7 @@
             margin: 30vh auto;
         }
     }
+
     .flexBetween {
         padding: 10px 10px 30px;
         background: #fff;
@@ -286,9 +288,9 @@
                     <option v-for="item in province" :value="item.label">{{item.label}}</option>
                 </select>
             </div>
-           <div class="inputBox clear">
-                  <!--<label class="inputText">*</label>
-                <span class="textDetail">单位地址</span> -->
+            <div class="inputBox clear">
+                <!--<label class="inputText">*</label>
+              <span class="textDetail">单位地址</span> -->
                 <input v-model="live_address" type="text" class="textInput fr" placeholder="请输入联系地址">
             </div>
             <div class="inputBox clear">
@@ -312,16 +314,16 @@
             </div>
             <div class="inputBox clear selectBox">
                 <label class="inputText">*</label>
-               <span class="textDetail">经办人联系地址所在区</span>
+                <span class="textDetail">经办人联系地址所在区</span>
                 <img class='selectImg' src="../assets/images/down.png">
                 <select class="fr selectText selectText4" style="margin-left: 5px;" v-model="proxy_area">
-                    <option value="" >请选择行政区</option>
+                    <option value="">请选择行政区</option>
                     <option v-for="item in area" :value="item.label">{{item.label}}</option>
                 </select>
             </div>
-           <div class="inputBox clear">
-              <!--<label class="inputText">*</label>
-                <span class="textDetail">经办人联系地址</span>-->
+            <div class="inputBox clear">
+                <!--<label class="inputText">*</label>
+                  <span class="textDetail">经办人联系地址</span>-->
                 <input type="text" class="textInput fr" v-model="proxy_address" placeholder="请输入经办人联系地址">
             </div>
             <div class="inputBox clear">
@@ -353,7 +355,8 @@
                 <div class="upload" v-for="(item,index) in imgData" :key="index">
                     <!-- 图片上传控件 -->
                     <div class="load">
-                        <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img" @click="getPhone(index,$event)">
+                        <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img"
+                             @click="getPhone(index,$event)">
                         <!--<input type="file" v-if='isAndroid' capture="camera" @change="uploadIMG($event ,index)">-->
                         <!--<input type="file" v-if='!isAndroid' @change="uploadIMG($event ,index)">-->
                     </div>
@@ -374,8 +377,8 @@
                     该车系本单位合法所得，如不属实，愿承担一切法律责任。
                 </p>
                 <div class="selectBox">
-                  <img class='selectImg' @click='selected' v-if="isSure" src="../assets/images/select.png">
-                  <img class='selectImg' @click='selected' v-if="!isSure" src="../assets/images/yuan.png">
+                    <img class='selectImg' @click='selected' v-if="isSure" src="../assets/images/select.png">
+                    <img class='selectImg' @click='selected' v-if="!isSure" src="../assets/images/yuan.png">
                     <span>以上内容已看过，同意并提交</span>
                 </div>
                 <div class="sureBox" @click.stop="sureBox">
@@ -417,7 +420,7 @@
         props: ["uploadUrl"],
         data() {
             return {
-              isSure: false,
+                isSure: false,
                 isShowthree: false,
                 cred: '',
                 credperson: '',
@@ -513,32 +516,32 @@
             this.getProvince('depart_cred');
             this.getProvince('cred');
             $(".selectText").css("color", '#bbb');
-          var self = this;
-          self.bridge.registerHandler('webviewGetImage', function (data, responseCallback) {//注册客户端主动触发js端
-            self.isShowthree = true;
-            axios.post(self.ajaxUrl + '/vehicle/uploadBaseImage', {
-              image: data.image ? 'data:image/jpeg;base64,'+ data.image : ''
+            var self = this;
+            self.bridge.registerHandler('webviewGetImage', function (data, responseCallback) {//注册客户端主动触发js端
+                self.isShowthree = true;
+                axios.post(self.ajaxUrl + '/vehicle/uploadBaseImage', {
+                    image: data.image ? 'data:image/jpeg;base64,' + data.image : ''
+                })
+                    .then(response => {
+                        self.isShowthree = false;
+                        if (response.data.result.rescode == 200) {
+                            self.imgData[data.position].imgUrl = response.data.url;
+                            if (data.position == 0) {
+                                self.card_pic = response.data.url;
+                            } else if (data.position == 1) {
+                                self.car_pic = response.data.url;
+                            } else if (data.position == 2) {
+                                self.car_pin_pic = response.data.url;
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        self.isShowthree = false;
+                    })
+                var responseData = {'rescode': '200'}
+                responseCallback(responseData)
             })
-              .then(response => {
-                self.isShowthree = false;
-                if (response.data.result.rescode == 200) {
-                  self.imgData[data.position].imgUrl = response.data.url;
-                  if (data.position == 0) {
-                    self.card_pic = response.data.url;
-                  } else if (data.position == 1) {
-                    self.car_pic = response.data.url;
-                  } else if (data.position == 2) {
-                    self.car_pin_pic = response.data.url;
-                  }
-                }
-              })
-              .catch(err => {
-                console.log(err);
-                self.isShowthree = false;
-              })
-            var responseData = {'rescode': '200'}
-            responseCallback(responseData)
-          })
         },
         methods: {
             //  获取省会或者区域
@@ -553,9 +556,9 @@
                         console.log(err);
                     })
             },
-          selected(){
-            this.isSure = !this.isSure;
-          },
+            selected() {
+                this.isSure = !this.isSure;
+            },
             getProvince(type) {
                 axios.post(this.ajaxUrl + '/vehicle/dict', {
                     type: type
@@ -589,20 +592,20 @@
                 this.isShowTwo = true;
             },
             sureBox() {
-              if(!this.isSure){
-                Toast("请勾选");
-              }else{
-                this.isShow = false;
-              }
+                if (!this.isSure) {
+                    Toast("请勾选");
+                } else {
+                    this.isShow = false;
+                }
             },
-          getPhone(index,event) {
-            // event.preventDefault();//取消原来的方法
-            var position= index;
-            console.log(position)
-            this.bridge.callHandler('openCamera', {'position': position}, function (response) {
-              console.log('js调用客户端方法回调传参' + response);
-            });
-          },
+            getPhone(index, event) {
+                // event.preventDefault();//取消原来的方法
+                var position = index;
+                console.log(position)
+                this.bridge.callHandler('openCamera', {'position': position}, function (response) {
+                    console.log('js调用客户端方法回调传参' + response);
+                });
+            },
             uploadIMG(event, num) {
                 let files = event.target.files || event.dataTransfer.files;
                 if (!files.length) return;
@@ -613,7 +616,7 @@
                 //         type: "warning"
                 //     });
                 // } else {
-                    this.imgPreview(this.picavalue, '', num);
+                this.imgPreview(this.picavalue, '', num);
                 // }
             },
             //获取图片

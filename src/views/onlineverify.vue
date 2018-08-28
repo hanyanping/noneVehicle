@@ -252,44 +252,45 @@
             }
         }
     }
-     .codeInput{
-         padding-top: 35px;
+
+    .codeInput {
+        padding-top: 35px;
         background: #fff;
         width: 100%;
         height: 40px;
         padding-left: 16px;
         font-size: 15px;
-        input{
-        border: 1px solid #f4f4f4;
-        padding: 12px 16px;
-        width: 60%;
-        border-radius:6px;
+        input {
+            border: 1px solid #f4f4f4;
+            padding: 12px 16px;
+            width: 60%;
+            border-radius: 6px;
         }
-       .textDetail{
-           display: inline-block;
-        //    width: 100%;
-        margin-bottom: 10px;
-       }
+        .textDetail {
+            display: inline-block;
+            //    width: 100%;
+            margin-bottom: 10px;
+        }
         .selectText {
-        font-size: 15px;
-        padding: 16px;
-        color: #bbb;
-        font-family: Microsoft Yahei;
-        /*text-align: right;*/
+            font-size: 15px;
+            padding: 16px;
+            color: #bbb;
+            font-family: Microsoft Yahei;
+            /*text-align: right;*/
         }
-    .codespan{
-        background:#0CEFAF;
-        color: #232323;
-        font-size: 14px;
-        display: inline-block;
-        height: 30px;
-        width: 30px;
-        text-align: center;
-        line-height: 30px;
-        margin-right: 5px;
-        margin-top: 5px;
+        .codespan {
+            background: #0CEFAF;
+            color: #232323;
+            font-size: 14px;
+            display: inline-block;
+            height: 30px;
+            width: 30px;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
     }
-  }
 </style>
 <template>
     <div style="background: #f4f4f4;min-height: 100vh;">
@@ -299,14 +300,14 @@
                 <span class="text">预约信息</span>
             </div>
             <div>
-            <div class="inputBox clear">
-                <span class="textDetail">预约办理地点：</span>
-                <span class="textInput">{{appointment.address}}</span>
-            </div>
-            <div class="inputBox clear">
-                <span class="textDetail">预约办理时间：</span>
-                <span class="textInput">{{appointment.time}}</span>
-            </div>
+                <div class="inputBox clear">
+                    <span class="textDetail">预约办理地点：</span>
+                    <span class="textInput">{{appointment.address}}</span>
+                </div>
+                <div class="inputBox clear">
+                    <span class="textDetail">预约办理时间：</span>
+                    <span class="textInput">{{appointment.time}}</span>
+                </div>
             </div>
             <div class="textBox">
                 <span class="line">|</span>
@@ -358,7 +359,7 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">联系电话</span>
-                <input type="tel" class="textInput fr"  readonly v-model="link_phone">
+                <input type="tel" class="textInput fr" readonly v-model="link_phone">
             </div>
             <div class="inputBox clear">
                 <label class="inputText">*</label>
@@ -372,7 +373,7 @@
                 <img class='tanhaoImg' @click="ShowOne" src="../assets/images/tanhao.png">
             </div>
             <div class="inputBox clear selectBox">
-                 <label class="inputText">*</label>
+                <label class="inputText">*</label>
                 <span class="textDetail">电动车整车编码(钢架号)</span>
                 <input type="tel" style='width: 40%;' v-model="pin" class="textInput fr tanInput" placeholder="请输入车架号">
                 <img class='tanhaoImg' @click="ShowTwo" src="../assets/images/tanhao.png">
@@ -395,13 +396,15 @@
                 </div>
             </div>
             <!--<div id="bigImg">-->
-                <!--<img style='height:100px;width: 100px;' :data-src="phone" :src="phone" >-->
+            <!--<img style='height:100px;width: 100px;' :data-src="phone" :src="phone" >-->
             <!--</div>-->
-            <div class='codeInput' >
-                  <label class="inputText">*</label>
+            <div class='codeInput'>
+                <label class="inputText">*</label>
                 <span class="textDetail">临时编号</span>
                 <div>
-                <span class='codespan'>京</span><span class='codespan'>临</span><input type='text' placeholder="请输入临时编号" v-model='apply_car_no'/>
+                    <span class='codespan'>京</span><span class='codespan'>临</span><input type='text'
+                                                                                         placeholder="请输入临时编号"
+                                                                                         v-model='apply_car_no'/>
                 </div>
             </div>
             <div class="submitBox">
@@ -438,6 +441,7 @@
     import axios from 'axios';
     import * as regAction from '@/utils/reg';
     import Viewer from 'viewerjs';
+
     export default {
         props: ["uploadUrl"],
         data() {
@@ -516,7 +520,7 @@
             this.link_phone = this.$route.query.phone;
         },
         mounted() {
-             this.getData();
+            this.getData();
             this.getArea();
             this.getProvince('province');
             this.getProvince('area');
@@ -551,63 +555,63 @@
             })
         },
         methods: {
-            getData(){
-        var data= {
-          apply_no: this.apply_no
-        }
-        axios.post(this.ajaxUrl+"/vehicle/getUserInfo" , data)
-          .then(response => {
-            console.log(response);
-            if(response.data.result.rescode == 200){
-              this.base = response.data.base;
-              this.applyType = this.base.applyType;
-              this.person = response.data.person;
-              this.cre_name = this.person.cre_name;
-              this.cre_code = this.person.cre_code;
-              this.department = response.data.department;
-              this.appointment = response.data.appointment;
-              this.appointment.time = moment(this.appointment.time).format('YYYY-MM-DD')
-              this.approve = response.data.approve;
-              if(this.applyType == 1){
-                this.imgData[0].imgUrl =  response.data.person.card_pic_min;
-                this.imgData[1].imgUrl =  response.data.person.car_pic_min;
-                this.imgData[2].imgUrl =  response.data.person.car_pin_pic_min;
-                this.imgData[0].bigUrl =  response.data.person.card_pic;
-                this.imgData[1].bigUrl =  response.data.person.car_pic
-                this.imgData[2].bigUrl =  response.data.person.car_pin_pic;
-                  this.$nextTick(() => {
-                      new Viewer(document.getElementById('scaleImg'), {
-                          url: 'data-src',
-                          navbar:false,
-                          toolbar:true,
-                          loop: true
-                      })
-                  })
+            getData() {
+                var data = {
+                    apply_no: this.apply_no
+                }
+                axios.post(this.ajaxUrl + "/vehicle/getUserInfo", data)
+                    .then(response => {
+                        console.log(response);
+                        if (response.data.result.rescode == 200) {
+                            this.base = response.data.base;
+                            this.applyType = this.base.applyType;
+                            this.person = response.data.person;
+                            this.cre_name = this.person.cre_name;
+                            this.cre_code = this.person.cre_code;
+                            this.department = response.data.department;
+                            this.appointment = response.data.appointment;
+                            this.appointment.time = moment(this.appointment.time).format('YYYY-MM-DD')
+                            this.approve = response.data.approve;
+                            if (this.applyType == 1) {
+                                this.imgData[0].imgUrl = response.data.person.card_pic_min;
+                                this.imgData[1].imgUrl = response.data.person.car_pic_min;
+                                this.imgData[2].imgUrl = response.data.person.car_pin_pic_min;
+                                this.imgData[0].bigUrl = response.data.person.card_pic;
+                                this.imgData[1].bigUrl = response.data.person.car_pic
+                                this.imgData[2].bigUrl = response.data.person.car_pin_pic;
+                                this.$nextTick(() => {
+                                    new Viewer(document.getElementById('scaleImg'), {
+                                        url: 'data-src',
+                                        navbar: false,
+                                        toolbar: true,
+                                        loop: true
+                                    })
+                                })
 
-              }else if(this.applyType == 2){
-                this.imgDataOne[0].imgUrl =  response.data.department.card_pic_min;
-                this.imgDataOne[1].imgUrl =  response.data.department.car_pic_min;
-                this.imgDataOne[2].imgUrl =  response.data.department.car_pin_pic_min;
-                this.imgDataOne[0].bigUrl =  response.data.department.card_pic;
-                this.imgDataOne[1].bigUrl =  response.data.department.car_pic
-                this.imgDataOne[2].bigUrl =  response.data.department.car_pin_pic;
-                  this.$nextTick(() => {
-                      new Viewer(document.getElementById('scaleImg1'), {
-                          url: 'data-src',
-                          navbar:false,
-                          toolbar:true,
-                          loop: true
-                      })
-                  })
-              }
-            }
-          }, err => {
-            console.log(err);
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
+                            } else if (this.applyType == 2) {
+                                this.imgDataOne[0].imgUrl = response.data.department.card_pic_min;
+                                this.imgDataOne[1].imgUrl = response.data.department.car_pic_min;
+                                this.imgDataOne[2].imgUrl = response.data.department.car_pin_pic_min;
+                                this.imgDataOne[0].bigUrl = response.data.department.card_pic;
+                                this.imgDataOne[1].bigUrl = response.data.department.car_pic
+                                this.imgDataOne[2].bigUrl = response.data.department.car_pin_pic;
+                                this.$nextTick(() => {
+                                    new Viewer(document.getElementById('scaleImg1'), {
+                                        url: 'data-src',
+                                        navbar: false,
+                                        toolbar: true,
+                                        loop: true
+                                    })
+                                })
+                            }
+                        }
+                    }, err => {
+                        console.log(err);
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            },
             //  获取省会或者区域
             getArea(id) {
                 axios.post(this.ajaxUrl + 'vehicle/area', {
@@ -814,7 +818,7 @@
                     Toast('请上传车架号照片')
                     return;
                 }
-                if(this.apply_car_no == ''){
+                if (this.apply_car_no == '') {
                     Toast('请输入临时编号')
                     return;
                 }
@@ -834,8 +838,8 @@
                     "card_pic": 'this.card_pic',
                     "car_pic": this.car_pic,
                     "car_pin_pic": this.car_pin_pic,
-                    'apply_no': this. apply_no,
-                    'apply_car_no': '京临'+this.apply_car_no
+                    'apply_no': this.apply_no,
+                    'apply_car_no': '京临' + this.apply_car_no
                 }
                 console.log(JSON.stringify(data));
                 // 发送请求;

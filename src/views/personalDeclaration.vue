@@ -129,7 +129,15 @@
         padding: 12px;
         background: #fff;
         border-bottom: 1px solid #f4f4f4;
-
+        .inputImg {
+            display: inline-block;
+            vertical-align: middle;
+            height: 30px;
+            width: 30px;
+            padding-left: 10px;
+            float: right;
+            margin-top: -5px;
+        }
         .textDetail {
             color: #232323;
             font-size: 14px;
@@ -218,6 +226,7 @@
                     width: 20px;
                     padding-right: 6px;
                 }
+
             }
             .sureBox {
                 margin: 20px auto 20px;
@@ -277,10 +286,11 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">证件号码</span>
+                <img class='inputImg fr' v-if="isAndroid" @click="idcordOc" src="../assets/images/listicon.png">
                 <input type="text" v-model="cre_code" class="textInput fr" placeholder="请输入证件号码">
             </div>
             <div class="inputBox clear selectBox">
-               <label class="inputText">*</label>
+                <label class="inputText">*</label>
                 <span class="textDetail">身份证地址</span>
                 <img class='selectImg' src="../assets/images/down.png">
                 <select style='margin-left: 5px;' class="fr selectText2 selectText" v-model="card_address">
@@ -288,23 +298,23 @@
                     <option v-for="item in province" :value="item.label" :key='item'>{{item.label}}</option>
                 </select>
             </div>
-           <div class="inputBox clear">
+            <div class="inputBox clear">
                 <!--<label class="inputText">*</label>
                 <span class="textDetail">证件详细地址</span> -->
                 <input v-model="card_detail_address" type="text" class="textInput fr" placeholder="请输入证件详细地址">
             </div>
             <div class="inputBox clear selectBox">
                 <label class="inputText">*</label>
-               <span class="textDetail">联系地址所在区</span>
+                <span class="textDetail">联系地址所在区</span>
                 <img class='selectImg' src="../assets/images/down.png">
                 <select style='margin-left: 5px;' class="fr selectText selectText3" v-model="link_area">
                     <option value="" style="color: #bbb;">请选择联系地址行政区</option>
                     <option v-for="item in area" :value="item.label" :key='item'>{{item.label}}</option>
                 </select>
             </div>
-             <div class="inputBox clear">
-              <!-- <label class="inputText">*</label>
-                <span class="textDetail">联系地址</span> -->
+            <div class="inputBox clear">
+                <!-- <label class="inputText">*</label>
+                  <span class="textDetail">联系地址</span> -->
                 <input type="text" class="textInput fr" v-model="link_address" placeholder="请输入联系地址">
             </div>
             <div class="inputBox clear">
@@ -350,7 +360,7 @@
                 </div>
             </div>
             <!--<div id="bigImg">-->
-                <!--<img style='height:100px;width: 100px;' :data-src="phone" :src="phone" >-->
+            <!--<img style='height:100px;width: 100px;' :data-src="phone" :src="phone" >-->
             <!--</div>-->
             <div class="submitBox">
                 <div class="submit" @click="submit">提交信息</div>
@@ -402,6 +412,7 @@
     import axios from 'axios';
     import * as regAction from '@/utils/reg';
     import Viewer from 'viewerjs';
+
     export default {
         props: ["uploadUrl"],
         data() {
@@ -440,7 +451,7 @@
                 cred: '',
                 area: '',
                 province: '',
-                user_id: ''
+                user_id: '',
             };
         },
         watch: {
@@ -480,7 +491,6 @@
             if (isiOS) {
                 this.isAndroid = false;
             }
-
         },
         mounted() {
             this.link_phone = localStorage.getItem('phone');
@@ -517,8 +527,18 @@
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
             })
+            self.bridge.registerHandler('callBackJSIDCardFrontOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
+                self.cre_code = data.IDCardFrontResult;
+                var responseData = {'rescode': '200'}
+                responseCallback(responseData)
+            })
         },
         methods: {
+            idcordOc() {//身份证正面OC
+                this.bridge.callHandler('invokeIDCardFrontOCR', function (response) {
+                    console.log('js调用客户端方法回调传参' + response);
+                });
+            },
             //  获取省会或者区域
             getArea(id) {
                 axios.post(this.ajaxUrl + 'vehicle/area', {

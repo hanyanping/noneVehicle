@@ -2,24 +2,24 @@
 * 申报成功页面
 */
 <style rel="stylesheet/scss" lang="scss" scoped>
-    $baseFontSize:75;
-    .declarSuccess{
+    $baseFontSize: 75;
+    .declarSuccess {
         height: 100vh;
         text-align: center;
         margin: 15vh auto;
         position: fixed;
         left: 0;
         right: 0;
-        img{
-            height:90px;
+        img {
+            height: 90px;
             width: 90px;
         }
-        p{
+        p {
             margin: 20px 0;
             color: #232323;
             font-size: 16px;
         }
-        .gobackGuild{
+        .gobackGuild {
             width: 140px;
             height: 40px;
             color: #fff;
@@ -32,25 +32,25 @@
     }
 </style>
 <template>
-  <div class="declarSuccess">
-    <img src="../assets/images/submit.png">
-      <p>预约成功</p>
-      <div class="gobackGuild" @click="goGuild">返回首页</div>
-  </div>
+    <div class="declarSuccess">
+        <img src="../assets/images/submit.png">
+        <p>预约成功</p>
+        <div class="gobackGuild" @click="goGuild">返回首页</div>
+    </div>
 </template>
 
 <script>
-export default {
-    data(){
-        return{}
+    export default {
+        data() {
+            return {}
 
-    },
-    created(){
-    },
-    methods:{
-        goGuild(){
-            this.$router.push({path:'/'})
+        },
+        created() {
+        },
+        methods: {
+            goGuild() {
+                this.$router.push({path: '/'})
+            }
         }
     }
-}
 </script>
