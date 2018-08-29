@@ -555,6 +555,9 @@
                 responseCallback(responseData)
             })
             self.bridge.registerHandler('callBackJSLicensePlateOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
+                // alert(JSON.stringify(data.licensePlateResult))
+                // alert(data.licensePlateResult.words_result[1].words)
+                data.licensePlateResult = JSON.parse(data.licensePlateResult)
                 self.apply_car_no = data.licensePlateResult.words_result[1].words;
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
