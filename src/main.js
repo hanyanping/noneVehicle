@@ -63,7 +63,7 @@ router.beforeEach((to, from, next) => {
   setTitle(to.meta.title)
   // localStorage.setItem('phone', '17600220760')
     // localStorage.setItem('userId', 12);
-  // next()//开发
+  next()//开发
   if (to.name == 'guild') {
     if (Vue.prototype.bridge) {
       next()

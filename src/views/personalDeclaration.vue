@@ -269,7 +269,7 @@
                 <span class="line">|</span>
                 <span class="text">填写基本信息</span>
             </div>
-            <div class="inputBox clear">
+            <div class="inputBox clear" @click="go">
                 <label class="inputText">*</label>
                 <span class="textDetail">申领人姓名</span>
                 <input v-model='name' type="text" class="textInput fr" placeholder="请输入申领人姓名">
@@ -534,6 +534,9 @@
             })
         },
         methods: {
+            go(){
+                this.cre_name = '居民身份证'
+            },
             idcordOc() {//身份证正面OC
                 this.bridge.callHandler('invokeIDCardFrontOCR', function (response) {
                     console.log('js调用客户端方法回调传参' + response);
