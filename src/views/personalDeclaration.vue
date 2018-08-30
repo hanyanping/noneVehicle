@@ -528,15 +528,15 @@
                 responseCallback(responseData)
             })
             self.bridge.registerHandler('callBackJSIDCardFrontOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
-                self.cre_code = data.IDCardFrontResult;
+                self.cre_name = '居民身份证';
+                data.IDCardFrontResult = JSON.parse(data.IDCardFrontResult);
+                self.cre_code = data.IDCardFrontResult.idNumber.words;
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
             })
         },
         methods: {
-            go(){
-                this.cre_name = '居民身份证'
-            },
+
             idcordOc() {//身份证正面OC
                 this.bridge.callHandler('invokeIDCardFrontOCR', function (response) {
                     console.log('js调用客户端方法回调传参' + response);
