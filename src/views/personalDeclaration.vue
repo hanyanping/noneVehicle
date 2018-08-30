@@ -269,9 +269,10 @@
                 <span class="line">|</span>
                 <span class="text">填写基本信息</span>
             </div>
-            <div class="inputBox clear" @click="go">
+            <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">申领人姓名</span>
+                <!--<img class='inputImg fr' v-if="isAndroid" @click="idcordOc" src="../assets/images/listicon.png">-->
                 <input v-model='name' type="text" class="textInput fr" placeholder="请输入申领人姓名">
             </div>
             <div class="inputBox clear selectBox">
@@ -301,6 +302,7 @@
             <div class="inputBox clear">
                 <!--<label class="inputText">*</label>
                 <span class="textDetail">证件详细地址</span> -->
+                <!--<img class='inputImg fr' v-if="isAndroid" @click="idcordOc" src="../assets/images/listicon.png">-->
                 <input v-model="card_detail_address" type="text" class="textInput fr" placeholder="请输入证件详细地址">
             </div>
             <div class="inputBox clear selectBox">
@@ -530,7 +532,15 @@
             self.bridge.registerHandler('callBackJSIDCardFrontOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
                 self.cre_name = '居民身份证';
                 data.IDCardFrontResult = JSON.parse(data.IDCardFrontResult);
-                self.cre_code = data.IDCardFrontResult.idNumber.words;
+                self.cre_code = data.IDCardFrontResult.idNum;
+                self.name = data.IDCardFrontResult.idName;
+                self.card_detail_address = data.IDCardFrontResult.idAddress;
+                var provincestr = self.card_detail_address.substring(0,2);
+              for(let i in self.province){
+                if(self.province[i].label.indexOf(provincestr) >= 0){
+                  self.card_address = province[i].label;
+                }
+              }
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
             })
