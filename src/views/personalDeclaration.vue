@@ -538,7 +538,7 @@
                 var provincestr = self.card_detail_address.substring(0,2);
               for(let i in self.province){
                 if(self.province[i].label.indexOf(provincestr) >= 0){
-                  self.card_address = province[i].label;
+                  self.card_address = self.province[i].label;
                 }
               }
                 var responseData = {'rescode': '200'}
