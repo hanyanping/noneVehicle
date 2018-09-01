@@ -493,15 +493,17 @@
             if (isiOS) {
                 this.isAndroid = false;
             }
-        },
-        mounted() {
-            this.link_phone = localStorage.getItem('phone');
+             this.link_phone = localStorage.getItem('phone');
             this.user_id = localStorage.getItem('userId')
             this.getArea();
             this.getProvince('province');
             this.getProvince('area');
             this.getProvince('cred');
+        },
+        mounted() {
             $(".selectText").css("color", '#bbb');
+         
+            
             var self = this;
             self.bridge.registerHandler('webviewGetImage', function (data, responseCallback) {//注册客户端主动触发js端
                 self.isShowthree = true;
@@ -536,11 +538,11 @@
                 self.name = data.IDCardFrontResult.idName;
                 self.card_detail_address = data.IDCardFrontResult.idAddress;
                 var provincestr = self.card_detail_address.substring(0,2);
-              for(let i in self.province){
-                if(self.province[i].label.indexOf(provincestr) >= 0){
-                  self.card_address = province[i].label;
+                for(let i in self.province){
+                    if(self.province[i].label.indexOf(provincestr) >= 0){
+                    self.card_address = self.province[i].label;
+                    }
                 }
-              }
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
             })

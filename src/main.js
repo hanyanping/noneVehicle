@@ -61,9 +61,9 @@ router.beforeEach((to, from, next) => {
   var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android??
   var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios??
   setTitle(to.meta.title)
-  // localStorage.setItem('phone', '17600220760')
-    // localStorage.setItem('userId', 12);
-  // next()//开发
+  localStorage.setItem('phone', '17600220760')
+    localStorage.setItem('userId', 12);
+  next()//开发
   if (to.name == 'guild') {
     if (Vue.prototype.bridge) {
       next()
