@@ -185,7 +185,7 @@
             };
         },
         created() {
-            document.getElementsByTagName("title")[0].innerHTML = "个人申报（预约）";
+//            document.getElementsByTagName("title")[0].innerHTML = "个人申报（预约）";
             this.getArea(this.parentId);
             this.apply_no = this.$route.query.applyNo;
             this.getProvince('cred');

@@ -306,7 +306,7 @@
             </div>
             <div class="inputBox clear">
                 <span class="textDetail">联系地址:</span>
-                <span class="textInput">{{person.card_detail_address}}</span>
+                <span class="textInput">{{person.link_address}}</span>
             </div>
             <div class="inputBox clear">
                 <span class="textDetail">联系电话:</span>

@@ -92,7 +92,7 @@
             }
         },
         created() {
-            document.getElementsByTagName('title')[0].innerHTML = '预约二维码';
+//            document.getElementsByTagName('title')[0].innerHTML = '预约二维码';
             this.apply_no = this.$route.query.apply_no;
             this.user_id = localStorage.getItem('userId');
             this.phone = localStorage.getItem('phone');

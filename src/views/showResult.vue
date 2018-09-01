@@ -562,7 +562,7 @@
             },
         },
         created() {
-            document.getElementsByTagName('title')[0].innerHTML = '扫码结果展示';
+//            document.getElementsByTagName('title')[0].innerHTML = '扫码结果展示';
             var u = navigator.userAgent;
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端

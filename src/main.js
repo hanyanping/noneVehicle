@@ -60,9 +60,10 @@ router.beforeEach((to, from, next) => {
   var u = navigator.userAgent;
   var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android??
   var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios??
-  setTitle(to.meta.title)
-  localStorage.setItem('phone', '17600220760')
-    localStorage.setItem('userId', 12);
+  // setTitle(to.meta.title)
+  document.getElementById('titleId').innerHTML = to.meta.title
+  // localStorage.setItem('phone', '17600220760')
+  //   localStorage.setItem('userId', 12);
   next()//开发
   if (to.name == 'guild') {
     if (Vue.prototype.bridge) {

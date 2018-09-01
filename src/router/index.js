@@ -59,7 +59,7 @@ export default new Router({
             name: 'onlinechoose',
             component: onlinechoose,
             meta: {
-                title: '扫描结果显示'
+                title: '过渡期电动自行车'
             }
         },
         {

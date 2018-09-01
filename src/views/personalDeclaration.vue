@@ -272,7 +272,7 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">申领人姓名</span>
-                <!--<img class='inputImg fr' v-if="isAndroid" @click="idcordOc" src="../assets/images/listicon.png">-->
+                <img class='inputImg fr' v-if="isAndroid" @click="idcordOc" src="../assets/images/listicon.png">
                 <input v-model='name' type="text" class="textInput fr" placeholder="请输入申领人姓名">
             </div>
             <div class="inputBox clear selectBox">
@@ -287,7 +287,7 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">证件号码</span>
-                <img class='inputImg fr' v-if="isAndroid" @click="idcordOc" src="../assets/images/listicon.png">
+
                 <input type="text" v-model="cre_code" class="textInput fr" placeholder="请输入证件号码">
             </div>
             <div class="inputBox clear selectBox">
@@ -502,8 +502,8 @@
         },
         mounted() {
             $(".selectText").css("color", '#bbb');
-         
-            
+
+
             var self = this;
             self.bridge.registerHandler('webviewGetImage', function (data, responseCallback) {//注册客户端主动触发js端
                 self.isShowthree = true;
@@ -538,11 +538,11 @@
                 self.name = data.IDCardFrontResult.idName;
                 self.card_detail_address = data.IDCardFrontResult.idAddress;
                 var provincestr = self.card_detail_address.substring(0,2);
-                for(let i in self.province){
-                    if(self.province[i].label.indexOf(provincestr) >= 0){
-                    self.card_address = self.province[i].label;
-                    }
+              for(let i in self.province) {
+                if (self.province[i].label.indexOf(provincestr) >= 0) {
+                  self.card_address = self.province[i].label;
                 }
+              }
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
             })

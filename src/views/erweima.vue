@@ -164,7 +164,7 @@
             }
         },
         created() {
-            document.getElementsByTagName('title')[0].innerHTML = '非机动车信息二维码';
+//            document.getElementsByTagName('title')[0].innerHTML = '非机动车信息二维码';
 
         },
         mounted() {

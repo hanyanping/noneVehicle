@@ -263,7 +263,7 @@
         input {
             border: 1px solid #f4f4f4;
             padding: 12px 16px;
-            width: 60%;
+            width: 52%;
             border-radius: 6px;
         }
         .textDetail {
@@ -291,6 +291,14 @@
             margin-top: 5px;
         }
     }
+    .inputImg {
+      display: inline-block;
+      vertical-align: middle;
+      height: 30px;
+      width: 30px;
+      padding-left: 10px;
+      margin-top: -5px;
+    }
 </style>
 <template>
     <div style="background: #f4f4f4;min-height: 100vh;">
@@ -316,6 +324,7 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">申领人姓名</span>
+              <img v-if="isAndroid" class='inputImg fr' @click="idcordOc" src="../assets/images/listicon.png">
                 <input v-model='name' type="text" class="textInput fr" placeholder="请输入申领人姓名">
             </div>
             <div class="inputBox clear selectBox">
@@ -561,9 +570,29 @@
                 self.apply_car_no = data.licensePlateResult.words_result[1].words;
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
-            })
+            });
+          self.bridge.registerHandler('callBackJSIDCardFrontOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
+            self.cre_name = '居民身份证';
+            data.IDCardFrontResult = JSON.parse(data.IDCardFrontResult);
+            self.cre_code = data.IDCardFrontResult.idNum;
+            self.name = data.IDCardFrontResult.idName;
+            self.card_detail_address = data.IDCardFrontResult.idAddress;
+            var provincestr = self.card_detail_address.substring(0,2);
+            for(let i in self.province) {
+              if (self.province[i].label.indexOf(provincestr) >= 0) {
+                self.card_address = self.province[i].label;
+              }
+            }
+            var responseData = {'rescode': '200'}
+            responseCallback(responseData)
+          })
         },
         methods: {
+          idcordOc() {//身份证正面OC
+            this.bridge.callHandler('invokeIDCardFrontOCR', function (response) {
+              console.log('js调用客户端方法回调传参' + response);
+            });
+          },
             LicensePlateOC() {//车牌识别OC
                 this.bridge.callHandler('invokeLicensePlateOCR', function (response) {
                     console.log('js调用客户端方法回调传参' + response);
