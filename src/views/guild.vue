@@ -136,21 +136,21 @@
                     <img class="goOrder" src="../assets/images/jiantou.png">
                 </div>
             </div>
-            <div class="item clear" @click="goonline">
+            <div class="item clear" @click="goonline" v-show="userType == 1">
                 <img class="orderIcon" src="../assets/images/guanli.png">
                 <span>历史预约记录(线上预约)</span>
                 <div class=" fr">
                     <img class="goOrder" src="../assets/images/jiantou.png">
                 </div>
             </div>
-            <div v-show="userType == 0" class="item clear" @click="saoCode">
+            <div v-show="userType == 1" class="item clear" @click="saoCode">
                 <img class="orderIcon" src="../assets/images/sao.png">
                 <span>扫描二维码(线上申请)</span>
                 <div class=" fr">
                     <img class="goOrder" src="../assets/images/jiantou.png">
                 </div>
             </div>
-            <div v-show="userType == 0" class="item clear" @click="saoCode">
+            <div v-show="userType == 1" class="item clear" @click="saoCode">
                 <img class="orderIcon" src="../assets/images/sao.png">
                 <span>扫描二维码(线上预约)</span>
                 <div class=" fr">
@@ -194,11 +194,13 @@
             };
         },
         created() {
+          this.phone = localStorage.getItem("phone");
+          console.log(this.phone )
+          //  获取用户类型
+          this.getUserType();
         },
         mounted() {
-            this.phone = localStorage.getItem("phone");
-            //  获取用户类型
-            this.getUserType();
+
             var self = this;
             self.bridge.registerHandler("getQRCodeScanResult", function (
                 data,
@@ -245,6 +247,7 @@
                             Toast(resdes);
                         } else {
                             this.userType = response.data.type;
+                            console.log(this.userType)
 
                         }
                     })
