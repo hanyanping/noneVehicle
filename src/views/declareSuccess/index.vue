@@ -14,7 +14,7 @@
             height: 90px;
             width: 90px;
         }
-        p {
+        .sucessText {
             margin: 20px 0;
             color: #232323;
             font-size: 16px;
@@ -28,13 +28,20 @@
             text-align: center;
             margin: 40px auto;
             border-radius: 5px;
+            font-size: 16px;
+        }
+        .warmtext{
+            color: #E7353C;
+            font-size: 15px;
+            text-align: center;
         }
     }
 </style>
 <template>
     <div class="declarSuccess">
         <img src="../../assets/images/submit.png">
-        <p>提交成功</p>
+        <p class="sucessText">提交成功</p>
+        <p class="warmtext">请在“历史申请记录（线上申请）”查看办理进度</p>
         <div class="gobackGuild" @click="goGuild">返回首页</div>
     </div>
 </template>

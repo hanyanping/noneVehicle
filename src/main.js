@@ -63,8 +63,8 @@ router.beforeEach((to, from, next) => {
   // setTitle(to.meta.title)
   document.getElementById('titleId').innerHTML = to.meta.title
   // localStorage.setItem('phone', '18510822236')
-  //   localStorage.setItem('userId', 12);
-  // next()//开发
+    // localStorage.setItem('userId', 12);
+  next()//开发
   if (to.name == 'guild') {
     if (Vue.prototype.bridge) {
       next()

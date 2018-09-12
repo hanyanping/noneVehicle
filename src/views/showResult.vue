@@ -457,7 +457,7 @@
                         </div>
                     </div>
                     <div class="phoneText">
-                        <span class="text">代领人个人照片</span>
+                        <span class="text">本人与带领人身份证照片</span>
                     </div>
                 </div>
             </div>

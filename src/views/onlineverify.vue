@@ -124,7 +124,12 @@
         color: #f00;
         vertical-align: middle;
     }
-
+    .warm{
+        text-align: right;
+        color: #E7353C;
+        padding: 5px;
+        font-size: 14px;
+    }
     .inputBox {
         padding: 12px;
         background: #fff;
@@ -327,6 +332,7 @@
               <img v-if="isAndroid" class='inputImg fr' @click="idcordOc" src="../assets/images/listicon.png">
                 <input v-model='name' type="text" class="textInput fr" placeholder="请输入申领人姓名">
             </div>
+            <div class="warm"  v-if="isAndroid"><span>*</span>身份证可使用OCR功能自动识别</div>
             <div class="inputBox clear selectBox">
                 <label class="inputText">*</label>
                 <span class="textDetail">证件名称</span>
@@ -572,9 +578,9 @@
                 responseCallback(responseData)
             });
           self.bridge.registerHandler('callBackJSIDCardFrontOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
-            self.cre_name = '居民身份证';
+            // self.cre_name = '居民身份证';
             data.IDCardFrontResult = JSON.parse(data.IDCardFrontResult);
-            self.cre_code = data.IDCardFrontResult.idNum;
+            // self.cre_code = data.IDCardFrontResult.idNum;
             self.name = data.IDCardFrontResult.idName;
             self.card_detail_address = data.IDCardFrontResult.idAddress;
             var provincestr = self.card_detail_address.substring(0,2);

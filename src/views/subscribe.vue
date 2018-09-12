@@ -151,13 +151,15 @@
                 parentlist: [],
                 childlist: [],
                 apply_no: '',
-                user_id: ''
+                user_id: '',
+                timeData:[]
             }
         },
         created() {
 //            document.getElementsByTagName('title')[0].innerHTML = '预约办理';
             this.getArea(this.parentId);
             this.apply_no = this.$route.query.applyNo;
+
         },
         mounted() {
             if (!this.parantValue) {
@@ -194,6 +196,33 @@
             }
         },
         methods: {
+            getTime(){
+                var now = new Date();
+                var nowTime = now.getTime() ;
+                var oneDayTime = 24*60*60*1000 ;
+                var timeData = new Array(),time = '',week = '';
+                for(var i = 0 ; i < 7 ; i++) {
+                    //显示周一
+                    var ShowTime = nowTime + (i + 1) * oneDayTime;
+                    console.log(ShowTime)
+                    //初始化日期时间
+                    var myDate = new Date(ShowTime);
+                    var year = myDate.getFullYear();
+                    var month = myDate.getMonth() + 1;
+                    var date = myDate.getDate();
+                    console.log(year + "-" + month + "-" + date)
+                    time = year + "-" + month + "-" + date;
+                    week = "星期" + "日一二三四五六".charAt(myDate.getDay());
+                    var obj = {
+                        time: time,
+                        week: week,
+                    };
+                    obj.week = week;
+                    timeData.push(obj)
+                }
+                this.timeData = timeData;
+                console.log(this.timeData)
+            },
             open: function (picker) {
                 this.$refs[picker].open()
             },
@@ -256,7 +285,7 @@
                         .then(response => {
                             console.log(response.data);
                             if (response.data.result.rescode == 200) {
-                                this.$router.push({path: '/subSucess', query: {apply_no: this.apply_no}})//跳到预约成功页面
+                                this.$router.push({path: '/subSucess', query: {apply_no: this.apply_no,source:'noonline'}})//跳到预约成功页面
                             } else {
                                 Toast(response.data.result.resdes)
                             }

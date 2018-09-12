@@ -121,10 +121,15 @@
     }
 
     .inputText {
-        color: #f00;
+        color: #E7353C;
         vertical-align: middle;
     }
-
+    .warm{
+        text-align: right;
+        color: #E7353C;
+        padding: 5px;
+        font-size: 14px;
+    }
     .inputBox {
         padding: 12px;
         background: #fff;
@@ -275,6 +280,7 @@
                 <img class='inputImg fr' v-if="isAndroid" @click="idcordOc" src="../assets/images/listicon.png">
                 <input v-model='name' type="text" class="textInput fr" placeholder="请输入申领人姓名">
             </div>
+            <div class="warm"  v-if="isAndroid"><span>*</span>身份证可使用OCR功能自动识别</div>
             <div class="inputBox clear selectBox">
                 <label class="inputText">*</label>
                 <span class="textDetail">证件名称</span>

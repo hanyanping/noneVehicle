@@ -27,8 +27,14 @@
                 line-height: 24px;
             }
             .showText1 {
-                color: #2985DE;
+                color: #096FD4;
                 border-top: 1px solid #f4f4f4;
+                font-size: 16px;
+            }
+            .warmtext{
+                color: #E7353C;
+                font-size: 14px;
+                text-align: center;
             }
         }
     }
@@ -42,13 +48,14 @@
 
     .gosubscribe {
         margin: 20px auto;
-        background: #4399E8;
+        background: #096FD4;
         color: #fff;
         height: 40px;
         line-height: 40px;
         text-align: center;
         width: 100px;
         border-radius: 6px;
+        font-size: 16px;
     }
 </style>
 <template>
@@ -59,6 +66,7 @@
                     <div id="qrcode"></div>
                 </div>
                 <p class="showText showText1">预约成功</p>
+                <p class="warmtext">预约点的工作时间为每天9:00-17:00（周六、日正常办理）</p>
                 <p class="showText">
                     需车主本人或代理人携带车主及代理人身份证明原件，按照预约时间({{appointment.time}})到预约发放点({{appointment.address}})出示二维码信息现场领取标识，未按照预约时间领取标识的，需重新进行预约</p>
             </div>
@@ -88,7 +96,8 @@
                 isOverdue: true,
                 phone: '',
                 user_id: '',
-                appointment: ''
+                appointment: '',
+                code: ''
             }
         },
         created() {
@@ -99,9 +108,9 @@
             this.getData();
         },
         mounted() {
-            var code = this.$route.query.code;
+           this.code = this.$route.query.code;
             if (this.isOverdue) {
-                this.getCode(code)
+                this.getCode(this.code)
             }
         },
         methods: {
@@ -179,9 +188,9 @@
                 });
             },
             gosubscribe() {
-                if (code == 1) {
+                if (this.code == 1) {
                     this.$router.push({path: '/personsubscribe'})
-                } else if (code == 0) {
+                } else if (this.code == 0) {
                     this.$router.push({path: '/subscribe'})
                 }
             }

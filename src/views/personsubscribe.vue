@@ -11,7 +11,13 @@
             font-size: 32rem / $baseFontSize;
         }
     }
-
+    .warm{
+        text-align: right;
+        color: #E7353C;
+        padding: 5px;
+        font-size: 14px;
+        background: #f4f4f4;
+    }
     .inputBox {
         padding: 15px;
         background: #fff;
@@ -115,6 +121,7 @@
             <img class='inputImg fr' v-if="isAndroid" @click="idcordOc" src="../assets/images/listicon.png">
             <input type="text" v-model="cre_code" class="textInput fr" placeholder="请输入证件号码">
         </div>
+        <div class="warm"  v-if="isAndroid"><span>*</span>身份证可使用OCR功能自动识别</div>
         <div class="textBox">
             <span class="line">|</span>
             <span class="text">填写预约信息</span>
@@ -358,7 +365,7 @@
                                 if (response.data.result.rescode == 200) {
                                     this.$router.push({
                                         path: "/subSucess",
-                                        query: {apply_no: this.apply_no}
+                                        query: {apply_no: this.apply_no,source:'online'}
                                     }); //跳到预约成功页面
                                 } else {
                                     Toast(response.data.result.resdes);
