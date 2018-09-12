@@ -111,23 +111,23 @@
                 <option v-for='item in childlist' :value="item.label" :key='item'>{{item.label}}</option>
             </select>
         </div>
-        <div class="inputBox clear selectBox" @click="open('datePicker')">
-            <label class="inputText">*</label>
-            <span class="textDetail">预约办理时间</span>
-            <span class="fr selectText3">{{pickerValueTwo}}</span>
-            <img class='selectImg' src="../assets/images/down.png">
-        </div>
-        <mt-datetime-picker
-                v-model="pickerValue"
-                type="date"
-                :startDate="now"
-                ref="datePicker"
-                year-format="{value} 年"
-                month-format="{value} 月"
-                date-format="{value} 日"
-                @confirm="handleChange">
-        </mt-datetime-picker>
-        <div class='submit' @click='submit'>提交信息</div>
+        <!--<div class="inputBox clear selectBox" @click="open('datePicker')">-->
+            <!--<label class="inputText">*</label>-->
+            <!--<span class="textDetail">预约办理时间</span>-->
+            <!--<span class="fr selectText3">{{pickerValueTwo}}</span>-->
+            <!--<img class='selectImg' src="../assets/images/down.png">-->
+        <!--</div>-->
+        <!--<mt-datetime-picker-->
+                <!--v-model="pickerValue"-->
+                <!--type="date"-->
+                <!--:startDate="now"-->
+                <!--ref="datePicker"-->
+                <!--year-format="{value} 年"-->
+                <!--month-format="{value} 月"-->
+                <!--date-format="{value} 日"-->
+                <!--@confirm="handleChange">-->
+        <!--</mt-datetime-picker>-->
+        <div class='submit' v-if="isShow" @click='submit'>提交信息</div>
     </div>
 </template>
 
@@ -140,6 +140,7 @@
         name: "subscribe",
         data() {
             return {
+                isShow: false,
                 name: '',
                 parantValue: '',
                 address: '',
