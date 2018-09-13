@@ -136,7 +136,7 @@
                     <img class="goOrder" src="../assets/images/jiantou.png">
                 </div>
             </div>
-            <div class="item clear" @click="goonline" v-show="userType == 1">
+            <div class="item clear" @click="goonline">
                 <img class="orderIcon" src="../assets/images/guanli.png">
                 <span>历史预约记录(线上预约)</span>
                 <div class=" fr">

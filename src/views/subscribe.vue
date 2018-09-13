@@ -16,6 +16,29 @@
         padding: 15px;
         background: #fff;
         border-bottom: 1px solid #f4f4f4;
+        .timeText{
+            color: #232323;
+            font-size: 30rem/$baseFontSize;
+            .subscribeText{
+                color: #bbb;
+                display:inline-block;
+                vertical-align: middle;
+            }
+            .subscribeCircle{
+                display:inline-block;
+                vertical-align: middle;
+                height: 50rem/$baseFontSize;
+                width: 50rem/$baseFontSize;
+                border-radius:50%;
+                background: #bbb;
+            }
+            img{
+                height: 50rem/$baseFontSize;
+                width: 50rem/$baseFontSize;
+                display:inline-block;
+                vertical-align: middle;
+            }
+        }
         .inputText {
             color: #f00;
             padding-right: 5px;
@@ -75,9 +98,9 @@
     }
 
     .submit {
-        margin: 20px auto;
+        margin: 25px auto;
         height: 45px;
-        width: 70%;
+        width: 60%;
         background: #096FD4;
         color: #fff;
         font-size: 16px;
@@ -99,7 +122,7 @@
             <img class='selectImg' src="../assets/images/down.png">
             <select v-model='parantValue' class="fr selectText">
                 <option value="">请选择预约办理区域</option>
-                <option v-for='item in parentlist' :value="item.value" :key='item'>{{item.label}}</option>
+                <option v-for='item in parentlist' :value="item.value">{{item.label}}</option>
             </select>
         </div>
         <div class="inputBox clear selectBox">
@@ -108,8 +131,22 @@
             <img class='selectImg' src="../assets/images/down.png">
             <select v-model='address' class="fr selectText1">
                 <option value="">请选择预约办理机构</option>
-                <option v-for='item in childlist' :value="item.label" :key='item'>{{item.label}}</option>
+                <option v-for='item in childlist' :value="item.label">{{item.label}}</option>
             </select>
+        </div>
+        <div class='submit' v-if="!isShow" @click="getTime">查询可预约时间</div>
+        <div class="textBox" v-if="isShow">
+            <span class="line">|</span>
+            <span class="text">预约时间（可提前预约7天以内的办理点）</span>
+        </div>
+        <div v-if="isShow" class='clear inputBox' v-for="(item,index) in timeData">
+            <div class="fl timeText">{{item.time}}  {{item.week}}</div>
+            <div class="fr timeText selectRight">
+                <span v-if="item.type==0" class="subscribeText">当天预约人数已满</span>
+                <span v-if="item.type==0" class="subscribeCircle"></span>
+                <img v-if="item.type==1" class="selectCicle" @click='selectTime(item.time,index,$event)' src="../../static/yuan.png">
+                <!--<img v-if="item.type==1 && isSelect == true" @click='selectTime(item.time)' src="../assets/images/selectIcon.jpg">-->
+            </div>
         </div>
         <!--<div class="inputBox clear selectBox" @click="open('datePicker')">-->
             <!--<label class="inputText">*</label>-->
@@ -140,6 +177,8 @@
         name: "subscribe",
         data() {
             return {
+                noselect: require('../../static/yuan.png'),
+                select: require('../../static/selectIcon.jpg'),
                 isShow: false,
                 name: '',
                 parantValue: '',
@@ -160,7 +199,6 @@
 //            document.getElementsByTagName('title')[0].innerHTML = '预约办理';
             this.getArea(this.parentId);
             this.apply_no = this.$route.query.applyNo;
-
         },
         mounted() {
             if (!this.parantValue) {
@@ -197,31 +235,48 @@
             }
         },
         methods: {
+            selectTime(time,index,event){
+                console.log(time)
+                this.pickerValueTwo = time;
+                var imgArr = $(".selectRight").find('.selectCicle');
+                for(var i = 0;i < imgArr.length; i++){
+                    $(imgArr[i]).attr('src','../../static/yuan.png')
+                }
+                $(event.target).attr('src','../../static/selectIcon.jpg')
+            },
             getTime(){
                 var now = new Date();
                 var nowTime = now.getTime() ;
                 var oneDayTime = 24*60*60*1000 ;
-                var timeData = new Array(),time = '',week = '';
+                var timeData = new Array(),time = '',week = '',type='';
                 for(var i = 0 ; i < 7 ; i++) {
                     //显示周一
                     var ShowTime = nowTime + (i + 1) * oneDayTime;
                     console.log(ShowTime)
                     //初始化日期时间
                     var myDate = new Date(ShowTime);
+                    console.log(myDate)
                     var year = myDate.getFullYear();
                     var month = myDate.getMonth() + 1;
                     var date = myDate.getDate();
                     console.log(year + "-" + month + "-" + date)
                     time = year + "-" + month + "-" + date;
                     week = "星期" + "日一二三四五六".charAt(myDate.getDay());
+                    if(week == '星期日'){
+                        type='0'
+                    }else{
+                        type='1'
+                    }
                     var obj = {
                         time: time,
                         week: week,
+                        type: type
                     };
                     obj.week = week;
                     timeData.push(obj)
                 }
                 this.timeData = timeData;
+                this.isShow = true;
                 console.log(this.timeData)
             },
             open: function (picker) {
