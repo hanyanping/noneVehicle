@@ -251,7 +251,7 @@
                 var timeData = new Array(),time = '',week = '',type='';
                 for(var i = 0 ; i < 7 ; i++) {
                     //显示周一
-                    var ShowTime = nowTime + (i + 1) * oneDayTime;
+                    var ShowTime = nowTime + (i + 1) * oneDayTime;//时间戳
                     console.log(ShowTime)
                     //初始化日期时间
                     var myDate = new Date(ShowTime);
