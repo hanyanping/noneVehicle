@@ -134,7 +134,7 @@
                 <option v-for='item in childlist' :value="item.label">{{item.label}}</option>
             </select>
         </div>
-        <div class='submit' v-if="!isShow" @click="getTime">查询可预约时间</div>
+        <div class='submit' v-if="!isShow" @click="getTimeDate">查询可预约时间</div>
         <div class="textBox" v-if="isShow">
             <span class="line">|</span>
             <span class="text">预约时间（可提前预约7天以内的办理点）</span>
@@ -142,9 +142,10 @@
         <div v-if="isShow" class='clear inputBox' v-for="(item,index) in timeData">
             <div class="fl timeText">{{item.time}}  {{item.week}}</div>
             <div class="fr timeText selectRight">
-                <span v-if="item.type==0" class="subscribeText">当天预约人数已满</span>
-                <span v-if="item.type==0" class="subscribeCircle"></span>
-                <img v-if="item.type==1" class="selectCicle" @click='selectTime(item.time,index,$event)' src="../../static/yuan.png">
+              <span v-if="item.type == 1" class="subscribeText">当天预约人数已满</span>
+              <span v-if="item.type == 2" class="subscribeText">不可预约</span>
+                <span v-if="item.type == 1 || item.type == 2" class="subscribeCircle"></span>
+                <img v-if="item.type == 0" class="selectCicle" @click='selectTime(item.time,index,$event)' src="../../static/yuan.png">
                 <!--<img v-if="item.type==1 && isSelect == true" @click='selectTime(item.time)' src="../assets/images/selectIcon.jpg">-->
             </div>
         </div>
@@ -244,40 +245,96 @@
                 }
                 $(event.target).attr('src','../../static/selectIcon.jpg')
             },
-            getTime(){
-                var now = new Date();
-                var nowTime = now.getTime() ;
-                var oneDayTime = 24*60*60*1000 ;
-                var timeData = new Array(),time = '',week = '',type='';
-                for(var i = 0 ; i < 7 ; i++) {
-                    //显示周一
-                    var ShowTime = nowTime + (i + 1) * oneDayTime;//时间戳
-                    console.log(ShowTime)
-                    //初始化日期时间
-                    var myDate = new Date(ShowTime);
-                    console.log(myDate)
-                    var year = myDate.getFullYear();
-                    var month = myDate.getMonth() + 1;
-                    var date = myDate.getDate();
-                    console.log(year + "-" + month + "-" + date)
-                    time = year + "-" + month + "-" + date;
-                    week = "星期" + "日一二三四五六".charAt(myDate.getDay());
-                    if(week == '星期日'){
-                        type='0'
-                    }else{
-                        type='1'
-                    }
-                    var obj = {
-                        time: time,
-                        week: week,
-                        type: type
-                    };
-                    obj.week = week;
-                    timeData.push(obj)
+            resetTime(data){
+              data = [{"date":1536915844975,"num":"66","enabled":"2","description":"测试日期"},{"date":1537002244975,"enabled":"2","description":"测试日期2"},{"date":1537088644975,"enabled":"0"},{"date":1537175044975,"enabled":"0"},{"date":1537261444975,"enabled":"0"},{"date":1537347844975,"enabled":"0"},{"date":1537434244975,"enabled":"0"}];
+              var timeData = new Array(),time = '',week = '',type='';
+              for(var i = 0 ; i < data.length ; i++) {
+                //显示周一
+                var ShowTime = data[i].date;//时间戳
+                console.log(ShowTime)
+                //初始化日期时间
+                var myDate = new Date(ShowTime);
+                console.log(myDate)
+                var year = myDate.getFullYear();
+                var month = myDate.getMonth() + 1;
+                var date = myDate.getDate();
+                console.log(year + "-" + month + "-" + date)
+                time = year + "-" + month + "-" + date;
+                week = "星期" + "日一二三四五六".charAt(myDate.getDay());
+                type = data[i].enabled;
+                if(week == '星期日'){
+                  type='0'
+                }else{
+                  type='1'
                 }
-                this.timeData = timeData;
-                this.isShow = true;
-                console.log(this.timeData)
+                var obj = {
+                  time: time,
+                  week: week,
+                  type: type
+                };
+                obj.week = week;
+                timeData.push(obj)
+              }
+              this.timeData = timeData;
+              this.isShow = true;
+            },
+            getTimeDate(){
+              this.resetTime(data);
+              return;
+              if(this.parantValue == ''){
+                Toast('请选择预约区域');
+                return;
+              }
+              var data = {
+                address: this.parantValue
+              }
+              axios.post(this.ajaxUrl + "/vehicle/getDate", data)
+                .then(response => {
+                  console.log(response.data);
+                  if (response.data.result.rescode == 200) {
+                    this.resetTime(response.data.list);
+                  }
+                }, err => {
+                  console.log(err);
+                })
+                .catch((error) => {
+                  console.log(error)
+                })
+
+
+//                var now = new Date();
+//                var nowTime = now.getTime() ;
+//                var oneDayTime = 24*60*60*1000 ;
+//                var timeData = new Array(),time = '',week = '',type='';
+//                for(var i = 0 ; i < 7 ; i++) {
+//                    //显示周一
+//                    var ShowTime = nowTime + (i + 1) * oneDayTime;//时间戳
+//                    console.log(ShowTime)
+//                    //初始化日期时间
+//                    var myDate = new Date(ShowTime);
+//                    console.log(myDate)
+//                    var year = myDate.getFullYear();
+//                    var month = myDate.getMonth() + 1;
+//                    var date = myDate.getDate();
+//                    console.log(year + "-" + month + "-" + date)
+//                    time = year + "-" + month + "-" + date;
+//                    week = "星期" + "日一二三四五六".charAt(myDate.getDay());
+//                    if(week == '星期日'){
+//                        type='0'
+//                    }else{
+//                        type='1'
+//                    }
+//                    var obj = {
+//                        time: time,
+//                        week: week,
+//                        type: type
+//                    };
+//                    obj.week = week;
+//                    timeData.push(obj)
+//                }
+//                this.timeData = timeData;
+//                this.isShow = true;
+//                console.log(this.timeData)
             },
             open: function (picker) {
                 this.$refs[picker].open()
