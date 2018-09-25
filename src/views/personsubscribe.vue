@@ -260,8 +260,10 @@
             $(".selectText1")
                 .find("option")
                 .css("color", "#232323");
-            this.bridge.registerHandler('callBackJSIDCardFrontOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
-                this.cre_code = data.IDCardFrontResult;
+            var self = this;
+          self.bridge.registerHandler('callBackJSIDCardFrontOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
+            self.cre_code = data.IDCardFrontResult.idNum;
+            self.cre_name = '居民身份证';
                 var responseData = {'rescode': '200'}
                 responseCallback(responseData)
             })

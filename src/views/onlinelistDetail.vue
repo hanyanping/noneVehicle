@@ -279,11 +279,11 @@
                 <span class="textDetail">所有权</span>
                 <span class="textInput">个人</span>
             </div>
-            <div class="inputBox clear">
-                <span class="textDetail" v-if='applyStatus != "待审核"'>所有人</span>
-                <span class="textDetail" v-else>申领人</span>
-                <span class="textInput">{{person.name}}</span>
-            </div>
+            <!--<div class="inputBox clear">-->
+                <!--<span class="textDetail" v-if='applyStatus != "待审核"'>所有人</span>-->
+                <!--<span class="textDetail" v-else>申领人</span>-->
+                <!--<span class="textInput">{{person.name}}</span>-->
+            <!--</div>-->
             <div class="inputBox clear">
                 <span class="textDetail">证件号码:</span>
                 <span class="textInput">{{person.cre_code}}</span>

@@ -189,9 +189,9 @@
             },
             gosubscribe() {
                 if (this.code == 1) {
-                    this.$router.push({path: '/personsubscribe'})
+                    this.$router.push({path: '/personsubscribe', query: {applyNo: this.apply_no}})
                 } else if (this.code == 0) {
-                    this.$router.push({path: '/subscribe'})
+                  this.$router.push({path: '/subscribe', query: {applyNo: this.apply_no}})
                 }
             }
         }

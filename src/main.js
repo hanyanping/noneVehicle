@@ -43,16 +43,16 @@ function setupWebViewJavascriptBridge(callback) {
 
 function setTitle(title) {
   document.title = title || document.title;
-  var ua = navigator.userAgent.toLowerCase();
-  if (ua.match(/MicroMessenger/i) == "micromessenger" && !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/i)) {
-    var ifr = document.createElement('iframe')
+  if (/ip(hone|od|ad)/i.test(navigator.userAgent)) {
+    var ifr = document.createElement('iframe');
     ifr.src = "/favicon.ico";
+    ifr.style.display = 'none';
     ifr.onload = function () {
       setTimeout(function () {
         ifr.remove();
-      }, 0)
+      }, 9);
+      document.body.appendChild(ifr);
     }
-    document.body.appendChild(ifr);
   }
 }
 
@@ -60,11 +60,11 @@ router.beforeEach((to, from, next) => {
   var u = navigator.userAgent;
   var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android??
   var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios??
-  // setTitle(to.meta.title)
-  document.getElementById('titleId').innerHTML = to.meta.title
+  setTitle(to.meta.title);
+  // document.getElementById('titleId').innerHTML = to.meta.title
   // localStorage.setItem('phone', '18510822236')
-    // localStorage.setItem('userId', 12);
-  // next()//开发
+  //   localStorage.setItem('userId', 12);
+  next()//开发
   if (to.name == 'guild') {
     if (Vue.prototype.bridge) {
       next()

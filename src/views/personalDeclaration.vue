@@ -538,7 +538,7 @@
                 responseCallback(responseData)
             })
             self.bridge.registerHandler('callBackJSIDCardFrontOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
-                self.cre_name = '居民身份证';
+                ;self.cre_name = '居民身份证'
                 data.IDCardFrontResult = JSON.parse(data.IDCardFrontResult);
                 self.cre_code = data.IDCardFrontResult.idNum;
                 self.name = data.IDCardFrontResult.idName;
