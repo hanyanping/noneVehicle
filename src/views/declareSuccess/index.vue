@@ -34,6 +34,7 @@
             color: #E7353C;
             font-size: 15px;
             text-align: center;
+            padding: 0 15px;
         }
     }
 </style>

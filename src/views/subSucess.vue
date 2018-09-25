@@ -34,6 +34,7 @@
             color: #E7353C;
             font-size: 15px;
             text-align: center;
+            padding: 0 15px;
         }
     }
 </style>
@@ -54,11 +55,10 @@
             return {
                 isshow: false
             }
-
         },
         created() {
-            if(this.$route.source == 'online'){
-                this.false = true;
+            if(this.$route.query.source == 'online'){
+                this.isshow = true;
             }
         },
         methods: {

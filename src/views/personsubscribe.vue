@@ -303,6 +303,15 @@
             }
         },
         methods: {
+            selectTime(time,index,event){
+                console.log(time)
+                this.pickerValueTwo = time;
+                var imgArr = $(".selectRight").find('.selectCicle');
+                for(var i = 0;i < imgArr.length; i++){
+                    $(imgArr[i]).attr('src',require('../../static/yuan.png'))
+                }
+                $(event.target).attr('src',require('../../static/selectIcon.jpg'))
+            },
             idcordOc() {//身份证正面OC
                 this.bridge.callHandler('invokeIDCardFrontOCR', function (response) {
                     console.log('js调用客户端方法回调传参' + response);
@@ -326,7 +335,7 @@
                     })
             },
           resetTime(data){
-            data = [{"date":1536915844975,"num":"66","enabled":"2","description":"测试日期"},{"date":1537002244975,"enabled":"2","description":"测试日期2"},{"date":1537088644975,"enabled":"0"},{"date":1537175044975,"enabled":"0"},{"date":1537261444975,"enabled":"0"},{"date":1537347844975,"enabled":"0"},{"date":1537434244975,"enabled":"0"}];
+            // data = [{"date":1536915844975,"num":"66","enabled":"2","description":"测试日期"},{"date":1537002244975,"enabled":"2","description":"测试日期2"},{"date":1537088644975,"enabled":"0"},{"date":1537175044975,"enabled":"0"},{"date":1537261444975,"enabled":"0"},{"date":1537347844975,"enabled":"0"},{"date":1537434244975,"enabled":"0"}];
             var timeData = new Array(),time = '',week = '',type='';
             for(var i = 0 ; i < data.length ; i++) {
               //显示周一
@@ -354,8 +363,8 @@
             this.isShow = true;
           },
           getTimeDate(){
-            this.resetTime(data);
-            return;
+            // this.resetTime(data);
+            // return;
             if(this.parantValue == ''){
               Toast('请选择预约区域');
               return;
@@ -363,12 +372,10 @@
             var data = {
               address: this.parantValue
             }
-            axios.post(this.ajaxUrl + "/vehicle/getDate", data)
+            axios.post(this.ajaxUrl + "vehicle/getDate", data)
               .then(response => {
                 console.log(response.data);
-                if (response.data.result.rescode == 200) {
-                  this.resetTime(response.data.list);
-                }
+                  this.resetTime(response.data);
               }, err => {
                 console.log(err);
               })
