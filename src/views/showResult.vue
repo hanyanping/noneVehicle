@@ -498,7 +498,7 @@
                 </div>
             </div>
             <div class='codeInput' v-if='ispass'>
-                <span class='codespan'>京</span><span class='codespan'>临</span><input type='text' placeholder="请输入临时编号"
+                <span class='codespan'>京</span><span class='codespan'>临</span><input type='tel' maxlength="7" @keyup="sureapply_car_no"  placeholder="请输入临时编号"
                                                                                      v-model='apply_car_no'/>
                 <img v-if="isAndroid" class='inputImg' @click="LicensePlateOC" src="../assets/images/listicon.png">
             </div>
@@ -611,6 +611,15 @@
             })
         },
         methods: {
+            sureapply_car_no(){
+                if(this.apply_car_no.length>7){
+                    this.apply_car_no = this.apply_car_no.substring(0,7)
+                }
+                var reg = /^[0-9]*$/;
+                if(!reg.test(this.apply_car_no)){
+                    Toast('请输入正确临时编号')
+                }
+            },
             LicensePlateOC() {//车牌识别OC
                 this.bridge.callHandler('invokeLicensePlateOCR', function (response) {
                     console.log('js调用客户端方法回调传参' + response);
@@ -789,6 +798,11 @@
                 return new Blob([ia], {type: mimeString});
             },
             surePass() {
+                var reg = /^[0-9]*$/;
+                if(!reg.test(this.apply_car_no)){
+                    Toast('请输入正确临时编号')
+                    return;
+                }
                 //判断是个人还是单位
                 if (this.applyType == 1) {
                     //判断是本人还是他人

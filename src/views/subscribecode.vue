@@ -128,7 +128,6 @@
                 console.log(subyear, submonth, subday, year, month, day)
                 var substing = parseInt(Number(new Date(subyear + '-' + submonth + '-' + subday)));
                 var currentstring = parseInt(Number(new Date(year + '-' + month + '-' + day)));
-                // var currentstring = '2018-02-23';
                 if (currentstring > substing) {
                     this.isOverdue = false;
                 } else {

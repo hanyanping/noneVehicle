@@ -11,10 +11,10 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/non_vehicle': {
-        // target: 'https://chakan.zhongchebaolian.com', // 生产
-          target: 'https://mock.zhongchebaolian.com', // 测试
-          changeOrigin: true,
-           pathRewrite: {
+            target: 'https://bjjj.zhongchebaolian.com', // 生产
+            // target: 'https://mock.zhongchebaolian.com', // 测试
+            changeOrigin: true,
+             pathRewrite: {
             '^/non_vehicle/': '/non_vehicle/'
            }
       },

@@ -165,6 +165,7 @@
         },
         methods: {
             goSubcode(appointmentTime, applyNo) {
+                console.log(appointmentTime)
                 localStorage.setItem('appointmentTime', appointmentTime);
 
                 this.$router.push({path: '/subscribecode', query: {apply_no: applyNo, code: 1}})

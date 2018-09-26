@@ -417,7 +417,7 @@
                 <label class="inputText">*</label>
                 <span class="textDetail">临时编号</span>
                 <div>
-                    <span class='codespan'>京</span><span class='codespan'>临</span><input type='text'
+                    <span class='codespan'>京</span><span class='codespan'>临</span><input @keyup="sureapply_car_no"  type='tel' maxlength="7"
                                                                                          placeholder="请输入临时编号"
                                                                                          v-model='apply_car_no'/>
                     <img v-if="isAndroid" class='inputImg' @click="LicensePlateOC" src="../assets/images/listicon.png">
@@ -594,6 +594,15 @@
           })
         },
         methods: {
+            sureapply_car_no(){
+                if(this.apply_car_no.length>7){
+                    this.apply_car_no = this.apply_car_no.substring(0,7)
+                }
+                var reg = /^[0-9]*$/;
+                if(!reg.test(this.apply_car_no)){
+                    Toast('请输入正确临时编号')
+                }
+            },
           idcordOc() {//身份证正面OC
             this.bridge.callHandler('invokeIDCardFrontOCR', function (response) {
               console.log('js调用客户端方法回调传参' + response);
@@ -869,6 +878,11 @@
                 }
                 if (this.apply_car_no == '') {
                     Toast('请输入临时编号')
+                    return;
+                }
+                var reg = /^[0-9]*$/;
+                if(!reg.test(this.apply_car_no)){
+                    Toast('请输入正确临时编号');
                     return;
                 }
                 var data = {
