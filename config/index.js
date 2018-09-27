@@ -11,8 +11,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/non_vehicle': {
-            target: 'https://bjjj.zhongchebaolian.com', // 生产
-            // target: 'https://mock.zhongchebaolian.com', // 测试
+            // target: 'https://bjjj.zhongchebaolian.com', // 生产
+            target: 'https://mock.zhongchebaolian.com', // 测试
             changeOrigin: true,
              pathRewrite: {
             '^/non_vehicle/': '/non_vehicle/'
