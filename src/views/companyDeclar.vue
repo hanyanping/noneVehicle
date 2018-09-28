@@ -329,7 +329,7 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">经办人联系电话</span>
-                <input type="tel" class="textInput fr" v-model="proxy_phone" placeholder="请输入联系电话">
+                <input type="tel" class="textInput fr" v-model="proxy_phone" readonly placeholder="请输入联系电话">
             </div>
             <div class="inputBox clear">
                 <label class="inputText">*</label>
@@ -506,10 +506,10 @@
             if (isiOS) {
                 this.isAndroid = false;
             }
-
         },
         mounted() {
-            this.user_id = localStorage.getItem('userId')
+            this.user_id = localStorage.getItem('userId');
+            this.proxy_phone = localStorage.getItem('phone');
             this.getArea();
             this.getProvince('province');
             this.getProvince('area');

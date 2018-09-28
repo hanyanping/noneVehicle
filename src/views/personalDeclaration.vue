@@ -355,11 +355,12 @@
                     <!-- 图片上传控件 -->
                     <div class="load">
                         <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img"
-                             @click="getPhone(index,$event)">
-                        <!--<form enctype="multipart/form-data">-->
-                        <!--<input type="file"  name="image" v-if='isAndroid' capture="camera" @change="uploadIMG($event ,index)">-->
-                        <!--<input type="file"  name="image" v-if='!isAndroid' @change="uploadIMG($event ,index)">-->
-                        <!--</form>-->
+                             @click="getPhone(index,$event)" v-if='isAndroid'>
+                        <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img"
+                           v-if='!isAndroid'>
+                        <form enctype="multipart/form-data">
+                        <input type="file"  name="image" v-if='!isAndroid' @change="uploadIMG($event ,index)">
+                        </form>
                     </div>
                     <div class="phoneText">
                         <span class="inputText">*</span>
@@ -637,15 +638,19 @@
                 let self = this;
                 //判断支不支持FileReader
                 if (!file || !window.FileReader) return;
-                var formData = new FormData();
-                formData.append("image", file);
-                let config = {
-                    headers: {"Content-Type": "multipart/form-data"}
-                };
+
+
+
+                    var reader = new FileReader();
+
+
+return
+
+
+
                 // 发送请求;
                 this.isShowthree = true;
-
-                axios.post(self.ajaxUrl + "vehicle/uploadImage", formData, config)
+                axios.post(self.ajaxUrl + "/vehicle/uploadBaseImage",{  image: data.image ? 'data:image/jpeg;base64,' + data.image : ''})
                     .then(response => {
                         this.isShowthree = false;
                         console.log(response);
