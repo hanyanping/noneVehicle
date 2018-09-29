@@ -356,9 +356,10 @@
                     <!-- 图片上传控件 -->
                     <div class="load">
                         <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img"
-                             @click="getPhone(index,$event)">
-                        <!--<input type="file" v-if='isAndroid' capture="camera" @change="uploadIMG($event ,index)">-->
-                        <!--<input type="file" v-if='!isAndroid' @change="uploadIMG($event ,index)">-->
+                             @click="getPhone(index,$event)" v-if='isAndroid'>
+                        <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img"
+                             v-if='!isAndroid'>
+                        <input type="file" v-if='!isAndroid' @change="uploadIMG($event ,index)">
                     </div>
                     <div class="phoneText">
                         <span class="inputText">*</span>
@@ -459,7 +460,8 @@
                 }, {'imgUrl': '', 'img': require('../../static/carCode.png'), 'text': ' 电动车整车编码(钢架号)照片'}],
                 isEnlargeImage: false,
                 isAndroid: true,
-                user_id: ''
+                user_id: '',
+                headerImage: ''
             };
         },
         watch: {
@@ -624,32 +626,50 @@
                 let self = this;
                 //判断支不支持FileReader
                 if (!file || !window.FileReader) return;
-                var formData = new FormData();
-                formData.append("image", file);
-                let config = {
-                    headers: {"Content-Type": "multipart/form-data"}
-                };
-                this.isShowthree = true;
+                let reader = new FileReader();
+                // 将图片将转成 base64 格式
+                reader.readAsDataURL(file);
+                // console.log(reader.result)
+                reader.onloadend = function () {
+                    let result = reader.result;
+                    let img = new Image();
+                    img.src = result;            //判断图片是否大于100K,是就直接上传，反之压缩图片
+                    if (reader.result.length <= (100 * 1024)) {
+                        self.headerImage =result;
+                        self.postImg(num)
+                    } else {
+                        img.onload = function () {
+                            let data = self.compress(img);
+                            self.headerImage = data;
+                            self.postImg(num)
+                        }
+                    }
+                }
+            },
+            //上传照片
+            postImg(num){
                 // 发送请求;
-                axios.post(self.ajaxUrl + "vehicle/uploadImage", formData, config)
+                this.isShowthree = true;
+                axios.post(this.ajaxUrl + "/vehicle/uploadBaseImage",{  image: this.headerImage ? this.headerImage : ''})
                     .then(response => {
                         this.isShowthree = false;
                         console.log(response);
-                        self.imgData[num].imgUrl = response.data.url;
+                        this.imgData[num].imgUrl = response.data.url;
                         if (num == 0) {
-                            self.card_pic = response.data.url;
+                            this.card_pic = response.data.url;
+                            console.log(self.card_pic)
                         } else if (num == 1) {
-                            self.car_pic = response.data.url;
+                            this.car_pic = response.data.url;
                         } else if (num == 2) {
-                            self.car_pin_pic = response.data.url;
+                            this.car_pin_pic = response.data.url;
                         }
                     }, err => {
                         console.log(err);
-                        this.isShowthree = false;
+                        // this.isShowthree = false;
                     })
                     .catch((error) => {
                         console.log(error)
-                        this.isShowthree = false;
+                        // this.isShowthree = false;
                     })
             },
             // 压缩图片
