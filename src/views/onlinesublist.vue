@@ -83,12 +83,9 @@
                 <div class="listBox" v-for="(item, index) in list" :key="index">
                     <div class="flexBetween listTop">
                         <span>申请时间 : {{item.applyTime}}</span>
-                        <span v-if="item.status == '待审核'" class="applyStatus origin">待审核</span>
-                        <span v-if="item.status == '待预约'" class="applyStatus green">待预约</span>
                         <span v-if="item.status == '预约成功'" class="applyStatus blue">预约成功</span>
-                        <span v-if="item.status == '审核不通过'" class="applyStatus nopass">审核不通过</span>
-                        <span v-if="item.status == '审核失败'" class="applyStatus nopass">审核失败</span>
                         <span v-if="item.status == '已签发'" class="already">已签发</span>
+                        <span v-if="item.status == '现场审核不通过'" class="applyStatus nopass">现场审核不通过</span>
                     </div>
                     <div class="listMiddle flexBetween" v-if="item.type == 1"
                          @click='goDetail(item.applyNo, item.type, item.status)'>

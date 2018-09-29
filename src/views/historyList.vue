@@ -89,6 +89,8 @@
                         <span v-if="item.status == '审核不通过'" class="applyStatus nopass">审核不通过</span>
                         <span v-if="item.status == '审核失败'" class="applyStatus nopass">审核失败</span>
                         <span v-if="item.status == '已签发'" class="already">已签发</span>
+                        <span v-if="item.status == '身份待验证'" class="origin">身份待验证</span>
+                        <span v-if="item.status == '身份验证失败'" class="applyStatus nopass">身份验证失败</span>
                     </div>
                     <div class="listMiddle flexBetween" v-if="item.type == 1"
                          @click='goDetail(item.applyNo,item.type,item.status)'>
