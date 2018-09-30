@@ -379,18 +379,18 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">品牌型号(车辆铭牌)</span>
-                <input type="tel" v-model='brand_model' class="textInput fr" placeholder="请输入品牌型号">
+                <input type="text" v-model='brand_model' class="textInput fr" placeholder="请输入品牌型号">
             </div>
             <div class="inputBox clear selectBox">
                 <label class="inputText">*</label>
                 <span class="textDetail">车身颜色</span>
-                <input type="tel" v-model="color" class="textInput fr tanInput" placeholder="请输入车身颜色">
+                <input type="text" v-model="color" class="textInput fr tanInput" placeholder="请输入车身颜色">
                 <img class='tanhaoImg' @click="ShowOne" src="../assets/images/tanhao.png">
             </div>
             <div class="inputBox clear selectBox">
                 <label class="inputText">*</label>
                 <span class="textDetail">电动车整车编码(钢架号)</span>
-                <input type="tel" style='width: 40%;' v-model="pin" class="textInput fr tanInput" placeholder="请输入车架号">
+                <input type="text" style='width: 40%;' v-model="pin" class="textInput fr tanInput" placeholder="请输入车架号">
                 <img class='tanhaoImg' @click="ShowTwo" src="../assets/images/tanhao.png">
             </div>
             <div class="textBox">
