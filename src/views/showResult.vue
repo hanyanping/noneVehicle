@@ -822,6 +822,10 @@
                     Toast('请输入正确临时编号')
                     return;
                 }
+                if(this.apply_car_no.length < 7){
+                    Toast('请输入正确临时编号')
+                    return;
+                }
                 //判断是个人还是单位
                 if (this.applyType == 1) {
                     //判断是本人还是他人

@@ -343,6 +343,7 @@
                 <img class='tanhaoImg' @click="ShowOne" src="../assets/images/tanhao.png">
             </div>
             <div class="inputBox clear selectBox">
+                <label class="inputText">*</label>
                 <span class="textDetail">电动车整车编码(钢架号)</span>
                 <input type="text" v-model="pin" style='width: 40%;' class="textInput fr tanInput" placeholder="请输入车架号">
                 <img class='tanhaoImg' @click="ShowTwo" src="../assets/images/tanhao.png">

@@ -293,7 +293,6 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">证件号码</span>
-
                 <input type="text" v-model="cre_code" class="textInput fr" placeholder="请输入证件号码">
             </div>
             <div class="inputBox clear selectBox">
@@ -342,6 +341,7 @@
                 <img class='tanhaoImg' @click="ShowOne" src="../assets/images/tanhao.png">
             </div>
             <div class="inputBox clear selectBox">
+                <label class="inputText">*</label>
                 <span class="textDetail">电动车整车编码(钢架号)</span>
                 <input type="text" style='width: 40%;' v-model="pin" class="textInput fr tanInput" placeholder="请输入车架号">
                 <img class='tanhaoImg' @click="ShowTwo" src="../assets/images/tanhao.png">
@@ -540,7 +540,7 @@
                 responseCallback(responseData)
             })
             self.bridge.registerHandler('callBackJSIDCardFrontOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
-                ;self.cre_name = '居民身份证'
+                self.cre_name = '居民身份证'
                 data.IDCardFrontResult = JSON.parse(data.IDCardFrontResult);
                 self.cre_code = data.IDCardFrontResult.idNum;
                 self.name = data.IDCardFrontResult.idName;

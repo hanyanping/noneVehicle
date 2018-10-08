@@ -905,6 +905,10 @@
                     Toast('请输入正确临时编号');
                     return;
                 }
+                if(this.apply_car_no.length<7){
+                    Toast('请输入正确临时编号');
+                    return;
+                }
                 var data = {
                     "user_id": this.user_id,
                     "name": this.name,
