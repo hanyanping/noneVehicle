@@ -32,7 +32,7 @@
         .searchresult {
             margin-top: 20px;
             .resultinfo {
-                font-size: #232323;
+                color: #232323;
                 font-size: 15px;
             }
             .tablebox {
@@ -77,7 +77,7 @@
 </style>
 <template>
     <div class='searchbox'>
-        <div class='searchinfo'>说明：请输入您的车辆品牌型号进行查询（支持模糊搜索），如果您的车辆在《电动自行车产品目录》里，您需至现场办理正式注册登记手续。
+        <div class='searchinfo'>说明：请输入您的车辆品牌型号进行查询（支持模糊搜索），如果您的车辆在《电动自行车产品目录》里，您需至现场办理注册登记手续。
         </div>
         <div class='inputbox'>
             <input class='searchinput' type='text' v-model='inputtext' placeholder="请输入车辆品牌型号（车辆铭牌）"/><span

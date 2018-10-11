@@ -19,11 +19,11 @@
         <div class='flexAround'>
             <div class='onlinetext'>
                 <img @click='goapplay' class='onlineimg' src='../assets/images/gonglue.png'>
-                <p>线上申请，线下领取</p>
+                <p>线上申请、线下领取</p>
             </div>
             <div class='onlinetext' v-if='source == 0'>
                 <img @click='gosubscrible' class='onlineimg' src='../assets/images/guanli.png'>
-                <p>线上预约,现场申领</p>
+                <p>预约办理、现场申领</p>
             </div>
         </div>
     </div>
