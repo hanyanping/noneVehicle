@@ -77,7 +77,7 @@
 </style>
 <template>
     <div style="background: #f4f4f4;min-height:100vh;">
-        <div class="scroll">
+        <div class="scroll" v-if="noData">
             <mt-loadmore :bottom-method="loadBottom" bottomPullText="上拉加载更多" :auto-fill="false" ref="loadmore"
                          :bottom-all-loaded="allLoaded">
                 <div class="listBox" v-for="(item, index) in list" :key="index">
@@ -138,6 +138,9 @@
                 </div>
             </mt-loadmore>
         </div>
+        <div v-else style="margin: 0 auto;padding-top: 100px;text-align: center;color: #f00;font-weight: 600;font-size: 18px;">
+            您还没有申请记录
+        </div>
     </div>
 </template>
 
@@ -155,7 +158,8 @@
                 pageSize: 10,
                 pageNum: 1,
                 userId: '',
-                loadMore: true
+                loadMore: true,
+                noData: false
             }
         },
         created() {
@@ -198,9 +202,10 @@
                 axios.post(this.ajaxUrl + "vehicle/userList", data)
                     .then(response => {
                         console.log(response);
+                        var listdata = response.data.list;
                         if (response.data.result.rescode == 200) {
                             if (response.data.list.length != 0) {
-                                var listdata = response.data.list;
+                                this.noData = true;
                                 for (var i = 0; i < listdata.length; i++) {
                                     listdata[i].applyTime = moment(listdata[i].applyTime).format('YYYY年MM月DD日');
                                     this.list.push(listdata[i])
@@ -208,9 +213,13 @@
                             }
                             if (listdata.length == 0 || listdata.length < this.pageSize) {
                                 this.loadMore = false;
+                                this.noData = true;
+                                if(listdata.length == 0 && this.pageNum == 1){
+                                    console.log(this.pageNum)
+                                    this.noData = false;
+                                }
                             }
                         }
-                        console.log(this.pageNum)
 
                     }, err => {
                         console.log(err);

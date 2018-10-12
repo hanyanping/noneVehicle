@@ -198,6 +198,7 @@
             right: 0;
             margin: 30vh auto;
         }
+
         .zhegaiContent {
             background: #fff;
             position: absolute;
@@ -243,6 +244,21 @@
                     font-size: 15px;
                     border-radius: 6px;
                 }
+            }
+        }
+        .zhegaiContentone{
+            width: 92%;
+            overflow-y: scroll;
+            top: 10px;
+            margin: 20px auto;
+            padding: 5px;
+            .chengnuoText {
+                color: #232323;
+                margin-bottom: 10px;
+                margin-top: 10px;
+                font-size: 15px;
+                line-height: 24px;
+                text-align: center;
             }
         }
     }
@@ -376,7 +392,7 @@
             </div>
         </div>
         <div class="zhegaiceng" v-if="isShow">
-            <div class="zhegaiContent">
+            <div class=" zhegaiContent">
                 <h1 class="chengnuo">本人承诺</h1>
                 <p class="chengnuoText">
                     该车系本人合法所得，如不属实，愿承担一切法律责任。
@@ -402,10 +418,14 @@
             </div>
         </div>
         <div class="zhegaiceng" v-if="isShowTwo">
-            <div class="zhegaiContent">
+            <div class="zhegaiContentone zhegaiContent">
                 <p class="chengnuoText">
-                    如车辆无车架号，车主本人须到我市指定发放点现场查验车辆进行申报
+                    车整车编码（钢架号）位置
                 </p>
+                <div class="imgBox" style="border-bottom: 1px solid #bbb;">
+                    <img style="height:auto;width: 100%;" src="../assets/images/chejiahaoOne.jpg">
+                    <img style="height:auto;width: 100%;margin-top: -3px;margin-bottom: -2px;" src="../assets/images/chejiahaotwo.jpg">
+                </div>
                 <div class="sureBox">
                     <span class="sure" @click="sureTwo">确认</span>
                 </div>
