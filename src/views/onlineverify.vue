@@ -460,9 +460,10 @@
                 <p class="chengnuoText">
                     车整车编码（钢架号）位置
                 </p>
-                <div class="imgBox" style="border-bottom: 1px solid #bbb;">
+                <div class="imgBox">
                     <img style="height:auto;width: 100%;" src="../assets/images/chejiahaoOne.jpg">
                     <img style="height:auto;width: 100%;margin-top: -3px;margin-bottom: -2px;" src="../assets/images/chejiahaotwo.jpg">
+                    <img style="height:auto;width: 100%;margin-top: -3px;margin-bottom: -2px;" src="../assets/images/chejiahaothree.jpg">
                 </div>
                 <div class="sureBox">
                     <span class="sure" @click="sureTwo">确认</span>
