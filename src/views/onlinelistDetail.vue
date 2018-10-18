@@ -289,11 +289,11 @@
                 <span class="textInput">{{person.cre_code}}</span>
             </div>
         </div>
-        <div class="textBox" v-if='applyStatus == "预约成功"'>
+        <div class="textBox">
             <span class="line">|</span>
             <span class="text">预约信息</span>
         </div>
-        <div v-if='applyStatus == "预约成功"'>
+        <div>
             <div class="inputBox clear">
                 <span class="textDetail">预约办理地点：</span>
                 <span class="textInput">{{appointment.address}}</span>

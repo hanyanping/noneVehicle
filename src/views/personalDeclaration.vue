@@ -293,7 +293,6 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">证件号码</span>
-
                 <input type="text" v-model="cre_code" class="textInput fr" placeholder="请输入证件号码">
             </div>
             <div class="inputBox clear selectBox">
@@ -333,17 +332,18 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">品牌型号(车辆铭牌)</span>
-                <input type="tel" v-model='brand_model' class="textInput fr" placeholder="请输入品牌型号">
+                <input type="text" v-model='brand_model' class="textInput fr" placeholder="请输入品牌型号">
             </div>
             <div class="inputBox clear selectBox">
                 <label class="inputText">*</label>
                 <span class="textDetail">车身颜色</span>
-                <input type="tel" v-model="color" class="textInput fr tanInput" placeholder="请输入车身颜色">
+                <input type="text" v-model="color" class="textInput fr tanInput" placeholder="请输入车身颜色">
                 <img class='tanhaoImg' @click="ShowOne" src="../assets/images/tanhao.png">
             </div>
             <div class="inputBox clear selectBox">
+                <label class="inputText">*</label>
                 <span class="textDetail">电动车整车编码(钢架号)</span>
-                <input type="tel" style='width: 40%;' v-model="pin" class="textInput fr tanInput" placeholder="请输入车架号">
+                <input type="text" style='width: 40%;' v-model="pin" class="textInput fr tanInput" placeholder="请输入车架号">
                 <img class='tanhaoImg' @click="ShowTwo" src="../assets/images/tanhao.png">
             </div>
             <div class="textBox">
@@ -355,11 +355,12 @@
                     <!-- 图片上传控件 -->
                     <div class="load">
                         <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img"
-                             @click="getPhone(index,$event)">
-                        <!--<form enctype="multipart/form-data">-->
-                        <!--<input type="file"  name="image" v-if='isAndroid' capture="camera" @change="uploadIMG($event ,index)">-->
-                        <!--<input type="file"  name="image" v-if='!isAndroid' @change="uploadIMG($event ,index)">-->
-                        <!--</form>-->
+                             @click="getPhone(index,$event)" v-if='isAndroid'>
+                        <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img"
+                           v-if='!isAndroid'>
+                        <form enctype="multipart/form-data">
+                        <input type="file"  name="image" v-if='!isAndroid' @change="uploadIMG($event ,index)">
+                        </form>
                     </div>
                     <div class="phoneText">
                         <span class="inputText">*</span>
@@ -460,6 +461,7 @@
                 area: '',
                 province: '',
                 user_id: '',
+                headerImage:''
             };
         },
         watch: {
@@ -538,7 +540,7 @@
                 responseCallback(responseData)
             })
             self.bridge.registerHandler('callBackJSIDCardFrontOCRResult', function (data, responseCallback) {//注册客户端主动触发js端
-                ;self.cre_name = '居民身份证'
+                self.cre_name = '居民身份证'
                 data.IDCardFrontResult = JSON.parse(data.IDCardFrontResult);
                 self.cre_code = data.IDCardFrontResult.idNum;
                 self.name = data.IDCardFrontResult.idName;
@@ -637,26 +639,42 @@
                 let self = this;
                 //判断支不支持FileReader
                 if (!file || !window.FileReader) return;
-                var formData = new FormData();
-                formData.append("image", file);
-                let config = {
-                    headers: {"Content-Type": "multipart/form-data"}
-                };
+                let reader = new FileReader();
+                // 将图片将转成 base64 格式
+                reader.readAsDataURL(file);
+                // console.log(reader.result)
+                reader.onloadend = function () {
+                    let result = reader.result;
+                    let img = new Image();
+                    img.src = result;            //判断图片是否大于100K,是就直接上传，反之压缩图片
+                    if (reader.result.length <= (100 * 1024)) {
+                        self.headerImage =result;
+                        self.postImg(num)
+                    } else {
+                        img.onload = function () {
+                            let data = self.compress(img);
+                            self.headerImage = data;
+                            self.postImg(num)
+                        }
+                    }
+                }
+            },
+             //上传照片
+            postImg(num){
                 // 发送请求;
                 this.isShowthree = true;
-
-                axios.post(self.ajaxUrl + "vehicle/uploadImage", formData, config)
+                axios.post(this.ajaxUrl + "/vehicle/uploadBaseImage",{  image: this.headerImage ? this.headerImage : ''})
                     .then(response => {
                         this.isShowthree = false;
                         console.log(response);
-                        self.imgData[num].imgUrl = response.data.url;
+                        this.imgData[num].imgUrl = response.data.url;
                         if (num == 0) {
-                            self.card_pic = response.data.url;
+                            this.card_pic = response.data.url;
                             console.log(self.card_pic)
                         } else if (num == 1) {
-                            self.car_pic = response.data.url;
+                            this.car_pic = response.data.url;
                         } else if (num == 2) {
-                            self.car_pin_pic = response.data.url;
+                            this.car_pin_pic = response.data.url;
                         }
                     }, err => {
                         console.log(err);
@@ -681,9 +699,9 @@
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, width, height);
                 //进行最小压缩
-                let ndata = canvas.toDataURL("image/jpeg", 0.1);
+                let ndata = canvas.toDataURL("image/jpeg", 0.04);
                 console.log("*******压缩后的图片大小*******");
-                console.log(ndata)
+                // console.log(ndata)
                 console.log(ndata.length);
                 return ndata;
             },

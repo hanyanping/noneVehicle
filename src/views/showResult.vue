@@ -451,9 +451,10 @@
                         <!-- 图片上传控件 -->
                         <div class="load">
                             <img class="loadImg" :src="imgUrl ? imgUrl : img" style='width:104px;height:104px;'
-                                 @click="getPhone()">
-                            <!--<input type="file"  v-if='isAndroid' capture="camera" @change="uploadIMG($event)">-->
-                            <!--<input type="file"  v-if='!isAndroid'  @change="uploadIMG($event)">-->
+                                 @click="getPhone()"  v-if='isAndroid'>
+                            <img class="loadImg" :src="imgUrl ? imgUrl : img"
+                                 v-if='!isAndroid'>
+                            <input type="file" v-if='!isAndroid' @change="uploadIMG($event ,index)">
                         </div>
                     </div>
                     <div class="phoneText">
@@ -471,9 +472,10 @@
                         <!-- 图片上传控件 -->
                         <div class="load">
                             <img class="loadImg" :src="imgUrl ? imgUrl : img" style='width:104px;height:104px;'
-                                 @click="getPhone()">
-                            <!--<input type="file"  v-if='isAndroid' capture="camera" @change="uploadIMG($event)">-->
-                            <!--<input type="file"  v-if='!isAndroid'  @change="uploadIMG($event)">-->
+                                 @click="getPhone()"  v-if='isAndroid'>
+                            <img class="loadImg" :src="imgUrl ? imgUrl : img"
+                                 v-if='!isAndroid'>
+                            <input type="file" v-if='!isAndroid' @change="uploadIMG($event ,index)">
                         </div>
                     </div>
                     <div class="phoneText">
@@ -548,7 +550,7 @@
                 result: [],
                 apply_car_no: '',
                 user_id: '',
-
+                headerImage: ''
             };
         },
         watch: {
@@ -738,22 +740,39 @@
             },
 
             //
-            //    //获取图片
-            imgPreview(file, callback) {
+            //获取图片
+            imgPreview(file, callback, num) {
                 let self = this;
                 //判断支不支持FileReader
                 if (!file || !window.FileReader) return;
-                var formData = new FormData();
-                formData.append("image", file);
-                let config = {
-                    headers: {"Content-Type": "multipart/form-data"}
-                };
+                let reader = new FileReader();
+                // 将图片将转成 base64 格式
+                reader.readAsDataURL(file);
+                // console.log(reader.result)
+                reader.onloadend = function () {
+                    let result = reader.result;
+                    let img = new Image();
+                    img.src = result;            //判断图片是否大于100K,是就直接上传，反之压缩图片
+                    if (reader.result.length <= (100 * 1024)) {
+                        self.headerImage =result;
+                        self.postImg(num)
+                    } else {
+                        img.onload = function () {
+                            let data = self.compress(img);
+                            self.headerImage = data;
+                            self.postImg(num)
+                        }
+                    }
+                }
+            },
+            //上传照片
+            postImg(num){
                 // 发送请求;
                 this.isShowthree = true;
-                axios.post(self.ajaxUrl + "vehicle/uploadImage", formData, config)
+                axios.post(this.ajaxUrl + "/vehicle/uploadBaseImage",{  image: this.headerImage ? this.headerImage : ''})
                     .then(response => {
-                        self.imgUrl = response.data.url;
-                        self.approve_url = response.data.url;
+                        this.imgUrl = response.data.url;
+                        this.approve_url = response.data.url;
                         this.isShowthree = false;
                     }, err => {
                         console.log(err);
@@ -800,6 +819,10 @@
             surePass() {
                 var reg = /^[0-9]*$/;
                 if(!reg.test(this.apply_car_no)){
+                    Toast('请输入正确临时编号')
+                    return;
+                }
+                if(this.apply_car_no.length < 7){
                     Toast('请输入正确临时编号')
                     return;
                 }
