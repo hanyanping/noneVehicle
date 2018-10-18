@@ -159,7 +159,7 @@
                 pageNum: 1,
                 userId: '',
                 loadMore: true,
-                noData: false
+                noData: true
             }
         },
         created() {

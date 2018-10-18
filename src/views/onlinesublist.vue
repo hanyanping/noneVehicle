@@ -101,10 +101,7 @@
                             </div>
                         </div>
                         <div class="flexRight">
-                            <span class="goSub" @click.stop='goSubscible(item.applyNo)'
-                                  v-if="item.status == '待预约'">立即预约</span>
-                            <span class="goSub" @click.stop='goApply(item.applyNo,item.type)'
-                                  v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
+
                             <img @click.stop='goSubcode(item.appointmentTime,item.applyNo)' v-if="item.status =='预约成功'"
                                  style='height:30px;width:30px;' src='../assets/images/look.png'>
                             <img class='godetail' src="../assets/images/right.png">
@@ -120,10 +117,6 @@
                             </div>
                         </div>
                         <div class="flexRight">
-                            <span class="goSub" @click.stop='goSubscible(item.applyNo)'
-                                  v-if="item.status == '待预约'">立即预约</span>
-                            <span class="goSub" @click.stop='goApply(item.applyNo,item.type)'
-                                  v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
                             <img @click.stop='goSubcode(item.appointmentTime,item.applyNo)' v-if="item.status =='预约成功'"
                                  style='height:30px;width:30px;' src='../assets/images/look.png'>
                             <img class='godetail' src="../assets/images/right.png">
@@ -153,7 +146,7 @@
                 pageNum: 1,
                 userId: '',
                 loadMore: true,
-                noData: false
+                noData: true
             }
         },
         created() {

@@ -68,7 +68,7 @@
                 <p class="showText showText1">预约成功</p>
                 <p class="warmtext">预约点的工作时间为每天上午9点-12点，下午14点-17点（周六、日正常办理）</p>
                 <p class="showText">
-                    需车主本人或代理人携带车主及代理人身份证明原件，按照预约时间({{appointment.time}})到预约发放点({{appointment.address}})出示二维码信息现场领取标识，未按照预约时间领取标识的，需重新进行预约</p>
+                    需车主本人或代理人携带车主及代理人身份证明原件，按照预约时间({{appointment.time}})到预约发放点({{appointment.address}})出示二维码信息并交验车辆后现场领取标识，每次预约仅限办理一辆电动自行车。未按照预约时间领取标识的，需重新进行预约</p>
             </div>
         </div>
         <div style="padding: 40px 20px;" v-else>

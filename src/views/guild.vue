@@ -114,6 +114,9 @@
         <div class="banner">
             <img class='guildBanner' src="../assets/images/banner.png">
         </div>
+        <div style="padding: 10px 15px;">
+            过渡期电动自行车系统登记时间为2018.11.01-2019.04.30过渡期电动自行车系统登记时间为2018.11.01-2019.04.30
+        </div>
         <div class="jumpBox">
             <div class="item clear" @click="goPerson">
                 <img class="orderIcon" src="../assets/images/geren.png">
