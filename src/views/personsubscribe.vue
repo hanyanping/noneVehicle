@@ -492,7 +492,8 @@
                         time: this.pickerValueTwo,
                         user_id: this.user_id,
                         cre_name: this.cre_name,
-                        cre_code: this.cre_code
+                        cre_code: this.cre_code,
+                        type: 2
                     };
                     axios.post(this.ajaxUrl + "/vehicle/appointment", data)
                         .then(

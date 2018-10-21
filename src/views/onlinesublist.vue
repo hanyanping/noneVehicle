@@ -77,24 +77,15 @@
 </style>
 <template>
     <div style="background: #f4f4f4;min-height:100vh;">
-        <div class="scroll">
+        <div v-if='noData' class="scroll">
             <mt-loadmore :bottom-method="loadBottom" bottomPullText="上拉加载更多" :auto-fill="false" ref="loadmore"
                          :bottom-all-loaded="allLoaded">
                 <div class="listBox" v-for="(item, index) in list" :key="index">
                     <div class="flexBetween listTop">
                         <span>申请时间 : {{item.applyTime}}</span>
-<<<<<<< HEAD
-                        <span  class="applyStatus origin">{{item.status}}</span>
-                        <!--<span v-if="item.status == '待预约'" class="applyStatus green">待预约</span>-->
-                        <!--<span v-if="item.status == '预约成功'" class="applyStatus blue">预约成功</span>-->
-                        <!--<span v-if="item.status == '审核不通过'" class="applyStatus nopass">审核不通过</span>-->
-                        <!--<span v-if="item.status == '审核失败'" class="applyStatus nopass">审核失败</span>-->
-                        <!--<span v-if="item.status == '已签发'" class="already">已签发</span>-->
-=======
                         <span v-if="item.status == '预约成功'" class="applyStatus blue">预约成功</span>
                         <span v-if="item.status == '已签发'" class="already">已签发</span>
-                        <span v-if="item.status == '现场审核不通过'" class="applyStatus nopass">现场审核不通过</span>
->>>>>>> 5acfd009fedd27fd4b40a94fe2e4c682a5bddabf
+                        <span v-if="item.status == '身份验证失败'" class="applyStatus nopass">身份验证失败</span>
                     </div>
                     <div class="listMiddle flexBetween" v-if="item.type == 1"
                          @click='goDetail(item.applyNo, item.type, item.status)'>
@@ -110,10 +101,7 @@
                             </div>
                         </div>
                         <div class="flexRight">
-                            <span class="goSub" @click.stop='goSubscible(item.applyNo)'
-                                  v-if="item.status == '待预约'">立即预约</span>
-                            <span class="goSub" @click.stop='goApply(item.applyNo,item.type)'
-                                  v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
+
                             <img @click.stop='goSubcode(item.appointmentTime,item.applyNo)' v-if="item.status =='预约成功'"
                                  style='height:30px;width:30px;' src='../assets/images/look.png'>
                             <img class='godetail' src="../assets/images/right.png">
@@ -129,10 +117,6 @@
                             </div>
                         </div>
                         <div class="flexRight">
-                            <span class="goSub" @click.stop='goSubscible(item.applyNo)'
-                                  v-if="item.status == '待预约'">立即预约</span>
-                            <span class="goSub" @click.stop='goApply(item.applyNo,item.type)'
-                                  v-if="item.status == '审核不通过' || item.status == '审核失败' ">重新申请</span>
                             <img @click.stop='goSubcode(item.appointmentTime,item.applyNo)' v-if="item.status =='预约成功'"
                                  style='height:30px;width:30px;' src='../assets/images/look.png'>
                             <img class='godetail' src="../assets/images/right.png">
@@ -140,6 +124,9 @@
                     </div>
                 </div>
             </mt-loadmore>
+        </div>
+        <div v-else style="margin: 0 auto;padding-top: 100px;text-align: center;color: #f00;font-weight: 600;font-size: 18px;">
+            您还没有预约记录
         </div>
     </div>
 </template>
@@ -158,7 +145,8 @@
                 pageSize: 10,
                 pageNum: 1,
                 userId: '',
-                loadMore: true
+                loadMore: true,
+                noData: true
             }
         },
         created() {
@@ -202,9 +190,11 @@
                 axios.post(this.ajaxUrl + "vehicle/userList", data)
                     .then(response => {
                         console.log(response);
+                        var listdata = response.data.list;
                         if (response.data.result.rescode == 200) {
                             if (response.data.list.length != 0) {
-                                var listdata = response.data.list;
+                                this.noData = true;
+
                                 for (var i = 0; i < listdata.length; i++) {
                                     listdata[i].applyTime = moment(listdata[i].applyTime).format('YYYY年MM月DD日');
                                     this.list.push(listdata[i])
@@ -212,6 +202,11 @@
                             }
                             if (listdata.length == 0 || listdata.length < this.pageSize) {
                                 this.loadMore = false;
+                                this.noData = true;
+                                if(listdata.length == 0 && this.pageNum == 1){
+                                    console.log(this.pageNum)
+                                    this.noData = false;
+                                }
                             }
                         }
                         console.log(this.pageNum)

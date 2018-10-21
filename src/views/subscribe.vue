@@ -379,7 +379,8 @@
                     var data = {
                         apply_no: this.apply_no,
                         address: this.address,
-                        time: this.pickerValueTwo
+                        time: this.pickerValueTwo,
+                        type: 1
                     }
                     axios.post(this.ajaxUrl + "/vehicle/appointment", data)
                         .then(response => {

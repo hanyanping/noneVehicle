@@ -63,7 +63,7 @@ router.beforeEach((to, from, next) => {
   setTitle(to.meta.title);
   // document.getElementById('titleId').innerHTML = to.meta.title
   // localStorage.setItem('phone', '18510822236')
-  //   localStorage.setItem('userId', 12);
+  //   localStorage.setItem('userId', '016D4A2A60FE4DD290AAC981F2449360');
   // next()//开发
   if (to.name == 'guild') {
     if (Vue.prototype.bridge) {
@@ -84,6 +84,7 @@ router.beforeEach((to, from, next) => {
             var phone = response.phoneNum;
             localStorage.setItem('userId', userId);
             localStorage.setItem('phone', phone)
+            // alert(userId)
             Vue.prototype.bridge = bridge;
             setTimeout(next(), 13)
           }

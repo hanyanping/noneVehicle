@@ -19,13 +19,14 @@
         <div class='flexAround'>
             <div class='onlinetext'>
                 <img @click='goapplay' class='onlineimg' src='../assets/images/gonglue.png'>
-                <p>线上申请，线下领取</p>
+                <p>线上申请、线下领取</p>
             </div>
             <div class='onlinetext' v-if='source == 0'>
                 <img @click='gosubscrible' class='onlineimg' src='../assets/images/guanli.png'>
-                <p>线上预约,现场申领</p>
+                <p>预约办理、现场申领</p>
             </div>
         </div>
+      <div style="margin: 20px 16px;color: #f00;font-size:14px;">重要提示：每次预约仅限办理一辆电动自行车，每辆电动自行车仅限选择一种办理方式</div>
     </div>
 </template>
 <script>
