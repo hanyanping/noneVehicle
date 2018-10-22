@@ -488,6 +488,12 @@
                 } else if (this.pickerValueTwo == "") {
                     Toast("请选择预约时间");
                 } else {
+                    let code = '';
+                    for (let item of this.childlist) {
+                      if (item.label === this.address) {
+                         code = item.value;
+                      }
+                    }
                     var data = {
                         apply_no: this.apply_no,
                         address: this.address,
@@ -495,7 +501,8 @@
                         user_id: this.user_id,
                         cre_name: this.cre_name,
                         cre_code: this.cre_code,
-                        type: 2
+                        type: 2,
+                        code
                     };
                     axios.post(this.ajaxUrl + "/vehicle/appointment", data)
                         .then(

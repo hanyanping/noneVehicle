@@ -377,11 +377,18 @@
                 } else if (this.pickerValueTwo == '') {
                     Toast('请选择预约时间')
                 } else {
+                  let code = '';
+                  for (let item of this.childlist) {
+                    if (item.label === this.address) {
+                      code = item.value;
+                    }
+                  }
                     var data = {
                         apply_no: this.apply_no,
                         address: this.address,
                         time: this.pickerValueTwo,
-                        type: 1
+                        type: 1,
+                        code
                     }
                     axios.post(this.ajaxUrl + "/vehicle/appointment", data)
                         .then(response => {
