@@ -64,7 +64,7 @@
         }
         .textInput {
             text-align: right;
-            font-size: 30rem / $baseFontSize;
+            font-size: 15px;
             color: #232323;
             font-family: Microsoft Yahei;
             text-align: right;

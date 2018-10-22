@@ -448,14 +448,14 @@
         <div class="zhegaiceng" v-if="isShowOne">
             <div class="zhegaiContent">
                 <p class="chengnuoText">
-                    如车辆为多种颜色，则填写其中面积最大的三种颜色，顺序为"从前至后"或"从上至"
+                    如车辆为多种颜色，则填写其中面积最大的三种颜色，顺序为"从前至后"或"从上至下"
                 </p>
                 <div class="sureBox">
                     <span class="sure" @click="sureOne">确认</span>
                 </div>
             </div>
         </div>
-        <div class="zhegaiceng" v-if="isShowTwo">
+        <div class="zhegaiceng" v-if="isShowTwo" @click="sureTwo">
             <div class="zhegaiContentone zhegaiContent">
                 <p class="chengnuoText">
                     车整车编码（钢架号）位置

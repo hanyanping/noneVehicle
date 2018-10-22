@@ -112,7 +112,7 @@
 <template>
     <div style="min-height: 100vh;background: #f4f4f4;">
         <div class="banner">
-            <img class='guildBanner' src="../assets/images/banner.png">
+            <img class='guildBanner' @click="See(qj_url)" src="../assets/images/banner.png">
         </div>
         <div style="padding: 10px 15px;">
           过渡期电动自行车系统登记时间为<span style="color: #f00;">2018.11.01-2019.04.30</span>
@@ -161,26 +161,26 @@
                 </div>
             </div>
         </div>
-        <div class="zhegaiceng" v-if="openSimple">
-            <div class="zhegaiContent">
-                <h1 class="chengnuo">本人承诺</h1>
-                <p class="chengnuoText">
-                    在您办理过渡期电动自行车临时标识申领业务前，
-                    请登录北京市工商行政管理局网站：http://www.hd315.gov.cn/,
-                    查询您的电动自行车是否已列入《电动自行车生产企业与产品目录,
-                    如您的电动自行车品牌型号已在公布的目录范围内，
-                    请携带相关手续到全市任意非机动车登记站（详见附件）
-                    办理正式登记注册业务；如您的电动自行车品牌型号未列入《电动自行车生产企业与产品目录》，
-                    则需按照要求办理过渡期电动自行车临时标识申领业务。
-                </p>
-                <p class="popupLink" @click="handlegGoRegList">
-                    <核发电动自行车牌证非机动车登记站一览表>
-                </p>
-                <div class="sureBox">
-                    <span class="sure" @click="closeSimpleDialog">确认</span>
-                </div>
-            </div>
-        </div>
+        <!--<div class="zhegaiceng" v-if="openSimple">-->
+            <!--<div class="zhegaiContent">-->
+                <!--<h1 class="chengnuo">本人承诺</h1>-->
+                <!--<p class="chengnuoText">-->
+                    <!--在您办理过渡期电动自行车临时标识申领业务前，-->
+                    <!--请登录北京市工商行政管理局网站：http://www.hd315.gov.cn/,-->
+                    <!--查询您的电动自行车是否已列入《电动自行车生产企业与产品目录,-->
+                    <!--如您的电动自行车品牌型号已在公布的目录范围内，-->
+                    <!--请携带相关手续到全市任意非机动车登记站（详见附件）-->
+                    <!--办理正式登记注册业务；如您的电动自行车品牌型号未列入《电动自行车生产企业与产品目录》，-->
+                    <!--则需按照要求办理过渡期电动自行车临时标识申领业务。-->
+                <!--</p>-->
+                <!--<p class="popupLink" @click="handlegGoRegList">-->
+                    <!--<核发电动自行车牌证非机动车登记站一览表>-->
+                <!--</p>-->
+                <!--<div class="sureBox">-->
+                    <!--<span class="sure" @click="closeSimpleDialog">确认</span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </template>
 
@@ -191,6 +191,7 @@
     export default {
         data() {
             return {
+              qj_url: 'https://mp.weixin.qq.com/s/RKbhbqn75SJyz-r3rOmTWg',
                 openSimple: false,
                 userType: "",
                 phone: ""
@@ -231,6 +232,9 @@
             });
         },
         methods: {
+          See (e) {
+            window.location.href = e
+          },
             goonline() {
                 this.$router.push({path: "/onlinesublist"});
             },
