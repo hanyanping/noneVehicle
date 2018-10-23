@@ -373,7 +373,8 @@
               return;
             }
             var data = {
-              address: this.parantValue
+              address: this.parantValue,
+                type: 2
             }
             axios.post(this.ajaxUrl + "vehicle/getDate", data)
               .then(response => {
