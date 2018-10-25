@@ -62,8 +62,8 @@ router.beforeEach((to, from, next) => {
   var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios??
   setTitle(to.meta.title);
   // document.getElementById('titleId').innerHTML = to.meta.title
-  localStorage.setItem('phone', '18510822236')
-    localStorage.setItem('userId', '016D4A2A60FE4DD290AAC981F2449360');
+  // localStorage.setItem('phone', '18510822236')
+    // localStorage.setItem('userId', '016D4A2A60FE4DD290AAC981F2449360');
   next()//开发
   if (to.name == 'guild') {
     if (Vue.prototype.bridge) {
