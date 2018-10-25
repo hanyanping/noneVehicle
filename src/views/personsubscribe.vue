@@ -142,7 +142,7 @@
             <label class="inputText">*</label>
             <span class="textDetail">证件号码</span>
             <img class='inputImg fr' v-if="isAndroid" @click="idcordOc" src="../assets/images/listicon.png">
-            <input type="text" v-model="cre_code" class="textInput fr" placeholder="请输入证件号码">
+            <input type="text" v-model="cre_code" @keyup="changeCard" class="textInput fr" placeholder="请输入证件号码">
         </div>
         <div class="warm"  v-if="isAndroid"><span>*</span>身份证可使用OCR功能自动识别</div>
         <div class="textBox">
@@ -306,6 +306,32 @@
             }
         },
         methods: {
+          changeCard(){
+            this.cre_code = this.cre_code .replace(/\s+/g,"");
+            var reg = /^[0-9]*$/;
+            var re = new RegExp(/^[a-zA-Z0-9]$/);
+            if(this.cre_name == '' || this.cre_name== '居民身份证'){
+              if(this.cre_code.length<18){
+                if(!reg.test(this.cre_code)){
+                  Toast('请输入正确的身份证号')
+                  return
+                }
+              }else if(this.cre_code.length>18){
+                this.cre_code = this.cre_code.substring(0,18)
+              }else if(this.cre_code.length == 18){
+                if(!re.test(this.cre_code.substring(17,18))){
+                  Toast('请输入正确的身份证号')
+                  return
+                }
+                if(!reg.test(this.cre_code.substring(0,17))){
+                  console.log(44444)
+                  Toast('请输入正确的身份证号')
+                  return
+                }
+              }
+
+            }
+          },
             selectTime(time,index,event){
                 console.log(time)
                 this.pickerValueTwo = time;
@@ -478,6 +504,24 @@
             submit() {
                 if (this.cre_name == "") {
                     Toast("请选择证件类型");
+                }else if(this.cre_name == '居民身份证'){
+                  if(this.cre_code.length<18){
+                    Toast('请输入正确的身份证号')
+                    return;
+                  }else{
+                    var reg = /^[0-9]*$/;
+                    var re = new RegExp(/^[a-zA-Z0-9]$/);
+                    this.cre_code = this.cre_code .replace(/\s+/g,"");
+                    this.cre_code = this.cre_code.substring(0,18)
+                    if(!re.test(this.cre_code.substring(17,18))){
+                      Toast('请输入正确的身份证号')
+                      return
+                    }
+                    if(!reg.test(this.cre_code.substring(0,17))){
+                      Toast('请输入正确的身份证号')
+                      return
+                    }
+                  }
                 } else if (this.cre_code == "") {
                     Toast("请输入证件号码");
                 } else if (this.parantValue == "") {

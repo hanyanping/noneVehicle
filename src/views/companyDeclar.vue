@@ -292,7 +292,7 @@
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">证件号码</span>
-                <input type="text" v-model="cre_code" class="textInput fr" placeholder="请输入证件号码">
+                <input type="text" v-model="cre_code" @keyup="changeCard" class="textInput fr" placeholder="请输入证件号码">
             </div>
             <div class="inputBox clear selectBox">
                 <label class="inputText">*</label>
@@ -567,6 +567,32 @@
             })
         },
         methods: {
+          changeCard(){
+            this.cre_code = this.cre_code .replace(/\s+/g,"");
+            var reg = /^[0-9]*$/;
+            var re = new RegExp(/^[a-zA-Z0-9]$/);
+            if(this.cre_name == '' || this.cre_name== '居民身份证'){
+              if(this.cre_code.length<18){
+                if(!reg.test(this.cre_code)){
+                  Toast('请输入正确的身份证号')
+                  return
+                }
+              }else if(this.cre_code.length>18){
+                this.cre_code = this.cre_code.substring(0,18)
+              }else if(this.cre_code.length == 18){
+                if(!re.test(this.cre_code.substring(17,18))){
+                  Toast('请输入正确的身份证号')
+                  return
+                }
+                if(!reg.test(this.cre_code.substring(0,17))){
+                  console.log(44444)
+                  Toast('请输入正确的身份证号')
+                  return
+                }
+              }
+
+            }
+          },
             //  获取省会或者区域
             getArea(id) {
                 axios.post(this.ajaxUrl + 'vehicle/area', {
@@ -746,6 +772,25 @@
                     Toast('请选择证件名称')
                     return
                 }
+              if(this.cre_name == '居民身份证'){
+                if(this.cre_code.length<18){
+                  Toast('请输入正确的身份证号')
+                  return;
+                }else{
+                  var reg = /^[0-9]*$/;
+                  var re = new RegExp(/^[a-zA-Z0-9]$/);
+                  this.cre_code = this.cre_code .replace(/\s+/g,"");
+                  this.cre_code = this.cre_code.substring(0,18)
+                  if(!re.test(this.cre_code.substring(17,18))){
+                    Toast('请输入正确的身份证号')
+                    return
+                  }
+                  if(!reg.test(this.cre_code.substring(0,17))){
+                    Toast('请输入正确的身份证号')
+                    return
+                  }
+                }
+              }
                 if (this.live_area == '') {
                     Toast('请选择单位所在省')
                     return

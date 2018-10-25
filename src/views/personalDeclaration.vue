@@ -303,13 +303,13 @@
                 <img class='selectImg' src="../assets/images/down.png">
                 <select placeholder="请选择证件名称" v-model='cre_name' class="fr selectText selectText1">
                     <option value="" style="color: #bbb;">请选择证件名称</option>
-                    <option v-for="item in cred" :value="item.label" :key='item'>{{item.label}}</option>
+                    <option v-for="item in cred" :value="item.label" >{{item.label}}</option>
                 </select>
             </div>
             <div class="inputBox clear">
                 <label class="inputText">*</label>
                 <span class="textDetail">证件号码</span>
-                <input type="text" v-model="cre_code" class="textInput fr" placeholder="请输入证件号码">
+                <input type="text" v-model="cre_code" @keyup="changeCard" class="textInput fr" placeholder="请输入证件号码">
             </div>
             <div class="inputBox clear selectBox">
                 <label class="inputText">*</label>
@@ -317,7 +317,7 @@
                 <img class='selectImg' src="../assets/images/down.png">
                 <select style='margin-left: 5px;' class="fr selectText2 selectText" v-model="card_address">
                     <option value="">请选择身份证地址所在省份</option>
-                    <option v-for="item in province" :value="item.label" :key='item'>{{item.label}}</option>
+                    <option v-for="item in province" :value="item.label" >{{item.label}}</option>
                 </select>
             </div>
             <div class="inputBox clear">
@@ -332,7 +332,7 @@
                 <img class='selectImg' src="../assets/images/down.png">
                 <select style='margin-left: 5px;' class="fr selectText selectText3" v-model="link_area">
                     <option value="" style="color: #bbb;">请选择联系地址行政区</option>
-                    <option v-for="item in area" :value="item.label" :key='item'>{{item.label}}</option>
+                    <option v-for="item in area" :value="item.label" >{{item.label}}</option>
                 </select>
             </div>
             <div class="inputBox clear">
@@ -367,7 +367,7 @@
                 <span class="text">照片信息</span>
             </div>
             <div class="flexBetween">
-                <div class="upload" v-for="(item,index) in imgData" :key="index">
+                <div class="upload" v-for="(item,index) in imgData" >
                     <!-- 图片上传控件 -->
                     <div class="load">
                         <img class="loadImg" :src="item.imgUrl ? item.imgUrl : item.img"
@@ -577,7 +577,32 @@
             })
         },
         methods: {
+            changeCard(){
+              this.cre_code = this.cre_code .replace(/\s+/g,"");
+              var reg = /^[0-9]*$/;
+              var re = new RegExp(/^[a-zA-Z0-9]$/);
+              if(this.cre_name == '' || this.cre_name== '居民身份证'){
+                if(this.cre_code.length<18){
+                  if(!reg.test(this.cre_code)){
+                    Toast('请输入正确的身份证号')
+                    return
+                  }
+                }else if(this.cre_code.length>18){
+                  this.cre_code = this.cre_code.substring(0,18)
+                }else if(this.cre_code.length == 18){
+                  if(!re.test(this.cre_code.substring(17,18))){
+                    Toast('请输入正确的身份证号')
+                    return
+                  }
+                  if(!reg.test(this.cre_code.substring(0,17))){
+                    console.log(44444)
+                    Toast('请输入正确的身份证号')
+                    return
+                  }
+                }
 
+              }
+            },
             idcordOc() {//身份证正面OC
                 this.bridge.callHandler('invokeIDCardFrontOCR', function (response) {
                     console.log('js调用客户端方法回调传参' + response);
@@ -758,6 +783,25 @@
                 if (this.cre_code == '') {
                     Toast('请选择证件号码')
                     return;
+                }
+                if(this.cre_name == '居民身份证'){
+                    if(this.cre_code.length<18){
+                      Toast('请输入正确的身份证号')
+                      return;
+                    }else{
+                      var reg = /^[0-9]*$/;
+                      var re = new RegExp(/^[a-zA-Z0-9]$/);
+                      this.cre_code = this.cre_code .replace(/\s+/g,"");
+                      this.cre_code = this.cre_code.substring(0,18)
+                      if(!re.test(this.cre_code.substring(17,18))){
+                        Toast('请输入正确的身份证号')
+                        return
+                      }
+                      if(!reg.test(this.cre_code.substring(0,17))){
+                        Toast('请输入正确的身份证号')
+                        return
+                      }
+                    }
                 }
                 if (this.card_address == '') {
                     Toast('请输入身份证地址所在省')
