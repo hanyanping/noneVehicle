@@ -502,26 +502,27 @@
                     });
             },
             submit() {
+                if(this.cre_name == '居民身份证'){
+                    if(this.cre_code.length<18){
+                        Toast('请输入正确的身份证号')
+                        return;
+                    }else{
+                        var reg = /^[0-9]*$/;
+                        var re = new RegExp(/^[a-zA-Z0-9]$/);
+                        this.cre_code = this.cre_code .replace(/\s+/g,"");
+                        this.cre_code = this.cre_code.substring(0,18)
+                        if(!re.test(this.cre_code.substring(17,18))){
+                            Toast('请输入正确的身份证号')
+                            return
+                        }
+                        if(!reg.test(this.cre_code.substring(0,17))){
+                            Toast('请输入正确的身份证号')
+                            return
+                        }
+                    }
+                }
                 if (this.cre_name == "") {
                     Toast("请选择证件类型");
-                }else if(this.cre_name == '居民身份证'){
-                  if(this.cre_code.length<18){
-                    Toast('请输入正确的身份证号')
-                    return;
-                  }else{
-                    var reg = /^[0-9]*$/;
-                    var re = new RegExp(/^[a-zA-Z0-9]$/);
-                    this.cre_code = this.cre_code .replace(/\s+/g,"");
-                    this.cre_code = this.cre_code.substring(0,18)
-                    if(!re.test(this.cre_code.substring(17,18))){
-                      Toast('请输入正确的身份证号')
-                      return
-                    }
-                    if(!reg.test(this.cre_code.substring(0,17))){
-                      Toast('请输入正确的身份证号')
-                      return
-                    }
-                  }
                 } else if (this.cre_code == "") {
                     Toast("请输入证件号码");
                 } else if (this.parantValue == "") {
@@ -531,6 +532,7 @@
                 } else if (this.pickerValueTwo == "") {
                     Toast("请选择预约时间");
                 } else {
+                    console.log(44444)
                     let code = '';
                     for (let item of this.childlist) {
                       if (item.label === this.address) {

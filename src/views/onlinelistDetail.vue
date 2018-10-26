@@ -354,7 +354,7 @@
                             this.person = response.data.person
                             this.department = response.data.department;
                             this.appointment = response.data.appointment;
-                            this.appointment.time = moment(this.appointment.time).format('YYYY-MM-DD')
+                            // this.appointment.time = moment(this.appointment.time).format('YYYY-MM-DD')
                             this.approve = response.data.approve;
                             if (this.applyType == 1) {
                                 this.imgData[0].imgUrl = response.data.person.card_pic_min;
